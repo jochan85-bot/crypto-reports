@@ -57,10 +57,10 @@
   #scoreChart { height: 280px; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
   th, td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   @media (max-width: 640px) {
-    table { font-size: 12px; }
+    table { font-size: 12px; min-width: 560px; }
     th, td { padding: 6px 8px; }
-    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   }
   th { color: var(--muted); font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
   td.right, th.right { text-align: right; font-variant-numeric: tabular-nums; }
