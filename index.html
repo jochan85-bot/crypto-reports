@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>📈 MacTrader · Crypto V7 Live</title>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+<style>
+  :root {
+    --bg: #0b0f17;
+    --panel: #131a26;
+    --border: #1f2a3a;
+    --text: #e6edf3;
+    --muted: #8b97a7;
+    --green: #22c55e;
+    --red: #ef4444;
+    --blue: #3b82f6;
+    --amber: #f59e0b;
+    --purple: #a855f7;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Pretendard",
+                 "Apple SD Gothic Neo", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+  }
+  header {
+    padding: 14px 18px; border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    flex-wrap: wrap;
+  }
+  h1 { margin: 0; font-size: 16px; font-weight: 600; }
+  h1 small { color: var(--muted); font-weight: 400; margin-left: 8px; font-size: 12px; }
+  .status {
+    display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+    font-size: 13px;
+  }
+  .pill {
+    padding: 4px 10px; border-radius: 999px;
+    background: var(--panel); border: 1px solid var(--border);
+    font-weight: 500;
+  }
+  .pill.zone-STRONG_BUY  { background: rgba(34,197,94,.18);  color: #4ade80; border-color: rgba(34,197,94,.4); }
+  .pill.zone-BUY         { background: rgba(34,197,94,.10);  color: #86efac; border-color: rgba(34,197,94,.3); }
+  .pill.zone-HOLD        { background: rgba(139,151,167,.15); color: var(--muted); }
+  .pill.zone-SELL        { background: rgba(245,158,11,.15); color: #fbbf24; border-color: rgba(245,158,11,.4); }
+  .pill.zone-STRONG_SELL { background: rgba(239,68,68,.18);  color: #fca5a5; border-color: rgba(239,68,68,.4); }
+  .muted { color: var(--muted); }
+  main { padding: 12px; max-width: 1400px; margin: 0 auto; }
+  .card {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px; margin-bottom: 14px;
+  }
+  .card h2 { margin: 0 0 10px; font-size: 14px; font-weight: 600; }
+  #priceChart, #scoreChart { width: 100%; height: 420px; }
+  #scoreChart { height: 280px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; }
+  th { color: var(--muted); font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+  td.right, th.right { text-align: right; font-variant-numeric: tabular-nums; }
+  .zone-cell { font-weight: 600; }
+  .zone-STRONG_BUY  { color: #4ade80; }
+  .zone-BUY         { color: #86efac; }
+  .zone-HOLD        { color: var(--muted); }
+  .zone-SELL        { color: #fbbf24; }
+  .zone-STRONG_SELL { color: #fca5a5; }
+  .empty { color: var(--muted); padding: 24px; text-align: center; }
+  footer { color: var(--muted); font-size: 12px; padding: 16px; text-align: center; }
+  footer a { color: var(--blue); text-decoration: none; }
+</style>
+</head>
+<body>
+  <header>
+    <h1>📈 MacTrader · Crypto V7 <small>BTC 사이클 기준 통합 시그널</small></h1>
+    <div class="status" id="statusBar">
+      <span class="muted">데이터 로드 중…</span>
+    </div>
+  </header>
+
+  <main>
+    <div class="card">
+      <h2>가격 · 시그널 마커</h2>
+      <div id="priceChart"></div>
+    </div>
+
+    <div class="card">
+      <h2>연속 통합 점수 (V7) <span class="muted" style="font-weight:400; font-size:12px;">
+        — 매수 컷 +6.5 · 강력매수 +9.5 · 매도 컷 −6.0 · 강력매도 −9.0
+      </span></h2>
+      <div id="scoreChart"></div>
+    </div>
+
+    <div class="card">
+      <h2>시그널 로그 <span class="muted" style="font-weight:400; font-size:12px;">— zone 변경 이벤트</span></h2>
+      <div id="signalLog"></div>
+    </div>
+
+    <div class="card">
+      <h2>일일 스냅샷 <span class="muted" style="font-weight:400; font-size:12px;">— 최근 30일</span></h2>
+      <div id="dailyTable"></div>
+    </div>
+  </main>
+
+  <footer>
+    데이터 갱신: 매일 09:00 KST · <a href="data/history.json">history.json</a> ·
+    <a href="https://github.com/jochan85-bot/crypto-reports">GitHub</a>
+  </footer>
+
+<script>
+const CFG = {
+  SBUY_ON:  9.5, BUY_ON:  6.5,
+  SELL_ON: -6.0, SSELL_ON: -9.0,
+};
+const ZONE_LABEL = {
+  STRONG_BUY:  "🟢 강력매수",
+  BUY:         "🟢 분할매수",
+  HOLD:        "⚪ 관망",
+  SELL:        "🟠 분할매도",
+  STRONG_SELL: "🔴 강력매도",
+};
+const ZONE_COLOR = {
+  STRONG_BUY:  "#22c55e",
+  BUY:         "#86efac",
+  HOLD:        "#8b97a7",
+  SELL:        "#f59e0b",
+  STRONG_SELL: "#ef4444",
+};
+
+const PLOTLY_LAYOUT_BASE = {
+  paper_bgcolor: "#131a26",
+  plot_bgcolor:  "#0b0f17",
+  font: { color: "#e6edf3", family: "-apple-system, BlinkMacSystemFont, Pretendard, sans-serif", size: 12 },
+  margin: { l: 60, r: 60, t: 30, b: 50 },
+  hovermode: "x unified",
+  legend: { orientation: "h", y: -0.2 },
+  xaxis: {
+    gridcolor: "#1f2a3a", linecolor: "#1f2a3a",
+    rangeslider: { visible: true, thickness: 0.06, bgcolor: "#0b0f17", bordercolor: "#1f2a3a" },
+    rangeselector: {
+      bgcolor: "#0b0f17", activecolor: "#3b82f6", bordercolor: "#1f2a3a",
+      buttons: [
+        { count: 7,   label: "1주",  step: "day",   stepmode: "backward" },
+        { count: 1,   label: "1달",  step: "month", stepmode: "backward" },
+        { count: 6,   label: "6달",  step: "month", stepmode: "backward" },
+        { count: 1,   label: "1년",  step: "year",  stepmode: "backward" },
+        { count: 5,   label: "5년",  step: "year",  stepmode: "backward" },
+        { step: "all", label: "전체" },
+      ]
+    }
+  },
+};
+
+function fmtKRW(n) {
+  if (n == null) return "-";
+  if (n >= 1e8) return (n / 1e8).toFixed(2) + "억";
+  if (n >= 1e4) return (n / 1e4).toFixed(0) + "만";
+  return n.toLocaleString();
+}
+
+function renderStatus(latest) {
+  const el = document.getElementById("statusBar");
+  if (!latest) { el.innerHTML = '<span class="muted">데이터 없음</span>'; return; }
+  const zone = latest.zone || "HOLD";
+  el.innerHTML = `
+    <span class="pill zone-${zone}">${ZONE_LABEL[zone] || zone}</span>
+    <span><span class="muted">점수</span> <b>${latest.score >= 0 ? "+" : ""}${(+latest.score).toFixed(1)}</b></span>
+    <span><span class="muted">BTC</span> ${fmtKRW(latest.btc_krw)} KRW</span>
+    <span><span class="muted">ETH</span> ${fmtKRW(latest.eth_krw)} KRW</span>
+    <span class="muted">📅 ${latest.zone_since} 시작 (${latest.zone_days}일째)</span>
+    <span class="muted">· 갱신 ${latest.date}</span>
+  `;
+}
+
+function renderPriceChart(rows) {
+  const x      = rows.map(r => r.date);
+  const btc    = rows.map(r => r.btc_krw);
+  const eth    = rows.map(r => r.eth_krw);
+  // zone 변경 마커
+  const changes = rows.filter(r => r.zone_changed);
+  const markers = {
+    x: changes.map(r => r.date),
+    y: changes.map(r => r.btc_krw),
+    text: changes.map(r => `${ZONE_LABEL[r.zone] || r.zone}<br>점수 ${r.score >= 0 ? "+" : ""}${(+r.score).toFixed(1)}`),
+    mode: "markers+text",
+    type: "scatter",
+    name: "Zone 변경",
+    marker: {
+      size: 14,
+      color: changes.map(r => ZONE_COLOR[r.zone] || "#8b97a7"),
+      symbol: "diamond",
+      line: { color: "#0b0f17", width: 2 },
+    },
+    textposition: "top center",
+    textfont: { size: 10, color: "#e6edf3" },
+    hovertemplate: "%{x}<br><b>%{text}</b><extra></extra>",
+  };
+  const traces = [
+    { x, y: btc, name: "BTC (KRW)", type: "scatter", mode: "lines", line: { color: "#f59e0b", width: 2 }, yaxis: "y" },
+    { x, y: eth, name: "ETH (KRW)", type: "scatter", mode: "lines", line: { color: "#3b82f6", width: 1.5 }, yaxis: "y2" },
+    markers,
+  ];
+  const layout = Object.assign({}, PLOTLY_LAYOUT_BASE, {
+    yaxis:  { title: "BTC (KRW)", gridcolor: "#1f2a3a", linecolor: "#1f2a3a", side: "left" },
+    yaxis2: { title: "ETH (KRW)", gridcolor: "transparent", linecolor: "#1f2a3a", overlaying: "y", side: "right" },
+  });
+  Plotly.newPlot("priceChart", traces, layout, { responsive: true, displaylogo: false });
+}
+
+function renderScoreChart(rows) {
+  const x = rows.map(r => r.date);
+  const s = rows.map(r => r.score);
+
+  const traces = [
+    {
+      x, y: s, name: "통합 점수", type: "scatter", mode: "lines",
+      line: { color: "#a855f7", width: 2 },
+      fill: "tozeroy", fillcolor: "rgba(168,85,247,0.10)",
+    },
+  ];
+  const shapes = [
+    { type: "line", xref: "paper", yref: "y", x0: 0, x1: 1, y0: CFG.SBUY_ON,  y1: CFG.SBUY_ON,  line: { color: "#22c55e", width: 1, dash: "dash" } },
+    { type: "line", xref: "paper", yref: "y", x0: 0, x1: 1, y0: CFG.BUY_ON,   y1: CFG.BUY_ON,   line: { color: "#86efac", width: 1, dash: "dot" } },
+    { type: "line", xref: "paper", yref: "y", x0: 0, x1: 1, y0: 0,            y1: 0,            line: { color: "#8b97a7", width: 1 } },
+    { type: "line", xref: "paper", yref: "y", x0: 0, x1: 1, y0: CFG.SELL_ON,  y1: CFG.SELL_ON,  line: { color: "#f59e0b", width: 1, dash: "dot" } },
+    { type: "line", xref: "paper", yref: "y", x0: 0, x1: 1, y0: CFG.SSELL_ON, y1: CFG.SSELL_ON, line: { color: "#ef4444", width: 1, dash: "dash" } },
+  ];
+  const annotations = [
+    { xref: "paper", yref: "y", x: 1.01, y: CFG.SBUY_ON,  text: "+9.5", showarrow: false, font: { color: "#22c55e", size: 10 } },
+    { xref: "paper", yref: "y", x: 1.01, y: CFG.BUY_ON,   text: "+6.5", showarrow: false, font: { color: "#86efac", size: 10 } },
+    { xref: "paper", yref: "y", x: 1.01, y: CFG.SELL_ON,  text: "-6.0", showarrow: false, font: { color: "#f59e0b", size: 10 } },
+    { xref: "paper", yref: "y", x: 1.01, y: CFG.SSELL_ON, text: "-9.0", showarrow: false, font: { color: "#ef4444", size: 10 } },
+  ];
+  const layout = Object.assign({}, PLOTLY_LAYOUT_BASE, {
+    yaxis: { title: "점수", gridcolor: "#1f2a3a", linecolor: "#1f2a3a", range: [-11, 11] },
+    shapes, annotations,
+  });
+  Plotly.newPlot("scoreChart", traces, layout, { responsive: true, displaylogo: false });
+}
+
+function renderSignalLog(rows) {
+  const changes = rows.filter(r => r.zone_changed).slice().reverse();
+  const el = document.getElementById("signalLog");
+  if (!changes.length) {
+    el.innerHTML = '<div class="empty">아직 zone 변경 이벤트 없음. 데이터가 누적되면 여기 표시됩니다.</div>';
+    return;
+  }
+  let html = '<table><thead><tr><th>날짜</th><th>Zone</th><th class="right">점수</th><th class="right">BTC</th><th class="right">ETH</th><th>비고</th></tr></thead><tbody>';
+  for (const r of changes) {
+    html += `<tr>
+      <td>${r.date}</td>
+      <td class="zone-cell zone-${r.zone}">${ZONE_LABEL[r.zone] || r.zone}</td>
+      <td class="right">${r.score >= 0 ? "+" : ""}${(+r.score).toFixed(1)}</td>
+      <td class="right">${fmtKRW(r.btc_krw)}</td>
+      <td class="right">${fmtKRW(r.eth_krw)}</td>
+      <td class="muted">${r.allocation || (r.gate || "-")}</td>
+    </tr>`;
+  }
+  html += "</tbody></table>";
+  el.innerHTML = html;
+}
+
+function renderDailyTable(rows) {
+  const recent = rows.slice(-30).reverse();
+  const el = document.getElementById("dailyTable");
+  if (!recent.length) { el.innerHTML = '<div class="empty">데이터 없음</div>'; return; }
+  let html = '<table><thead><tr>' +
+    '<th>날짜</th><th>Zone</th><th class="right">점수</th>' +
+    '<th class="right">BTC</th><th class="right">ETH</th>' +
+    '<th class="right">NUPL</th><th class="right">MVRVz</th><th class="right">F&G</th>' +
+    '</tr></thead><tbody>';
+  for (const r of recent) {
+    const m = r.metrics || {};
+    html += `<tr>
+      <td>${r.date}</td>
+      <td class="zone-cell zone-${r.zone}">${(ZONE_LABEL[r.zone] || r.zone).replace(/^[\u{1F300}-\u{1FAFF}]\s*/u, "")}</td>
+      <td class="right">${r.score >= 0 ? "+" : ""}${(+r.score).toFixed(1)}</td>
+      <td class="right">${fmtKRW(r.btc_krw)}</td>
+      <td class="right">${fmtKRW(r.eth_krw)}</td>
+      <td class="right">${m.btc_nupl != null ? (+m.btc_nupl).toFixed(3) : "-"}</td>
+      <td class="right">${m.btc_mvrv_z != null ? (+m.btc_mvrv_z).toFixed(2) : "-"}</td>
+      <td class="right">${m.fng != null ? m.fng : "-"}</td>
+    </tr>`;
+  }
+  html += "</tbody></table>";
+  el.innerHTML = html;
+}
+
+async function main() {
+  let rows = [];
+  try {
+    const r = await fetch("data/history.json?t=" + Date.now(), { cache: "no-store" });
+    rows = await r.json();
+  } catch (e) {
+    document.getElementById("statusBar").innerHTML = '<span style="color:#ef4444">데이터 로드 실패</span>';
+    return;
+  }
+  rows.sort((a, b) => a.date < b.date ? -1 : 1);
+  const latest = rows.length ? rows[rows.length - 1] : null;
+  renderStatus(latest);
+  if (!rows.length) {
+    for (const id of ["priceChart","scoreChart"]) {
+      document.getElementById(id).innerHTML =
+        '<div class="empty">아직 데이터 없음. 매일 09:00 KST cron이 첫 데이터를 추가하면 차트가 그려집니다.</div>';
+    }
+    renderSignalLog(rows); renderDailyTable(rows);
+    return;
+  }
+  renderPriceChart(rows);
+  renderScoreChart(rows);
+  renderSignalLog(rows);
+  renderDailyTable(rows);
+}
+main();
+</script>
+</body>
+</html>
