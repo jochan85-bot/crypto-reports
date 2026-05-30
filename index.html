@@ -56,7 +56,12 @@
   #priceChart, #scoreChart { width: 100%; height: 420px; }
   #scoreChart { height: 280px; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th, td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; }
+  th, td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
+  @media (max-width: 640px) {
+    table { font-size: 12px; }
+    th, td { padding: 6px 8px; }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  }
   th { color: var(--muted); font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
   td.right, th.right { text-align: right; font-variant-numeric: tabular-nums; }
   .zone-cell { font-weight: 600; }
@@ -93,12 +98,12 @@
 
     <div class="card">
       <h2>시그널 로그 <span class="muted" style="font-weight:400; font-size:12px;">— zone 변경 이벤트</span></h2>
-      <div id="signalLog"></div>
+      <div id="signalLog" class="table-wrap"></div>
     </div>
 
     <div class="card">
       <h2>일일 스냅샷 <span class="muted" style="font-weight:400; font-size:12px;">— 최근 30일</span></h2>
-      <div id="dailyTable"></div>
+      <div id="dailyTable" class="table-wrap"></div>
     </div>
   </main>
 
@@ -204,7 +209,9 @@ function renderPriceChart(rows) {
     yaxis:  { title: "BTC (KRW)", gridcolor: "#1f2a3a", linecolor: "#1f2a3a", side: "left" },
     yaxis2: { title: "ETH (KRW)", gridcolor: "transparent", linecolor: "#1f2a3a", overlaying: "y", side: "right" },
   });
-  Plotly.newPlot("priceChart", traces, layout, { responsive: true, displaylogo: false });
+  Plotly.newPlot("priceChart", traces, layout, {
+    responsive: true, displaylogo: false, displayModeBar: false,
+  });
 }
 
 function renderScoreChart(rows) {
@@ -235,7 +242,9 @@ function renderScoreChart(rows) {
     yaxis: { title: "점수", gridcolor: "#1f2a3a", linecolor: "#1f2a3a", range: [-11, 11] },
     shapes, annotations,
   });
-  Plotly.newPlot("scoreChart", traces, layout, { responsive: true, displaylogo: false });
+  Plotly.newPlot("scoreChart", traces, layout, {
+    responsive: true, displaylogo: false, displayModeBar: false,
+  });
 }
 
 function renderSignalLog(rows) {
@@ -298,10 +307,12 @@ async function main() {
   rows.sort((a, b) => a.date < b.date ? -1 : 1);
   const latest = rows.length ? rows[rows.length - 1] : null;
   renderStatus(latest);
-  if (!rows.length) {
-    for (const id of ["priceChart","scoreChart"]) {
-      document.getElementById(id).innerHTML =
-        '<div class="empty">아직 데이터 없음. 매일 09:00 KST cron이 첫 데이터를 추가하면 차트가 그려집니다.</div>';
+  if (rows.length < 2) {
+    const msg = rows.length === 0
+      ? '아직 데이터 없음. 매일 09:00 KST cron이 첫 데이터를 추가하면 차트가 그려집니다.'
+      : '데이터 누적 중 (1/2일). 내일 09:00 KST 이후 차트가 그려집니다.';
+    for (const id of ["priceChart", "scoreChart"]) {
+      document.getElementById(id).innerHTML = `<div class="empty">${msg}</div>`;
     }
     renderSignalLog(rows); renderDailyTable(rows);
     return;
