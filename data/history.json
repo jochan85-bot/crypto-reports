@@ -1,1 +1,23 @@
-[]
+[
+  {
+    "date": "2026-05-30",
+    "btc_krw": 108856000,
+    "eth_krw": 2985000,
+    "score": 5.83,
+    "zone": "HOLD",
+    "zone_since": "2026-05-30",
+    "zone_days": 1,
+    "zone_changed": false,
+    "gate": "분할매수",
+    "ethbtc": 0.0274,
+    "liq_regime": 0,
+    "allocation": null,
+    "metrics": {
+      "btc_nupl": 0.27,
+      "btc_mvrv_z": 0.66,
+      "puell": 0.8,
+      "mayer": 0.92,
+      "fng": 23
+    }
+  }
+]
