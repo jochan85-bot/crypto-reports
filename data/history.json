@@ -82,5 +82,26 @@
       "mayer": 0.87,
       "fng": 23
     }
+  },
+  {
+    "date": "2026-06-03",
+    "btc_krw": 98788000,
+    "eth_krw": 2757000,
+    "score": 7.19,
+    "zone": "BUY",
+    "zone_since": "2026-06-03",
+    "zone_days": 1,
+    "zone_changed": true,
+    "gate": "분할매수",
+    "ethbtc": 0.0279,
+    "liq_regime": 0,
+    "allocation": "BTC 50 / ETH 50",
+    "metrics": {
+      "btc_nupl": 0.25,
+      "btc_mvrv_z": 0.67,
+      "puell": 0.73,
+      "mayer": 0.84,
+      "fng": 11
+    }
   }
 ]
