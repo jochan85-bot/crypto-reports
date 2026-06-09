@@ -328,6 +328,78 @@ function bindChartSync() {
   document.getElementById("scoreChart").on("plotly_relayout", e => syncTo("priceChart", e));
 }
 
+// ── 수동 핀치줌 핸들러 (Plotly는 모바일 핀치 기본 지원 안함) ─────────────
+function bindPinchZoom(chartId) {
+  const el = document.getElementById(chartId);
+  if (!el) return;
+
+  let startDist = 0;       // 두 손가락 거리 (px)
+  let startMidX = 0;       // 두 손가락 중간점 (px, chart 좌표계)
+  let startRange = null;   // 시작 x축 범위 [t0, t1] (ms)
+  let plotRect = null;     // 차트 그리기 영역 (xaxis domain)
+
+  function getPlotInfo() {
+    const gd = el;
+    if (!gd._fullLayout) return null;
+    const xaxis = gd._fullLayout.xaxis;
+    if (!xaxis || !xaxis._length) return null;
+    const bb = gd.getBoundingClientRect();
+    return {
+      // 플롯 그리기 영역 픽셀 범위
+      left:   bb.left + xaxis._offset,
+      width:  xaxis._length,
+      // 현재 x축 데이터 범위
+      d2p: xaxis.d2p.bind(xaxis),
+      p2d: xaxis.p2d.bind(xaxis),
+      range: xaxis.range.map(v => new Date(v).getTime()),
+    };
+  }
+
+  el.addEventListener("touchstart", e => {
+    if (e.touches.length !== 2) return;
+    const info = getPlotInfo();
+    if (!info) return;
+    const t0 = e.touches[0], t1 = e.touches[1];
+    startDist = Math.hypot(t0.clientX - t1.clientX, t0.clientY - t1.clientY);
+    // 두 손가락 중간점을 데이터 좌표(ms)로 변환
+    const midScreenX = (t0.clientX + t1.clientX) / 2;
+    const midPxInPlot = midScreenX - info.left;  // 플롯 영역 내 픽셀 위치
+    const midDataMs = new Date(info.p2d(midPxInPlot)).getTime();
+    startMidX = midDataMs;
+    startRange = info.range;
+    plotRect = info;
+    e.preventDefault();
+  }, { passive: false });
+
+  el.addEventListener("touchmove", e => {
+    if (e.touches.length !== 2 || !startRange) return;
+    const t0 = e.touches[0], t1 = e.touches[1];
+    const dist = Math.hypot(t0.clientX - t1.clientX, t0.clientY - t1.clientY);
+    if (dist < 10 || startDist < 10) return;
+    const scale = startDist / dist;  // 멀어지면 dist↑ → scale↓ → 데이터 범위 × scale (이 작아짐 = 확대)
+    const [r0, r1] = startRange;
+    const span = r1 - r0;
+    const newSpan = span * scale;
+    // startMidX를 중심으로 확대/축소 (데이터 공간 중심점 고정)
+    const leftFrac = (startMidX - r0) / span;
+    const newR0 = startMidX - leftFrac * newSpan;
+    const newR1 = newR0 + newSpan;
+    Plotly.relayout(chartId, {
+      "xaxis.range[0]": new Date(newR0).toISOString(),
+      "xaxis.range[1]": new Date(newR1).toISOString(),
+      "xaxis.autorange": false,
+    });
+    e.preventDefault();
+  }, { passive: false });
+
+  el.addEventListener("touchend", e => {
+    if (e.touches.length < 2) {
+      startDist = 0;
+      startRange = null;
+    }
+  });
+}
+
 async function main() {
   let rows = [];
   try {
@@ -353,6 +425,8 @@ async function main() {
   renderPriceChart(rows);
   renderScoreChart(rows);
   bindChartSync();
+  bindPinchZoom("priceChart");
+  bindPinchZoom("scoreChart");
   renderSignalLog(rows);
   renderDailyTable(rows);
 }
