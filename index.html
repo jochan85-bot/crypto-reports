@@ -141,7 +141,7 @@ const PLOTLY_LAYOUT_BASE = {
   legend: { orientation: "h", y: -0.2 },
   xaxis: {
     gridcolor: "#1f2a3a", linecolor: "#1f2a3a",
-    rangeslider: { visible: true, thickness: 0.06, bgcolor: "#0b0f17", bordercolor: "#1f2a3a" },
+    rangeslider: { visible: false },
     rangeselector: {
       bgcolor: "#0b0f17", activecolor: "#3b82f6", bordercolor: "#1f2a3a",
       buttons: [
@@ -210,7 +210,7 @@ function renderPriceChart(rows) {
     yaxis2: { title: "ETH (KRW)", gridcolor: "transparent", linecolor: "#1f2a3a", overlaying: "y", side: "right" },
   });
   Plotly.newPlot("priceChart", traces, layout, {
-    responsive: true, displaylogo: false, displayModeBar: false,
+    responsive: true, displaylogo: false, displayModeBar: false, scrollZoom: true,
   });
 }
 
@@ -243,7 +243,7 @@ function renderScoreChart(rows) {
     shapes, annotations,
   });
   Plotly.newPlot("scoreChart", traces, layout, {
-    responsive: true, displaylogo: false, displayModeBar: false,
+    responsive: true, displaylogo: false, displayModeBar: false, scrollZoom: true,
   });
 }
 
