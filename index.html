@@ -53,7 +53,7 @@
     border-radius: 10px; padding: 14px; margin-bottom: 14px;
   }
   .card h2 { margin: 0 0 10px; font-size: 14px; font-weight: 600; }
-  #priceChart, #scoreChart { width: 100%; height: 420px; }
+  #priceChart, #scoreChart { width: 100%; height: 420px; touch-action: none; }
   #scoreChart { height: 280px; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
   th, td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
@@ -355,32 +355,32 @@ function bindPinchZoom(chartId) {
     };
   }
 
+  // capture 단계에서 Plotly 내부 핸들러보다 먼저 잡아서 stopPropagation
   el.addEventListener("touchstart", e => {
     if (e.touches.length !== 2) return;
     const info = getPlotInfo();
     if (!info) return;
     const t0 = e.touches[0], t1 = e.touches[1];
     startDist = Math.hypot(t0.clientX - t1.clientX, t0.clientY - t1.clientY);
-    // 두 손가락 중간점을 데이터 좌표(ms)로 변환
     const midScreenX = (t0.clientX + t1.clientX) / 2;
-    const midPxInPlot = midScreenX - info.left;  // 플롯 영역 내 픽셀 위치
+    const midPxInPlot = midScreenX - info.left;
     const midDataMs = new Date(info.p2d(midPxInPlot)).getTime();
     startMidX = midDataMs;
     startRange = info.range;
     plotRect = info;
     e.preventDefault();
-  }, { passive: false });
+    e.stopPropagation();
+  }, { passive: false, capture: true });
 
   el.addEventListener("touchmove", e => {
     if (e.touches.length !== 2 || !startRange) return;
     const t0 = e.touches[0], t1 = e.touches[1];
     const dist = Math.hypot(t0.clientX - t1.clientX, t0.clientY - t1.clientY);
     if (dist < 10 || startDist < 10) return;
-    const scale = startDist / dist;  // 멀어지면 dist↑ → scale↓ → 데이터 범위 × scale (이 작아짐 = 확대)
+    const scale = startDist / dist;
     const [r0, r1] = startRange;
     const span = r1 - r0;
-    const newSpan = span * scale;
-    // startMidX를 중심으로 확대/축소 (데이터 공간 중심점 고정)
+    const newSpan = Math.max(span * scale, 86400000);  // 최소 1일
     const leftFrac = (startMidX - r0) / span;
     const newR0 = startMidX - leftFrac * newSpan;
     const newR1 = newR0 + newSpan;
@@ -390,14 +390,15 @@ function bindPinchZoom(chartId) {
       "xaxis.autorange": false,
     });
     e.preventDefault();
-  }, { passive: false });
+    e.stopPropagation();
+  }, { passive: false, capture: true });
 
   el.addEventListener("touchend", e => {
     if (e.touches.length < 2) {
       startDist = 0;
       startRange = null;
     }
-  });
+  }, { capture: true });
 }
 
 async function main() {
