@@ -328,78 +328,98 @@ function bindChartSync() {
   document.getElementById("scoreChart").on("plotly_relayout", e => syncTo("priceChart", e));
 }
 
-// ── 수동 핀치줌 핸들러 (Plotly는 모바일 핀치 기본 지원 안함) ─────────────
-function bindPinchZoom(chartId) {
-  const el = document.getElementById(chartId);
-  if (!el) return;
+// ── 수동 핀치줌 핸들러 (iOS Safari 부트·document 레벨 캐처) ─────────────────
+const _pinchState = {
+  chartId: null,
+  startDist: 0,
+  startMidData: 0,
+  startRange: null,
+};
 
-  let startDist = 0;       // 두 손가락 거리 (px)
-  let startMidX = 0;       // 두 손가락 중간점 (px, chart 좌표계)
-  let startRange = null;   // 시작 x축 범위 [t0, t1] (ms)
-  let plotRect = null;     // 차트 그리기 영역 (xaxis domain)
-
-  function getPlotInfo() {
-    const gd = el;
-    if (!gd._fullLayout) return null;
-    const xaxis = gd._fullLayout.xaxis;
-    if (!xaxis || !xaxis._length) return null;
-    const bb = gd.getBoundingClientRect();
-    return {
-      // 플롯 그리기 영역 픽셀 범위
-      left:   bb.left + xaxis._offset,
-      width:  xaxis._length,
-      // 현재 x축 데이터 범위
-      d2p: xaxis.d2p.bind(xaxis),
-      p2d: xaxis.p2d.bind(xaxis),
-      range: xaxis.range.map(v => (typeof v === "number" ? v : new Date(v).getTime())),
-    };
-  }
-
-  // capture 단계에서 Plotly 내부 핸들러보다 먼저 잡아서 stopPropagation
-  el.addEventListener("touchstart", e => {
-    if (e.touches.length !== 2) return;
-    const info = getPlotInfo();
-    if (!info) return;
-    const t0 = e.touches[0], t1 = e.touches[1];
-    startDist = Math.hypot(t0.clientX - t1.clientX, t0.clientY - t1.clientY);
-    const midScreenX = (t0.clientX + t1.clientX) / 2;
-    const midPxInPlot = midScreenX - info.left;
-    const midDataMs = new Date(info.p2d(midPxInPlot)).getTime();
-    startMidX = midDataMs;
-    startRange = info.range;
-    plotRect = info;
-    e.preventDefault();
-    e.stopPropagation();
-  }, { passive: false, capture: true });
-
-  el.addEventListener("touchmove", e => {
-    if (e.touches.length !== 2 || !startRange) return;
-    const t0 = e.touches[0], t1 = e.touches[1];
-    const dist = Math.hypot(t0.clientX - t1.clientX, t0.clientY - t1.clientY);
-    if (dist < 10 || startDist < 10) return;
-    const scale = startDist / dist;
-    const [r0, r1] = startRange;
-    const span = r1 - r0;
-    const newSpan = Math.max(span * scale, 86400000);  // 최소 1일
-    const leftFrac = (startMidX - r0) / span;
-    const newR0 = startMidX - leftFrac * newSpan;
-    const newR1 = newR0 + newSpan;
-    Plotly.relayout(chartId, {
-      "xaxis.range[0]": new Date(newR0).toISOString(),
-      "xaxis.range[1]": new Date(newR1).toISOString(),
-      "xaxis.autorange": false,
-    });
-    e.preventDefault();
-    e.stopPropagation();
-  }, { passive: false, capture: true });
-
-  el.addEventListener("touchend", e => {
-    if (e.touches.length < 2) {
-      startDist = 0;
-      startRange = null;
-    }
-  }, { capture: true });
+function _getChartInfo(chartId, clientX) {
+  const gd = document.getElementById(chartId);
+  if (!gd || !gd._fullLayout) return null;
+  const xaxis = gd._fullLayout.xaxis;
+  if (!xaxis || !xaxis._length) return null;
+  const bb = gd.getBoundingClientRect();
+  const left = bb.left + xaxis._offset;
+  const pxInPlot = clientX - left;
+  return {
+    left, width: xaxis._length,
+    rect: bb,
+    pxToData: (px) => {
+      const v = xaxis.p2d(px);
+      return (typeof v === "number") ? v : new Date(v).getTime();
+    },
+    pxInPlot,
+    range: xaxis.range.map(v => (typeof v === "number" ? v : new Date(v).getTime())),
+  };
 }
+
+function _findChartUnderTouch(t0, t1) {
+  // 두 터치 중 하나용 차트 div가 어디인지 판단
+  const midX = (t0.clientX + t1.clientX) / 2;
+  const midY = (t0.clientY + t1.clientY) / 2;
+  for (const id of ["priceChart", "scoreChart"]) {
+    const el = document.getElementById(id);
+    if (!el) continue;
+    const bb = el.getBoundingClientRect();
+    if (midX >= bb.left && midX <= bb.right && midY >= bb.top && midY <= bb.bottom) {
+      return id;
+    }
+  }
+  return null;
+}
+
+// document 레벨에서 다중 터치 캡처 (Plotly/iOS 보다 먼저)
+document.addEventListener("touchstart", e => {
+  if (e.touches.length !== 2) return;
+  const t0 = e.touches[0], t1 = e.touches[1];
+  const chartId = _findChartUnderTouch(t0, t1);
+  if (!chartId) return;
+  const midScreenX = (t0.clientX + t1.clientX) / 2;
+  const info = _getChartInfo(chartId, midScreenX);
+  if (!info) return;
+  _pinchState.chartId = chartId;
+  _pinchState.startDist = Math.hypot(t0.clientX - t1.clientX, t0.clientY - t1.clientY);
+  _pinchState.startMidData = info.pxToData(info.pxInPlot);
+  _pinchState.startRange = info.range;
+  e.preventDefault();
+}, { passive: false, capture: true });
+
+document.addEventListener("touchmove", e => {
+  if (e.touches.length !== 2 || !_pinchState.startRange) return;
+  const t0 = e.touches[0], t1 = e.touches[1];
+  const dist = Math.hypot(t0.clientX - t1.clientX, t0.clientY - t1.clientY);
+  if (dist < 10 || _pinchState.startDist < 10) return;
+  const scale = _pinchState.startDist / dist;
+  const [r0, r1] = _pinchState.startRange;
+  const span = r1 - r0;
+  const newSpan = Math.max(span * scale, 86400000);
+  const leftFrac = (_pinchState.startMidData - r0) / span;
+  const newR0 = _pinchState.startMidData - leftFrac * newSpan;
+  const newR1 = newR0 + newSpan;
+  Plotly.relayout(_pinchState.chartId, {
+    "xaxis.range[0]": new Date(newR0).toISOString(),
+    "xaxis.range[1]": new Date(newR1).toISOString(),
+    "xaxis.autorange": false,
+  });
+  e.preventDefault();
+}, { passive: false, capture: true });
+
+document.addEventListener("touchend", e => {
+  if (e.touches.length < 2) {
+    _pinchState.chartId = null;
+    _pinchState.startRange = null;
+  }
+}, { capture: true });
+
+// iOS Safari 전용 gesture 이벤트 차단 (viewport 줌 방지)
+document.addEventListener("gesturestart",  e => e.preventDefault(), { passive: false });
+document.addEventListener("gesturechange", e => e.preventDefault(), { passive: false });
+document.addEventListener("gestureend",    e => e.preventDefault(), { passive: false });
+
+function bindPinchZoom(chartId) { /* document-level 처리, 개별 바인딩 불필요 */ }
 
 async function main() {
   let rows = [];
