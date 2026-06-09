@@ -138,6 +138,7 @@ const PLOTLY_LAYOUT_BASE = {
   font: { color: "#e6edf3", family: "-apple-system, BlinkMacSystemFont, Pretendard, sans-serif", size: 12 },
   margin: { l: 60, r: 60, t: 30, b: 50 },
   hovermode: "x unified",
+  dragmode: "pan",
   legend: { orientation: "h", y: -0.2 },
   xaxis: {
     gridcolor: "#1f2a3a", linecolor: "#1f2a3a",
@@ -295,6 +296,38 @@ function renderDailyTable(rows) {
   el.innerHTML = html;
 }
 
+// ── 차트 x축 연동 (핀치줌 / 범위선택 공유) ─────────────────────────────
+function bindChartSync() {
+  let _syncing = false;
+
+  function syncTo(targetId, eventData) {
+    if (_syncing) return;
+    _syncing = true;
+    try {
+      if (eventData["xaxis.autorange"] === true) {
+        // "전체" 버튼: autorange 복원
+        Plotly.relayout(targetId, { "xaxis.autorange": true });
+      } else if (eventData["xaxis.range[0]"] !== undefined) {
+        Plotly.relayout(targetId, {
+          "xaxis.range[0]": eventData["xaxis.range[0]"],
+          "xaxis.range[1]": eventData["xaxis.range[1]"],
+          "xaxis.autorange": false,
+        });
+      } else if (Array.isArray(eventData["xaxis.range"])) {
+        Plotly.relayout(targetId, {
+          "xaxis.range": eventData["xaxis.range"],
+          "xaxis.autorange": false,
+        });
+      }
+    } finally {
+      setTimeout(() => { _syncing = false; }, 80);
+    }
+  }
+
+  document.getElementById("priceChart").on("plotly_relayout", e => syncTo("scoreChart", e));
+  document.getElementById("scoreChart").on("plotly_relayout", e => syncTo("priceChart", e));
+}
+
 async function main() {
   let rows = [];
   try {
@@ -319,6 +352,7 @@ async function main() {
   }
   renderPriceChart(rows);
   renderScoreChart(rows);
+  bindChartSync();
   renderSignalLog(rows);
   renderDailyTable(rows);
 }
