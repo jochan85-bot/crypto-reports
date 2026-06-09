@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>📈 MacTrader · Crypto V7 Live</title>
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
 <style>
@@ -351,7 +351,7 @@ function bindPinchZoom(chartId) {
       // 현재 x축 데이터 범위
       d2p: xaxis.d2p.bind(xaxis),
       p2d: xaxis.p2d.bind(xaxis),
-      range: xaxis.range.map(v => new Date(v).getTime()),
+      range: xaxis.range.map(v => (typeof v === "number" ? v : new Date(v).getTime())),
     };
   }
 
