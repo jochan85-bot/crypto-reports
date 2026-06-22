@@ -481,5 +481,26 @@
       "mayer": 0.85,
       "fng": 23
     }
+  },
+  {
+    "date": "2026-06-22",
+    "btc_krw": 95307000,
+    "eth_krw": 2572000,
+    "score": 7.6,
+    "zone": "HOLD",
+    "zone_since": "2026-06-04",
+    "zone_days": 19,
+    "zone_changed": false,
+    "gate": "분할매수",
+    "ethbtc": 0.027,
+    "liq_regime": 0,
+    "allocation": null,
+    "metrics": {
+      "btc_nupl": 0.176,
+      "btc_mvrv_z": 0.35,
+      "puell": 0.72,
+      "mayer": 0.84,
+      "fng": 20
+    }
   }
 ]
