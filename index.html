@@ -174,6 +174,7 @@ function renderStatus(latest) {
     <span><span class="muted">BTC</span> ${fmtKRW(latest.btc_krw)} KRW</span>
     <span><span class="muted">ETH</span> ${fmtKRW(latest.eth_krw)} KRW</span>
     <span class="muted">📅 ${latest.zone_since} 시작 (${latest.zone_days}일째)</span>
+    ${latest.macro_gate_primary != null ? `<span title="V9 매크로 게이트"><span class="muted">현물</span> <b style="color:${latest.macro_gate_primary>=0.6?'#22c55e':'#8b97a7'}">${(+latest.macro_gate_primary).toFixed(2)}</b> <span class="muted">레버</span> <b style="color:${latest.macro_gate_dd>=0.6?'#22c55e':'#8b97a7'}">${(+latest.macro_gate_dd).toFixed(2)}</b>${latest.crash_signal ? ' <span style="color:#ff4081">🚨crash★</span>' : ''}</span>` : ''}
     <span class="muted">· 갱신 ${latest.date}</span>
   `;
 }
@@ -219,12 +220,34 @@ function renderScoreChart(rows) {
   const x = rows.map(r => r.date);
   const s = rows.map(r => r.score);
 
+  // V9 게이트 데이터
+  const gp  = rows.map(r => r.macro_gate_primary != null ? +r.macro_gate_primary : null);
+  const gdd = rows.map(r => r.macro_gate_dd      != null ? +r.macro_gate_dd      : null);
+  const cr  = rows.map(r => r.crash_signal ? 0 : null);  // crash 발화 마커용
+  const hasGate = gp.some(v => v != null);
+
   const traces = [
     {
       x, y: s, name: "통합 점수", type: "scatter", mode: "lines",
       line: { color: "#a855f7", width: 2 },
       fill: "tozeroy", fillcolor: "rgba(168,85,247,0.10)",
+      yaxis: "y",
     },
+    ...(hasGate ? [
+      {
+        x, y: gp, name: "V9 현물 게이트", type: "scatter", mode: "lines",
+        line: { color: "#22c55e", width: 1.5 },
+        fill: "tozeroy", fillcolor: "rgba(34,197,94,0.08)",
+        yaxis: "y2",
+        hovertemplate: "현물 게이트: %{y:.2f}<extra></extra>",
+      },
+      {
+        x, y: gdd, name: "V9 레버리지 게이트", type: "scatter", mode: "lines",
+        line: { color: "#f59e0b", width: 1.2, dash: "dot" },
+        yaxis: "y2",
+        hovertemplate: "레버 게이트: %{y:.2f}<extra></extra>",
+      },
+    ] : []),
   ];
   const shapes = [
     { type: "line", xref: "paper", yref: "y", x0: 0, x1: 1, y0: CFG.SBUY_ON,  y1: CFG.SBUY_ON,  line: { color: "#22c55e", width: 1, dash: "dash" } },
@@ -240,8 +263,23 @@ function renderScoreChart(rows) {
     { xref: "paper", yref: "y", x: 1.01, y: CFG.SSELL_ON, text: "-9.0", showarrow: false, font: { color: "#ef4444", size: 10 } },
   ];
   const layout = Object.assign({}, PLOTLY_LAYOUT_BASE, {
-    yaxis: { title: "점수", gridcolor: "#1f2a3a", linecolor: "#1f2a3a", range: [-11, 11] },
-    shapes, annotations,
+    yaxis:  { title: "점수", gridcolor: "#1f2a3a", linecolor: "#1f2a3a", range: [-11, 11] },
+    yaxis2: {
+      title: "게이트 (0~1)", overlaying: "y", side: "right",
+      range: [-0.05, 1.3], gridcolor: "transparent", linecolor: "#1f2a3a",
+      showgrid: false, tickformat: ".1f",
+    },
+    shapes: [
+      ...shapes,
+      // FLOOR 0.6 점선 (게이트 패널)
+      { type: "line", xref: "paper", yref: "y2", x0: 0, x1: 1, y0: 0.6, y1: 0.6,
+        line: { color: "#22c55e", width: 1, dash: "dot" } },
+    ],
+    annotations: [
+      ...annotations,
+      { xref: "paper", yref: "y2", x: -0.01, y: 0.6, text: "0.6",
+        showarrow: false, font: { color: "#22c55e", size: 9 }, xanchor: "right" },
+    ],
   });
   Plotly.newPlot("scoreChart", traces, layout, {
     responsive: true, displaylogo: false, displayModeBar: false, scrollZoom: true,
@@ -274,13 +312,16 @@ function renderDailyTable(rows) {
   const recent = rows.slice(-30).reverse();
   const el = document.getElementById("dailyTable");
   if (!recent.length) { el.innerHTML = '<div class="empty">데이터 없음</div>'; return; }
+  const showGate = recent.some(r => r.macro_gate_primary != null);
   let html = '<table><thead><tr>' +
     '<th>날짜</th><th>Zone</th><th class="right">점수</th>' +
     '<th class="right">BTC</th><th class="right">ETH</th>' +
     '<th class="right">NUPL</th><th class="right">MVRVz</th><th class="right">F&G</th>' +
+    (showGate ? '<th class="right" title="V9 현물 게이트">현물G</th><th class="right" title="V9 레버 게이트">레버G</th><th class="right" title="crash_buyer 발화">crash</th>' : '') +
     '</tr></thead><tbody>';
   for (const r of recent) {
     const m = r.metrics || {};
+    const gColor = (g) => g >= 0.6 ? 'color:#22c55e' : 'color:#8b97a7';
     html += `<tr>
       <td>${r.date}</td>
       <td class="zone-cell zone-${r.zone}">${(ZONE_LABEL[r.zone] || r.zone).replace(/^[\u{1F300}-\u{1FAFF}]\s*/u, "")}</td>
@@ -290,6 +331,7 @@ function renderDailyTable(rows) {
       <td class="right">${m.btc_nupl != null ? (+m.btc_nupl).toFixed(3) : "-"}</td>
       <td class="right">${m.btc_mvrv_z != null ? (+m.btc_mvrv_z).toFixed(2) : "-"}</td>
       <td class="right">${m.fng != null ? m.fng : "-"}</td>
+      ${showGate ? `<td class="right" style="${r.macro_gate_primary != null ? gColor(r.macro_gate_primary) : ''}">${r.macro_gate_primary != null ? (+r.macro_gate_primary).toFixed(2) : '-'}</td><td class="right" style="${r.macro_gate_dd != null ? gColor(r.macro_gate_dd) : ''}">${r.macro_gate_dd != null ? (+r.macro_gate_dd).toFixed(2) : '-'}</td><td class="right" style="color:${r.crash_signal ? '#ff4081' : 'var(--muted)'}">${r.crash_signal ? '★' : '-'}</td>` : ''}
     </tr>`;
   }
   html += "</tbody></table>";
