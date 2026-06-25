@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>📈 MacTrader · Crypto V10 Live</title>
+<title>📈 MacTrader · Crypto V18 Live</title>
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
 <style>
   :root {
@@ -77,7 +77,7 @@
 </head>
 <body>
   <header>
-    <h1>📈 MacTrader · Crypto V10 <small>BTC 사이클 + 매크로 통합 점수</small></h1>
+    <h1>📈 MacTrader · Crypto V18 <small>유포리아+시간차 매도 · 강력매수 max+그룹화</small></h1>
     <div class="status" id="statusBar">
       <span class="muted">데이터 로드 중…</span>
     </div>
@@ -90,8 +90,8 @@
     </div>
 
     <div class="card">
-      <h2>연속 통합 점수 (V10) <span class="muted" style="font-weight:400; font-size:12px;">
-        — 매수 컷 +6.5 · 강력매수 +9.5 · 매도 컷 −6.0 · 강력매도 −9.0 · 매크로가산(달러±NL±crash) 직접 포함
+      <h2>연속 통합 점수 (V18) <span class="muted" style="font-weight:400; font-size:12px;">
+        — 매수 컷 +6.5 · 강력매수 +9.5 · 매도 컷 −6.0 · 강력매도 −9.0 · 유포리아 매도 임계 −4.5
       </span></h2>
       <div id="scoreChart"></div>
     </div>
@@ -168,21 +168,24 @@ function renderStatus(latest) {
   const el = document.getElementById("statusBar");
   if (!latest) { el.innerHTML = '<span class="muted">데이터 없음</span>'; return; }
   const zone = latest.zone || "HOLD";
-  // V10: 매크로 신호 직접 표시 (게이트 배수 개념 제거)
-  const hasMacroV10 = (
-    latest.dollar_tailwind !== undefined ||
-    latest.nl_expanding   !== undefined ||
-    latest.hw_acute       !== undefined ||
-    latest.crash_signal   !== undefined
-  );
-  const tick = (v) => v ? '<b style="color:#22c55e">✓</b>' : '<span style="color:#8b97a7">✗</span>';
+  // V18: score_v18 우선, 유포리아 및 V18 신호 표시
+  const sc = latest.score_v18 != null ? latest.score_v18 : latest.score;
+  const eu = latest.euphoria_v18;
+  // 유포리아: 높을수록 더 과열 → 매도 임계 접근 경보 (임계 이상이면 빨강)
+  const euTag = eu != null
+    ? `<span title="유포리아 (매도 임계 ≥4.5)" style="color:${eu>=4.5?'#ef4444':eu>=3?'#f59e0b':'#8b97a7'}"><span class="muted">유포리아</span> ${eu>=0?'+':''}${eu.toFixed(1)}</span>`
+    : '';
+  const sellTag = latest.sell_signal_v18 ? '<span style="color:#ef4444">🔻매도신호</span>' : '';
+  const sbTag   = latest.strong_buy_v18  ? '<span style="color:#fbbf24">★강력매수</span>' : '';
   el.innerHTML = `
     <span class="pill zone-${zone}">${ZONE_LABEL[zone] || zone}</span>
-    <span><span class="muted">점수</span> <b>${latest.score >= 0 ? "+" : ""}${(+latest.score).toFixed(1)}</b></span>
+    <span><span class="muted">점수(V18)</span> <b>${sc >= 0 ? "+" : ""}${(+sc).toFixed(1)}</b></span>
     <span><span class="muted">BTC</span> ${fmtKRW(latest.btc_krw)} KRW</span>
     <span><span class="muted">ETH</span> ${fmtKRW(latest.eth_krw)} KRW</span>
+    ${euTag}
+    ${sellTag}
+    ${sbTag}
     <span class="muted">📅 ${latest.zone_since} 시작 (${latest.zone_days}일째)</span>
-    ${hasMacroV10 ? `<span title="V10 매크로 신호 (점수에 직접 반영)"><span class="muted">달러약세</span> ${tick(latest.dollar_tailwind)} <span class="muted">NL확장</span> ${tick(latest.nl_expanding)}${latest.hw_acute ? ' <span style="color:#ef4444">⚠️급달러</span>' : ''}${latest.crash_signal ? ' <span style="color:#ff4081">🚨crash★</span>' : ''}</span>` : ''}
     <span class="muted">· 갱신 ${latest.date}</span>
   `;
 }
@@ -210,11 +213,31 @@ function renderPriceChart(rows) {
     textfont: { size: 10, color: "#e6edf3" },
     hovertemplate: "%{x}<br><b>%{text}</b><extra></extra>",
   };
+  // V18 매도 신호 (빨강 삼각 아래 ▼)
+  const sellDays = rows.filter(r => r.sell_signal_v18);
+  const sellMarker = sellDays.length ? {
+    x: sellDays.map(r => r.date),
+    y: sellDays.map(r => r.btc_krw),
+    mode: "markers", type: "scatter", name: "V18 매도▼",
+    marker: { color: "#ef4444", size: 12, symbol: "triangle-down", line: { color: "#0b0f17", width: 1 } },
+    hovertemplate: "%{x}<br><b>V18 매도 신호</b><extra></extra>",
+  } : null;
+  // V18 강력매수 (노란 별 ★)
+  const sbDays = rows.filter(r => r.strong_buy_v18);
+  const sbMarker = sbDays.length ? {
+    x: sbDays.map(r => r.date),
+    y: sbDays.map(r => r.btc_krw),
+    mode: "markers", type: "scatter", name: "V18 강력매수★",
+    marker: { color: "#fbbf24", size: 14, symbol: "star", line: { color: "#0b0f17", width: 1 } },
+    hovertemplate: "%{x}<br><b>V18 강력매수</b><extra></extra>",
+  } : null;
   const traces = [
     { x, y: btc, name: "BTC (KRW)", type: "scatter", mode: "lines", line: { color: "#f59e0b", width: 2 }, yaxis: "y" },
     { x, y: eth, name: "ETH (KRW)", type: "scatter", mode: "lines", line: { color: "#3b82f6", width: 1.5 }, yaxis: "y2" },
     markers,
-  ];
+    sellMarker,
+    sbMarker,
+  ].filter(Boolean);
   const layout = Object.assign({}, PLOTLY_LAYOUT_BASE, {
     yaxis:  { title: "BTC (KRW)", gridcolor: "#1f2a3a", linecolor: "#1f2a3a", side: "left" },
     yaxis2: { title: "ETH (KRW)", gridcolor: "transparent", linecolor: "#1f2a3a", overlaying: "y", side: "right" },
@@ -226,33 +249,40 @@ function renderPriceChart(rows) {
 
 function renderScoreChart(rows) {
   const x = rows.map(r => r.date);
-  const s = rows.map(r => r.score);
+  // V18 점수 우선, 없으면 구버전 fallback
+  const s = rows.map(r => r.score_v18 != null ? r.score_v18 : r.score);
+  const eu = rows.map(r => r.euphoria_v18 != null ? r.euphoria_v18 : null);
+  const hasEu = eu.some(v => v != null);
 
-  // V10: 매크로 신호 발화 마커 (점수에 직접 반영되므로 별도 라인 불필요)
-  const macroOnDates = rows.filter(r => r.dollar_tailwind || r.nl_expanding);
-  const crashDates   = rows.filter(r => r.crash_signal);
-  const acuteDates   = rows.filter(r => r.hw_acute);
+  const sellDays = rows.filter(r => r.sell_signal_v18);
+  const sbDays   = rows.filter(r => r.strong_buy_v18);
 
   const traces = [
     {
-      x, y: s, name: "통합 점수 (V10)", type: "scatter", mode: "lines",
+      x, y: s, name: "통합 점수 (V18)", type: "scatter", mode: "lines",
       line: { color: "#a855f7", width: 2 },
       fill: "tozeroy", fillcolor: "rgba(168,85,247,0.10)",
       yaxis: "y",
     },
-    crashDates.length ? {
-      x: crashDates.map(r => r.date),
-      y: crashDates.map(r => +r.score),
-      mode: "markers", type: "scatter", name: "crash★",
-      marker: { color: "#ff4081", size: 10, symbol: "star" },
-      hovertemplate: "%{x}<br>crash★ (패닉저점 +3.0)<extra></extra>",
+    hasEu ? {
+      x, y: eu, name: "유포리아 (V18)", type: "scatter", mode: "lines",
+      line: { color: "#ef4444", width: 1.5, dash: "dot" },
+      yaxis: "y2",
+      hovertemplate: "%{x}<br>유포리아 %{y:.2f}<extra></extra>",
     } : null,
-    acuteDates.length ? {
-      x: acuteDates.map(r => r.date),
-      y: acuteDates.map(r => +r.score),
-      mode: "markers", type: "scatter", name: "급달러⚠️",
-      marker: { color: "#ef4444", size: 9, symbol: "x" },
-      hovertemplate: "%{x}<br>급달러경보 (-2.0)<extra></extra>",
+    sellDays.length ? {
+      x: sellDays.map(r => r.date),
+      y: sellDays.map(r => +(r.score_v18 != null ? r.score_v18 : r.score)),
+      mode: "markers", type: "scatter", name: "V18 매도▼",
+      marker: { color: "#ef4444", size: 10, symbol: "triangle-down" },
+      hovertemplate: "%{x}<br>V18 매도 신호<extra></extra>",
+    } : null,
+    sbDays.length ? {
+      x: sbDays.map(r => r.date),
+      y: sbDays.map(r => +(r.score_v18 != null ? r.score_v18 : r.score)),
+      mode: "markers", type: "scatter", name: "V18 강력매수★",
+      marker: { color: "#fbbf24", size: 12, symbol: "star" },
+      hovertemplate: "%{x}<br>V18 강력매수<extra></extra>",
     } : null,
   ].filter(Boolean);
   const shapes = [
@@ -261,6 +291,8 @@ function renderScoreChart(rows) {
     { type: "line", xref: "paper", yref: "y", x0: 0, x1: 1, y0: 0,            y1: 0,            line: { color: "#8b97a7", width: 1 } },
     { type: "line", xref: "paper", yref: "y", x0: 0, x1: 1, y0: CFG.SELL_ON,  y1: CFG.SELL_ON,  line: { color: "#f59e0b", width: 1, dash: "dot" } },
     { type: "line", xref: "paper", yref: "y", x0: 0, x1: 1, y0: CFG.SSELL_ON, y1: CFG.SSELL_ON, line: { color: "#ef4444", width: 1, dash: "dash" } },
+    // V18 유포리아 매도 임계 (y2 축)
+    { type: "line", xref: "paper", yref: "y2", x0: 0, x1: 1, y0: 4.5, y1: 4.5, line: { color: "#ef4444", width: 1, dash: "dash" } },
   ];
   const annotations = [
     { xref: "paper", yref: "y", x: 1.01, y: CFG.SBUY_ON,  text: "+9.5", showarrow: false, font: { color: "#22c55e", size: 10 } },
@@ -270,6 +302,7 @@ function renderScoreChart(rows) {
   ];
   const layout = Object.assign({}, PLOTLY_LAYOUT_BASE, {
     yaxis:  { title: "점수", gridcolor: "#1f2a3a", linecolor: "#1f2a3a", range: [-13, 13] },
+    yaxis2: { title: "유포리아", gridcolor: "transparent", linecolor: "#1f2a3a", overlaying: "y", side: "right", range: [-6, 8] },
     shapes: shapes,
     annotations: annotations,
   });
@@ -285,12 +318,13 @@ function renderSignalLog(rows) {
     el.innerHTML = '<div class="empty">아직 zone 변경 이벤트 없음. 데이터가 누적되면 여기 표시됩니다.</div>';
     return;
   }
-  let html = '<table><thead><tr><th>날짜</th><th>Zone</th><th class="right">점수</th><th class="right">BTC</th><th class="right">ETH</th><th>비고</th></tr></thead><tbody>';
+  let html = '<table><thead><tr><th>날짜</th><th>Zone</th><th class="right">V18점수</th><th class="right">BTC</th><th class="right">ETH</th><th>비고</th></tr></thead><tbody>';
   for (const r of changes) {
+    const sc = r.score_v18 != null ? r.score_v18 : r.score;
     html += `<tr>
       <td>${r.date}</td>
       <td class="zone-cell zone-${r.zone}">${ZONE_LABEL[r.zone] || r.zone}</td>
-      <td class="right">${r.score >= 0 ? "+" : ""}${(+r.score).toFixed(1)}</td>
+      <td class="right">${sc >= 0 ? "+" : ""}${(+sc).toFixed(1)}</td>
       <td class="right">${fmtKRW(r.btc_krw)}</td>
       <td class="right">${fmtKRW(r.eth_krw)}</td>
       <td class="muted">${r.allocation || (r.gate || "-")}</td>
@@ -304,34 +338,36 @@ function renderDailyTable(rows) {
   const recent = rows.slice(-30).reverse();
   const el = document.getElementById("dailyTable");
   if (!recent.length) { el.innerHTML = '<div class="empty">데이터 없음</div>'; return; }
-  // V10: 매크로 신호 컬럼 (게이트 배수 컬럼 제거)
-  const showMacro = recent.some(r =>
-    r.dollar_tailwind !== undefined || r.nl_expanding !== undefined ||
-    r.hw_acute !== undefined || r.crash_signal !== undefined
-  );
+  // V18: 유포리아 / 매도 / 강력매수 컬럼
   let html = '<table><thead><tr>' +
-    '<th>날짜</th><th>Zone</th><th class="right">점수</th>' +
+    '<th>날짜</th><th>Zone</th>' +
+    '<th class="right">V18점수</th>' +
     '<th class="right">BTC</th><th class="right">ETH</th>' +
     '<th class="right">NUPL</th><th class="right">MVRVz</th><th class="right">F&G</th>' +
-    (showMacro ? '<th class="right" title="DXY < 100일선">달러약세</th><th class="right" title="Net Liq > 6개월추세">NL확장</th><th class="right" title="DXY 60일 +4% 급등">급달러</th><th class="right" title="30일 -45% 급락 & value 반등">crash★</th>' : '') +
+    '<th class="right" title="유포리아 (≥4.5이면 매도구간)">유포리아</th>' +
+    '<th class="right" title="V18 매도 신호">매도</th>' +
+    '<th class="right" title="V18 강력매수">★</th>' +
     '</tr></thead><tbody>';
-  const tickCell = (v, color) => v === true || v === 1
-    ? `<td class="right" style="color:${color}"><b>✓</b></td>`
-    : v === false || v === 0
-      ? '<td class="right" style="color:#8b97a7">✗</td>'
-      : '<td class="right muted">-</td>';
+  const boolCell = (v, label, color) => v === true
+    ? `<td class="right" style="color:${color}"><b>${label}</b></td>`
+    : '<td class="right muted">·</td>';
   for (const r of recent) {
     const m = r.metrics || {};
+    const sc = r.score_v18 != null ? r.score_v18 : r.score;
+    const eu = r.euphoria_v18;
+    const euColor = eu != null && eu >= 4.5 ? '#ef4444' : (eu != null && eu >= 3 ? '#f59e0b' : '#e6edf3');
     html += `<tr>
       <td>${r.date}</td>
       <td class="zone-cell zone-${r.zone}">${(ZONE_LABEL[r.zone] || r.zone).replace(/^[\u{1F300}-\u{1FAFF}]\s*/u, "")}</td>
-      <td class="right">${r.score >= 0 ? "+" : ""}${(+r.score).toFixed(1)}</td>
+      <td class="right">${sc >= 0 ? "+" : ""}${(+sc).toFixed(1)}</td>
       <td class="right">${fmtKRW(r.btc_krw)}</td>
       <td class="right">${fmtKRW(r.eth_krw)}</td>
       <td class="right">${m.btc_nupl != null ? (+m.btc_nupl).toFixed(3) : "-"}</td>
       <td class="right">${m.btc_mvrv_z != null ? (+m.btc_mvrv_z).toFixed(2) : "-"}</td>
       <td class="right">${m.fng != null ? m.fng : "-"}</td>
-      ${showMacro ? `${tickCell(r.dollar_tailwind, '#22c55e')}${tickCell(r.nl_expanding, '#22c55e')}${tickCell(r.hw_acute, '#ef4444')}${tickCell(r.crash_signal, '#ff4081')}` : ''}
+      <td class="right" style="color:${euColor}">${eu != null ? ((eu>=0?'+':'') + eu.toFixed(1)) : "-"}</td>
+      ${boolCell(r.sell_signal_v18, '▼', '#ef4444')}
+      ${boolCell(r.strong_buy_v18,  '★', '#fbbf24')}
     </tr>`;
   }
   html += "</tbody></table>";
