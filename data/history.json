@@ -18,7 +18,11 @@
       "puell": 0.8,
       "mayer": 0.92,
       "fng": 23
-    }
+    },
+    "macro_gate_primary": 0.6,
+    "macro_gate_dd": 0.6,
+    "crash_signal": 0,
+    "gate_v9": "V9-ON (0.60)"
   },
   {
     "date": "2026-05-31",
@@ -39,7 +43,11 @@
       "puell": 0.8,
       "mayer": 0.93,
       "fng": 28
-    }
+    },
+    "macro_gate_primary": 0.6,
+    "macro_gate_dd": 0.6,
+    "crash_signal": 0,
+    "gate_v9": "V9-ON (0.60)"
   },
   {
     "date": "2026-06-01",
@@ -60,7 +68,11 @@
       "puell": 0.8,
       "mayer": 0.92,
       "fng": 29
-    }
+    },
+    "macro_gate_primary": 0.6,
+    "macro_gate_dd": 0.6,
+    "crash_signal": 0,
+    "gate_v9": "V9-ON (0.60)"
   },
   {
     "date": "2026-06-02",
@@ -81,7 +93,11 @@
       "puell": 0.75,
       "mayer": 0.87,
       "fng": 23
-    }
+    },
+    "macro_gate_primary": 0.6,
+    "macro_gate_dd": 0.6,
+    "crash_signal": 0,
+    "gate_v9": "V9-ON (0.60)"
   },
   {
     "date": "2026-06-03",
@@ -102,7 +118,11 @@
       "puell": 0.73,
       "mayer": 0.84,
       "fng": 11
-    }
+    },
+    "macro_gate_primary": 0.6,
+    "macro_gate_dd": 0.6,
+    "crash_signal": 0,
+    "gate_v9": "V9-ON (0.60)"
   },
   {
     "date": "2026-06-04",
@@ -123,7 +143,11 @@
       "puell": 0.7,
       "mayer": 0.82,
       "fng": 12
-    }
+    },
+    "macro_gate_primary": 0.6,
+    "macro_gate_dd": 0.6,
+    "crash_signal": 0,
+    "gate_v9": "V9-ON (0.60)"
   },
   {
     "date": "2026-06-05",
@@ -144,7 +168,11 @@
       "puell": 0.7,
       "mayer": 0.82,
       "fng": 12
-    }
+    },
+    "macro_gate_primary": 0.6,
+    "macro_gate_dd": 0.6,
+    "crash_signal": 0,
+    "gate_v9": "V9-ON (0.60)"
   },
   {
     "date": "2026-06-06",
@@ -165,7 +193,11 @@
       "puell": 0.69,
       "mayer": 0.8,
       "fng": 12
-    }
+    },
+    "macro_gate_primary": 0.6,
+    "macro_gate_dd": 0.6,
+    "crash_signal": 0,
+    "gate_v9": "V9-ON (0.60)"
   },
   {
     "date": "2026-06-07",
@@ -186,7 +218,11 @@
       "puell": 0.68,
       "mayer": 0.8,
       "fng": 12
-    }
+    },
+    "macro_gate_primary": 0.6,
+    "macro_gate_dd": 0.6,
+    "crash_signal": 0,
+    "gate_v9": "V9-ON (0.60)"
   },
   {
     "date": "2026-06-08",
@@ -207,7 +243,11 @@
       "puell": 0.71,
       "mayer": 0.82,
       "fng": 8
-    }
+    },
+    "macro_gate_primary": 0.6,
+    "macro_gate_dd": 0.6,
+    "crash_signal": 0,
+    "gate_v9": "V9-ON (0.60)"
   },
   {
     "date": "2026-06-09",
@@ -228,7 +268,11 @@
       "puell": 0.7,
       "mayer": 0.82,
       "fng": 10
-    }
+    },
+    "macro_gate_primary": 0.6,
+    "macro_gate_dd": 0.6,
+    "crash_signal": 0,
+    "gate_v9": "V9-ON (0.60)"
   },
   {
     "date": "2026-06-10",
@@ -249,7 +293,11 @@
       "puell": 0.69,
       "mayer": 0.8,
       "fng": 9
-    }
+    },
+    "macro_gate_primary": 0.6,
+    "macro_gate_dd": 0.6,
+    "crash_signal": 0,
+    "gate_v9": "V9-ON (0.60)"
   },
   {
     "date": "2026-06-11",
@@ -270,7 +318,11 @@
       "puell": 0.69,
       "mayer": 0.8,
       "fng": 12
-    }
+    },
+    "macro_gate_primary": 0.6,
+    "macro_gate_dd": 0.6,
+    "crash_signal": 0,
+    "gate_v9": "V9-ON (0.60)"
   },
   {
     "date": "2026-06-12",
@@ -291,7 +343,11 @@
       "puell": 0.71,
       "mayer": 0.83,
       "fng": 12
-    }
+    },
+    "macro_gate_primary": 0.6,
+    "macro_gate_dd": 0.6,
+    "crash_signal": 0,
+    "gate_v9": "V9-ON (0.60)"
   },
   {
     "date": "2026-06-13",
@@ -312,7 +368,11 @@
       "puell": 0.71,
       "mayer": 0.83,
       "fng": 13
-    }
+    },
+    "macro_gate_primary": 0.6,
+    "macro_gate_dd": 0.6,
+    "crash_signal": 0,
+    "gate_v9": "V9-ON (0.60)"
   },
   {
     "date": "2026-06-14",
@@ -333,7 +393,11 @@
       "puell": 0.73,
       "mayer": 0.85,
       "fng": 18
-    }
+    },
+    "macro_gate_primary": 0.6,
+    "macro_gate_dd": 0.6,
+    "crash_signal": 0,
+    "gate_v9": "V9-ON (0.60)"
   },
   {
     "date": "2026-06-15",
@@ -354,7 +418,11 @@
       "puell": 0.74,
       "mayer": 0.86,
       "fng": 20
-    }
+    },
+    "macro_gate_primary": 0.6,
+    "macro_gate_dd": 0.6,
+    "crash_signal": 0,
+    "gate_v9": "V9-ON (0.60)"
   },
   {
     "date": "2026-06-16",
@@ -375,7 +443,11 @@
       "puell": 0.74,
       "mayer": 0.87,
       "fng": 23
-    }
+    },
+    "macro_gate_primary": 0.6,
+    "macro_gate_dd": 0.6,
+    "crash_signal": 0,
+    "gate_v9": "V9-ON (0.60)"
   },
   {
     "date": "2026-06-17",
@@ -396,7 +468,11 @@
       "puell": 0.74,
       "mayer": 0.86,
       "fng": 22
-    }
+    },
+    "macro_gate_primary": 0.6,
+    "macro_gate_dd": 0.6,
+    "crash_signal": 0,
+    "gate_v9": "V9-ON (0.60)"
   },
   {
     "date": "2026-06-18",
@@ -417,7 +493,11 @@
       "puell": 0.73,
       "mayer": 0.85,
       "fng": 15
-    }
+    },
+    "macro_gate_primary": 0.6,
+    "macro_gate_dd": 0.6,
+    "crash_signal": 0,
+    "gate_v9": "V9-ON (0.60)"
   },
   {
     "date": "2026-06-19",
@@ -438,7 +518,11 @@
       "puell": 0.71,
       "mayer": 0.83,
       "fng": 14
-    }
+    },
+    "macro_gate_primary": 0.6,
+    "macro_gate_dd": 0.6,
+    "crash_signal": 0,
+    "gate_v9": "V9-ON (0.60)"
   },
   {
     "date": "2026-06-20",
@@ -459,7 +543,11 @@
       "puell": 0.72,
       "mayer": 0.84,
       "fng": 23
-    }
+    },
+    "macro_gate_primary": 0.6,
+    "macro_gate_dd": 0.6,
+    "crash_signal": 0,
+    "gate_v9": "V9-ON (0.60)"
   },
   {
     "date": "2026-06-21",
@@ -480,7 +568,11 @@
       "puell": 0.73,
       "mayer": 0.85,
       "fng": 23
-    }
+    },
+    "macro_gate_primary": 0.6,
+    "macro_gate_dd": 0.6,
+    "crash_signal": 0,
+    "gate_v9": "V9-ON (0.60)"
   },
   {
     "date": "2026-06-22",
@@ -501,7 +593,11 @@
       "puell": 0.72,
       "mayer": 0.84,
       "fng": 20
-    }
+    },
+    "macro_gate_primary": 0.6,
+    "macro_gate_dd": 0.6,
+    "crash_signal": 0,
+    "gate_v9": "V9-ON (0.60)"
   },
   {
     "date": "2026-06-23",
@@ -522,7 +618,11 @@
       "puell": 0.73,
       "mayer": 0.85,
       "fng": 23
-    }
+    },
+    "macro_gate_primary": 0.6,
+    "macro_gate_dd": 0.6,
+    "crash_signal": 0,
+    "gate_v9": "V9-ON (0.60)"
   },
   {
     "date": "2026-06-24",
@@ -543,7 +643,11 @@
       "puell": 0.71,
       "mayer": 0.83,
       "fng": 17
-    }
+    },
+    "macro_gate_primary": 0.6,
+    "macro_gate_dd": 0.6,
+    "crash_signal": 0,
+    "gate_v9": "V9-ON (0.60)"
   },
   {
     "date": "2026-06-25",
@@ -564,6 +668,10 @@
       "puell": 0.7,
       "mayer": 0.82,
       "fng": 12
-    }
+    },
+    "macro_gate_primary": 0.6,
+    "macro_gate_dd": 0.6,
+    "crash_signal": 0,
+    "gate_v9": "V9-ON (0.60)"
   }
 ]
