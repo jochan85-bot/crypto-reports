@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>📈 MacTrader · Crypto V9 Live</title>
+<title>📈 MacTrader · Crypto V10 Live</title>
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
 <style>
   :root {
@@ -77,7 +77,7 @@
 </head>
 <body>
   <header>
-    <h1>📈 MacTrader · Crypto V9 <small>BTC 사이클 기준 통합 시그널</small></h1>
+    <h1>📈 MacTrader · Crypto V10 <small>BTC 사이클 + 매크로 통합 점수</small></h1>
     <div class="status" id="statusBar">
       <span class="muted">데이터 로드 중…</span>
     </div>
@@ -90,8 +90,8 @@
     </div>
 
     <div class="card">
-      <h2>연속 통합 점수 (V9) <span class="muted" style="font-weight:400; font-size:12px;">
-        — 매수 컷 +6.5 · 강력매수 +9.5 · 매도 컷 −6.0 · 강력매도 −9.0
+      <h2>연속 통합 점수 (V10) <span class="muted" style="font-weight:400; font-size:12px;">
+        — 매수 컷 +6.5 · 강력매수 +9.5 · 매도 컷 −6.0 · 강력매도 −9.0 · 매크로가산(달러±NL±crash) 직접 포함
       </span></h2>
       <div id="scoreChart"></div>
     </div>
@@ -168,13 +168,21 @@ function renderStatus(latest) {
   const el = document.getElementById("statusBar");
   if (!latest) { el.innerHTML = '<span class="muted">데이터 없음</span>'; return; }
   const zone = latest.zone || "HOLD";
+  // V10: 매크로 신호 직접 표시 (게이트 배수 개념 제거)
+  const hasMacroV10 = (
+    latest.dollar_tailwind !== undefined ||
+    latest.nl_expanding   !== undefined ||
+    latest.hw_acute       !== undefined ||
+    latest.crash_signal   !== undefined
+  );
+  const tick = (v) => v ? '<b style="color:#22c55e">✓</b>' : '<span style="color:#8b97a7">✗</span>';
   el.innerHTML = `
     <span class="pill zone-${zone}">${ZONE_LABEL[zone] || zone}</span>
     <span><span class="muted">점수</span> <b>${latest.score >= 0 ? "+" : ""}${(+latest.score).toFixed(1)}</b></span>
     <span><span class="muted">BTC</span> ${fmtKRW(latest.btc_krw)} KRW</span>
     <span><span class="muted">ETH</span> ${fmtKRW(latest.eth_krw)} KRW</span>
     <span class="muted">📅 ${latest.zone_since} 시작 (${latest.zone_days}일째)</span>
-    ${latest.macro_gate_primary != null ? `<span title="V9 매크로 게이트"><span class="muted">현물</span> <b style="color:${latest.macro_gate_primary>=0.6?'#22c55e':'#8b97a7'}">${(+latest.macro_gate_primary).toFixed(2)}</b> <span class="muted">레버</span> <b style="color:${latest.macro_gate_dd>=0.6?'#22c55e':'#8b97a7'}">${(+latest.macro_gate_dd).toFixed(2)}</b>${latest.crash_signal ? ' <span style="color:#ff4081">🚨crash★</span>' : ''}</span>` : ''}
+    ${hasMacroV10 ? `<span title="V10 매크로 신호 (점수에 직접 반영)"><span class="muted">달러약세</span> ${tick(latest.dollar_tailwind)} <span class="muted">NL확장</span> ${tick(latest.nl_expanding)}${latest.hw_acute ? ' <span style="color:#ef4444">⚠️급달러</span>' : ''}${latest.crash_signal ? ' <span style="color:#ff4081">🚨crash★</span>' : ''}</span>` : ''}
     <span class="muted">· 갱신 ${latest.date}</span>
   `;
 }
@@ -220,35 +228,33 @@ function renderScoreChart(rows) {
   const x = rows.map(r => r.date);
   const s = rows.map(r => r.score);
 
-  // V9 게이트 데이터
-  const gp  = rows.map(r => r.macro_gate_primary != null ? +r.macro_gate_primary : null);
-  const gdd = rows.map(r => r.macro_gate_dd      != null ? +r.macro_gate_dd      : null);
-  const cr  = rows.map(r => r.crash_signal ? 0 : null);  // crash 발화 마커용
-  const hasGate = gp.some(v => v != null);
+  // V10: 매크로 신호 발화 마커 (점수에 직접 반영되므로 별도 라인 불필요)
+  const macroOnDates = rows.filter(r => r.dollar_tailwind || r.nl_expanding);
+  const crashDates   = rows.filter(r => r.crash_signal);
+  const acuteDates   = rows.filter(r => r.hw_acute);
 
   const traces = [
     {
-      x, y: s, name: "통합 점수", type: "scatter", mode: "lines",
+      x, y: s, name: "통합 점수 (V10)", type: "scatter", mode: "lines",
       line: { color: "#a855f7", width: 2 },
       fill: "tozeroy", fillcolor: "rgba(168,85,247,0.10)",
       yaxis: "y",
     },
-    ...(hasGate ? [
-      {
-        x, y: gp, name: "V9 현물 게이트", type: "scatter", mode: "lines",
-        line: { color: "#22c55e", width: 1.5 },
-        fill: "tozeroy", fillcolor: "rgba(34,197,94,0.08)",
-        yaxis: "y2",
-        hovertemplate: "현물 게이트: %{y:.2f}<extra></extra>",
-      },
-      {
-        x, y: gdd, name: "V9 레버리지 게이트", type: "scatter", mode: "lines",
-        line: { color: "#f59e0b", width: 1.2, dash: "dot" },
-        yaxis: "y2",
-        hovertemplate: "레버 게이트: %{y:.2f}<extra></extra>",
-      },
-    ] : []),
-  ];
+    crashDates.length ? {
+      x: crashDates.map(r => r.date),
+      y: crashDates.map(r => +r.score),
+      mode: "markers", type: "scatter", name: "crash★",
+      marker: { color: "#ff4081", size: 10, symbol: "star" },
+      hovertemplate: "%{x}<br>crash★ (패닉저점 +3.0)<extra></extra>",
+    } : null,
+    acuteDates.length ? {
+      x: acuteDates.map(r => r.date),
+      y: acuteDates.map(r => +r.score),
+      mode: "markers", type: "scatter", name: "급달러⚠️",
+      marker: { color: "#ef4444", size: 9, symbol: "x" },
+      hovertemplate: "%{x}<br>급달러경보 (-2.0)<extra></extra>",
+    } : null,
+  ].filter(Boolean);
   const shapes = [
     { type: "line", xref: "paper", yref: "y", x0: 0, x1: 1, y0: CFG.SBUY_ON,  y1: CFG.SBUY_ON,  line: { color: "#22c55e", width: 1, dash: "dash" } },
     { type: "line", xref: "paper", yref: "y", x0: 0, x1: 1, y0: CFG.BUY_ON,   y1: CFG.BUY_ON,   line: { color: "#86efac", width: 1, dash: "dot" } },
@@ -263,23 +269,9 @@ function renderScoreChart(rows) {
     { xref: "paper", yref: "y", x: 1.01, y: CFG.SSELL_ON, text: "-9.0", showarrow: false, font: { color: "#ef4444", size: 10 } },
   ];
   const layout = Object.assign({}, PLOTLY_LAYOUT_BASE, {
-    yaxis:  { title: "점수", gridcolor: "#1f2a3a", linecolor: "#1f2a3a", range: [-11, 11] },
-    yaxis2: {
-      title: "게이트 (0~1)", overlaying: "y", side: "right",
-      range: [-0.05, 1.3], gridcolor: "transparent", linecolor: "#1f2a3a",
-      showgrid: false, tickformat: ".1f",
-    },
-    shapes: [
-      ...shapes,
-      // FLOOR 0.6 점선 (게이트 패널)
-      { type: "line", xref: "paper", yref: "y2", x0: 0, x1: 1, y0: 0.6, y1: 0.6,
-        line: { color: "#22c55e", width: 1, dash: "dot" } },
-    ],
-    annotations: [
-      ...annotations,
-      { xref: "paper", yref: "y2", x: -0.01, y: 0.6, text: "0.6",
-        showarrow: false, font: { color: "#22c55e", size: 9 }, xanchor: "right" },
-    ],
+    yaxis:  { title: "점수", gridcolor: "#1f2a3a", linecolor: "#1f2a3a", range: [-13, 13] },
+    shapes: shapes,
+    annotations: annotations,
   });
   Plotly.newPlot("scoreChart", traces, layout, {
     responsive: true, displaylogo: false, displayModeBar: false, scrollZoom: true,
@@ -312,16 +304,24 @@ function renderDailyTable(rows) {
   const recent = rows.slice(-30).reverse();
   const el = document.getElementById("dailyTable");
   if (!recent.length) { el.innerHTML = '<div class="empty">데이터 없음</div>'; return; }
-  const showGate = recent.some(r => r.macro_gate_primary != null);
+  // V10: 매크로 신호 컬럼 (게이트 배수 컬럼 제거)
+  const showMacro = recent.some(r =>
+    r.dollar_tailwind !== undefined || r.nl_expanding !== undefined ||
+    r.hw_acute !== undefined || r.crash_signal !== undefined
+  );
   let html = '<table><thead><tr>' +
     '<th>날짜</th><th>Zone</th><th class="right">점수</th>' +
     '<th class="right">BTC</th><th class="right">ETH</th>' +
     '<th class="right">NUPL</th><th class="right">MVRVz</th><th class="right">F&G</th>' +
-    (showGate ? '<th class="right" title="V9 현물 게이트">현물G</th><th class="right" title="V9 레버 게이트">레버G</th><th class="right" title="crash_buyer 발화">crash</th>' : '') +
+    (showMacro ? '<th class="right" title="DXY < 100일선">달러약세</th><th class="right" title="Net Liq > 6개월추세">NL확장</th><th class="right" title="DXY 60일 +4% 급등">급달러</th><th class="right" title="30일 -45% 급락 & value 반등">crash★</th>' : '') +
     '</tr></thead><tbody>';
+  const tickCell = (v, color) => v === true || v === 1
+    ? `<td class="right" style="color:${color}"><b>✓</b></td>`
+    : v === false || v === 0
+      ? '<td class="right" style="color:#8b97a7">✗</td>'
+      : '<td class="right muted">-</td>';
   for (const r of recent) {
     const m = r.metrics || {};
-    const gColor = (g) => g >= 0.6 ? 'color:#22c55e' : 'color:#8b97a7';
     html += `<tr>
       <td>${r.date}</td>
       <td class="zone-cell zone-${r.zone}">${(ZONE_LABEL[r.zone] || r.zone).replace(/^[\u{1F300}-\u{1FAFF}]\s*/u, "")}</td>
@@ -331,7 +331,7 @@ function renderDailyTable(rows) {
       <td class="right">${m.btc_nupl != null ? (+m.btc_nupl).toFixed(3) : "-"}</td>
       <td class="right">${m.btc_mvrv_z != null ? (+m.btc_mvrv_z).toFixed(2) : "-"}</td>
       <td class="right">${m.fng != null ? m.fng : "-"}</td>
-      ${showGate ? `<td class="right" style="${r.macro_gate_primary != null ? gColor(r.macro_gate_primary) : ''}">${r.macro_gate_primary != null ? (+r.macro_gate_primary).toFixed(2) : '-'}</td><td class="right" style="${r.macro_gate_dd != null ? gColor(r.macro_gate_dd) : ''}">${r.macro_gate_dd != null ? (+r.macro_gate_dd).toFixed(2) : '-'}</td><td class="right" style="color:${r.crash_signal ? '#ff4081' : 'var(--muted)'}">${r.crash_signal ? '★' : '-'}</td>` : ''}
+      ${showMacro ? `${tickCell(r.dollar_tailwind, '#22c55e')}${tickCell(r.nl_expanding, '#22c55e')}${tickCell(r.hw_acute, '#ef4444')}${tickCell(r.crash_signal, '#ff4081')}` : ''}
     </tr>`;
   }
   html += "</tbody></table>";
