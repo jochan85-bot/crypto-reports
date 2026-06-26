@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>📖 MacTrader Crypto V18 — 가이드</title>
+<style>
+  :root {
+    --bg: #0b0f17; --panel: #131a26; --border: #1f2a3a;
+    --text: #e6edf3; --muted: #8b97a7;
+    --green: #22c55e; --red: #ef4444; --blue: #3b82f6;
+    --amber: #f59e0b; --purple: #a855f7;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Pretendard",
+                 "Apple SD Gothic Neo", Helvetica, Arial, sans-serif;
+    font-size: 15px; line-height: 1.7;
+  }
+  a { color: var(--blue); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ── 헤더 ── */
+  header {
+    padding: 14px 20px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    position: sticky; top: 0; z-index: 100; background: var(--bg);
+  }
+  header h1 { margin: 0; font-size: 16px; font-weight: 600; }
+  header h1 small { color: var(--muted); font-size: 12px; font-weight: 400; margin-left: 8px; }
+  .back-btn {
+    padding: 5px 14px; border-radius: 999px;
+    border: 1px solid var(--border); background: var(--panel);
+    color: var(--muted); font-size: 13px; cursor: pointer;
+    white-space: nowrap; text-decoration: none;
+    transition: border-color .15s, color .15s;
+  }
+  .back-btn:hover { border-color: var(--blue); color: var(--text); text-decoration: none; }
+
+  /* ── 레이아웃 ── */
+  .container {
+    max-width: 800px; margin: 0 auto;
+    padding: 28px 20px 60px;
+  }
+
+  /* ── TOC ── */
+  .toc {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 20px; margin-bottom: 32px;
+  }
+  .toc-title { font-size: 12px; color: var(--muted); font-weight: 600;
+    text-transform: uppercase; letter-spacing: .06em; margin-bottom: 10px; }
+  .toc-list { display: flex; flex-wrap: wrap; gap: 6px 0; }
+  .toc-list a {
+    display: inline-block; padding: 3px 12px 3px 0;
+    color: var(--blue); font-size: 13px;
+  }
+  .toc-list a::before { content: "·  "; color: var(--border); }
+
+  /* ── 섹션 ── */
+  .section { margin-bottom: 40px; }
+  h2 {
+    font-size: 18px; font-weight: 700; margin: 0 0 4px;
+    padding-bottom: 10px; border-bottom: 1px solid var(--border);
+    scroll-margin-top: 70px;
+  }
+  h2 .section-num { color: var(--muted); font-size: 13px; font-weight: 400; margin-right: 8px; }
+  h3 { font-size: 15px; font-weight: 600; margin: 22px 0 6px; color: var(--amber); }
+  p { margin: 0 0 12px; color: #c8d4df; }
+  ul { margin: 0 0 12px; padding-left: 20px; color: #c8d4df; }
+  li { margin-bottom: 6px; }
+  code {
+    background: rgba(255,255,255,.08); border-radius: 4px;
+    padding: 2px 6px; font-family: "SF Mono", "Fira Code", monospace; font-size: 13px;
+  }
+  .highlight {
+    background: rgba(168,85,247,.1); border-left: 3px solid var(--purple);
+    padding: 10px 14px; border-radius: 4px; margin: 12px 0;
+    font-size: 14px; color: var(--text);
+  }
+  .highlight.green { background: rgba(34,197,94,.1); border-color: var(--green); }
+  .highlight.red   { background: rgba(239,68,68,.1);  border-color: var(--red); }
+  .highlight.amber { background: rgba(245,158,11,.1); border-color: var(--amber); }
+
+  /* ── 태그 ── */
+  .tag {
+    display: inline-block; padding: 2px 9px; border-radius: 999px;
+    font-size: 11px; font-weight: 600; vertical-align: middle; margin-right: 6px;
+  }
+  .tag-buy  { background: rgba(34,197,94,.2);  color: #4ade80; }
+  .tag-sell { background: rgba(239,68,68,.2);  color: #fca5a5; }
+  .tag-hold { background: rgba(139,151,167,.2); color: #8b97a7; }
+  .tag-data { background: rgba(59,130,246,.2); color: #93c5fd; }
+
+  /* ── 신호 카드 ── */
+  .signal-card {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 18px; margin-bottom: 14px;
+  }
+  .signal-card h3 { margin: 0 0 8px; color: var(--text); }
+  .signal-card .cond { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+  .signal-card ul { margin: 0; }
+
+  /* ── Zone 표 ── */
+  .zone-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .zone-table th, .zone-table td {
+    padding: 9px 12px; border-bottom: 1px solid var(--border);
+    text-align: left; vertical-align: top;
+  }
+  .zone-table th { color: var(--muted); font-weight: 500;
+    font-size: 11px; text-transform: uppercase; letter-spacing: .05em; }
+  .zone-table td:first-child { font-weight: 600; white-space: nowrap; }
+
+  /* ── 지표 그리드 ── */
+  .indicator-grid {
+    display: grid; gap: 14px;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  }
+  .indicator-card {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 18px;
+  }
+  .indicator-card h3 { margin: 0 0 6px; font-size: 14px; color: var(--text); }
+  .indicator-card .formula { font-size: 12px; font-family: monospace;
+    color: var(--muted); margin-bottom: 10px; }
+  .indicator-card ul { margin: 0; font-size: 13px; }
+
+  /* ── FAQ ── */
+  .faq-item { margin-bottom: 20px; }
+  .faq-q { font-weight: 600; color: var(--text); margin-bottom: 6px; }
+  .faq-a { color: #c8d4df; font-size: 14px; }
+
+  /* ── 푸터 ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 20px; text-align: center;
+    color: var(--muted); font-size: 12px;
+  }
+
+  /* ── 모바일 ── */
+  @media (max-width: 600px) {
+    .container { padding: 20px 16px 50px; }
+    .indicator-grid { grid-template-columns: 1fr; }
+    h2 { font-size: 16px; }
+    .zone-table { font-size: 12px; }
+    .zone-table th, .zone-table td { padding: 7px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📖 V18 가이드 <small>MacTrader · Crypto</small></h1>
+  <a class="back-btn" href="index.html">← 대시보드</a>
+</header>
+
+<div class="container">
+
+  <!-- TOC -->
+  <div class="toc">
+    <div class="toc-title">목차</div>
+    <div class="toc-list">
+      <a href="#overview">시스템 개요</a>
+      <a href="#indicators">온체인 지표 4종</a>
+      <a href="#buy-core">통합 점수</a>
+      <a href="#signals">3대 신호</a>
+      <a href="#zone">Zone 판정</a>
+      <a href="#chart">차트 읽기</a>
+      <a href="#data">데이터 소스</a>
+      <a href="#faq">FAQ</a>
+    </div>
+  </div>
+
+  <!-- 1. 개요 -->
+  <div class="section" id="overview">
+    <h2><span class="section-num">01</span>시스템 개요</h2>
+    <p>
+      <strong>MacTrader Crypto V18</strong>은 BTC 사이클 위치를 온체인 지표 4종 + 매크로로 판단해
+      <strong>매수 / 강력매수 / 매도</strong> 3가지 에피소드 신호를 내는 시스템입니다.
+      레버리지 진입·청산 타이밍이 아닌 <em>사이클 사이즈</em> 판단용입니다.
+    </p>
+    <ul>
+      <li>매일 <strong>09:00 KST</strong> 자동 실행 (크론)</li>
+      <li>모든 신호는 <strong>60일 에피소드 그룹화</strong> — 단기 노이즈 제거</li>
+      <li>온체인 분포: CoinMetrics 2011년~현재 (PIT 백분위 기준)</li>
+      <li>일별 지표: bitcoin-data.com (NUPL·MVRV-Z), Upbit (가격), 자체 계산 (Puell·Mayer)</li>
+    </ul>
+    <div class="highlight">
+      현재(2026-06-26): 🟢 <strong>강력매수</strong> 에피소드 활성 (2026-06-05 시작 · 코어 +8.57)
+    </div>
+  </div>
+
+  <!-- 2. 온체인 지표 -->
+  <div class="section" id="indicators">
+    <h2><span class="section-num">02</span>온체인 지표 4종</h2>
+    <p>4가지 지표 모두 <strong>낮을수록 저평가(매수 우호)</strong>, 높을수록 고평가(매도 우호)입니다.</p>
+
+    <div class="indicator-grid">
+
+      <div class="indicator-card">
+        <h3>① NUPL <span style="color:var(--muted);font-weight:400;font-size:12px;">Net Unrealized Profit/Loss</span></h3>
+        <div class="formula">= (시가총액 − 실현가치) / 시가총액</div>
+        <ul>
+          <li><strong>0.0 이하</strong>: 보유자 전체 손실권 → 역대 바닥 구간</li>
+          <li><strong>0.15~0.25</strong>: 초기 회복 (현재 <strong>0.132</strong>)</li>
+          <li><strong>0.5~0.6</strong>: 강세장 중반</li>
+          <li><strong>0.75 이상</strong>: 심리적 유포리아 → 매도 경보</li>
+        </ul>
+        <div style="margin-top:8px;font-size:12px;color:var(--muted);">
+          V18 가중치: <code>×3</code> (가장 높음)
+        </div>
+      </div>
+
+      <div class="indicator-card">
+        <h3>② MVRV-Z Score</h3>
+        <div class="formula">= (시가총액 − 실현가치) / std(시가총액)</div>
+        <ul>
+          <li><strong>0 이하</strong>: 실현가 이하 거래 → 강한 저평가</li>
+          <li><strong>0~2</strong>: 적정 구간 (현재 <strong>0.33</strong>)</li>
+          <li><strong>4~6</strong>: 과열 경보</li>
+          <li><strong>7 이상</strong>: 역대 버블 정점</li>
+        </ul>
+        <div style="margin-top:8px;font-size:12px;color:var(--muted);">
+          V18 가중치: <code>×3</code> · 유포리아 점수 핵심 입력
+        </div>
+      </div>
+
+      <div class="indicator-card">
+        <h3>③ Puell Multiple</h3>
+        <div class="formula">= 오늘 채굴자 수익 / 365일 평균 채굴자 수익</div>
+        <ul>
+          <li><strong>0.5 이하</strong>: 채굴자 극심한 고통 → 항복 매도 바닥</li>
+          <li><strong>0.5~1.5</strong>: 정상 구간 (현재 <strong>0.69</strong>)</li>
+          <li><strong>3.5 이상</strong>: 채굴자 과잉 수익 → 천장 경보</li>
+        </ul>
+        <div style="margin-top:8px;font-size:12px;color:var(--muted);">
+          V18 가중치: <code>×2</code> · 반감기 직후 낮아짐
+        </div>
+      </div>
+
+      <div class="indicator-card">
+        <h3>④ Mayer Multiple</h3>
+        <div class="formula">= 현재 BTC 가격 / 200일 이동평균</div>
+        <ul>
+          <li><strong>0.8 이하</strong>: 200MA 심하게 하회 → 저평가 (현재 <strong>0.81</strong>)</li>
+          <li><strong>1.0</strong>: 200MA 위</li>
+          <li><strong>2.4 이상</strong>: 역대 과열 구간</li>
+        </ul>
+        <div style="margin-top:8px;font-size:12px;color:var(--muted);">
+          V18 가중치: <code>×1</code> · 유일하게 <strong>매일</strong> 업데이트
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 3. 통합 점수 -->
+  <div class="section" id="buy-core">
+    <h2><span class="section-num">03</span>통합 점수 (buy_core)</h2>
+    <p>4개 지표 각각의 <strong>PIT(Point-in-Time) 백분위</strong>를 가중 합산한 값입니다.</p>
+
+    <h3>계산 방식</h3>
+    <div class="highlight amber">
+      <code>cheap(x) = (0.5 − percentile(x)) × 2</code><br>
+      → 백분위 0% (역대 최저) = <strong>+1.0</strong> / 백분위 100% (역대 최고) = <strong>−1.0</strong>
+    </div>
+    <div class="highlight">
+      <code>buy_core = max(전체역사 기준, 3년창 기준)</code><br>
+      × 가중치 (MVRV×3, NUPL×3, Puell×2, Mayer×1)
+    </div>
+
+    <h3>왜 max(전체역사, 3년창)?</h3>
+    <p>
+      2019년 이후 BTC가 성숙해지면서 지표 분포가 압축됐습니다.
+      전체역사 기준만 쓰면 2022·2026 바닥이 "+4~5"에 머물러 강력매수가 뜨지 않습니다.
+      3년 이내 분포에서도 저점을 체크해 <em>현대 사이클 바닥도 포착</em>하도록 max를 취합니다.
+    </p>
+
+    <h3>점수 해석</h3>
+    <table class="zone-table">
+      <thead><tr><th>범위</th><th>의미</th><th>액션</th></tr></thead>
+      <tbody>
+        <tr><td style="color:#4ade80;">+8.5 이상</td><td>역대 극저평가 구간</td><td>강력매수 에피소드 발화</td></tr>
+        <tr><td style="color:#86efac;">+6.5 이상</td><td>저평가 구간</td><td>분할매수 에피소드 발화</td></tr>
+        <tr><td style="color:#8b97a7;">0 근처</td><td>중립</td><td>관망</td></tr>
+        <tr><td style="color:#fbbf24;">−4.5 이하 (유포리아)</td><td>고평가 1차 조건</td><td>매도 게이트 진입 여부 확인</td></tr>
+        <tr><td style="color:#fca5a5;">−7 이하</td><td>역대 극고평가</td><td>매도 신호 발화 가능성↑</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:10px;font-size:13px;color:var(--muted);">
+      * 유포리아 점수는 buy_core와 별도로 MVRV-Z·NUPL만으로 계산됩니다 (비대칭 설계).
+    </p>
+  </div>
+
+  <!-- 4. 3대 신호 -->
+  <div class="section" id="signals">
+    <h2><span class="section-num">04</span>3대 신호</h2>
+    <p>모든 신호는 <strong>60일 에피소드 그룹화</strong>를 거칩니다. 연속/근접 발화를 1회로 묶어 노이즈를 제거합니다.</p>
+
+    <div class="signal-card">
+      <h3>⭐ 강력매수 (STRONG_BUY)</h3>
+      <div class="cond">조건: buy_core ≥ 8.5 발화 → 이후 60일간 에피소드 활성</div>
+      <ul>
+        <li>역대 발화: 2014·2018·2022·2026 사이클 바닥 (사이클당 1~2회)</li>
+        <li>bc가 8.5 아래로 잠깐 내려가도 에피소드 기간(60일) 내 STRONG_BUY 유지</li>
+        <li>액션: <em>사이클 바닥권 — 적극 분할 진입 검토</em></li>
+        <li>현재 에피소드: 2026-06-05 시작 (8월 4일까지 활성)</li>
+      </ul>
+    </div>
+
+    <div class="signal-card">
+      <h3>▲ 분할매수 (BUY)</h3>
+      <div class="cond">조건: buy_core ≥ 6.5 발화 → 이후 60일간 에피소드 활성 (STRONG_BUY보다 우선순위 낮음)</div>
+      <ul>
+        <li>강력매수보다 넓은 저평가 구간 포착</li>
+        <li>강력매수 에피소드가 활성이면 BUY보다 STRONG_BUY가 표시됨</li>
+        <li>액션: <em>분할 진입 적극 고려</em></li>
+      </ul>
+    </div>
+
+    <div class="signal-card">
+      <h3>▼ 매도 에피소드 (SELL)</h3>
+      <div class="cond">조건: 아래 3가지 동시 충족 → 60일 그룹화</div>
+      <ul>
+        <li><strong>① 유포리아 점수 ≤ −4.5</strong>: MVRV-Z·NUPL이 역대 상위권 (극고평가)</li>
+        <li><strong>② 매크로 게이트</strong>: 달러 긴축(60일 +1.5%↑) 또는 유동성 수축</li>
+        <li><strong>③ 가격 꺾임</strong>: 30일 고점 대비 −8% 이상 하락 (롤오버 확인)</li>
+      </ul>
+      <p style="margin:10px 0 0;font-size:13px;color:var(--muted);">
+        ③이 필요한 이유: 온체인 고평가는 아직 가격이 신고가일 때 켜짐 →
+        가격이 실제로 꺾인 뒤 발화해야 조기매도 억제. 역대 대형 폭락 4/4 포착(2025-10 포함).
+      </p>
+      <div class="highlight red" style="margin-top:10px;">
+        현재 유포리아 +5.42 → 매도 1차 조건(≤ −4.5) 불충족 → 매도 신호 없음
+      </div>
+    </div>
+
+    <div class="signal-card">
+      <h3>🔄 눌림목 신호 (현물 전용)</h3>
+      <div class="cond">독립 신호 — 강력매수/매도와 별개. 레버리지 금지.</div>
+      <ul>
+        <li>buy_core가 <em>얕게 양전(+3.5 미만) → 120일 내 다시 음전</em> 패턴</li>
+        <li>주요 추세 속 단기 눌림 매집 신호</li>
+        <li>진입 후 −12% 손절 (가짜 눌림목 차단)</li>
+        <li>마지막 발화: 2025-10-18</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 5. Zone 판정 -->
+  <div class="section" id="zone">
+    <h2><span class="section-num">05</span>Zone 판정 기준</h2>
+    <p>Zone은 <strong>에피소드 활성 기간 기반</strong>으로 표시됩니다. 에피소드가 시작되면 60일간 해당 Zone 유지 (bc가 잠깐 임계값 아래 내려가도 유지).</p>
+
+    <table class="zone-table">
+      <thead>
+        <tr>
+          <th>Zone</th>
+          <th>조건</th>
+          <th>지속</th>
+          <th>의미</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:#4ade80;">🟢 강력매수</td>
+          <td>강력매수 에피소드 활성</td>
+          <td>시작 후 60일</td>
+          <td>사이클 바닥권</td>
+        </tr>
+        <tr>
+          <td style="color:#86efac;">🟢 분할매수</td>
+          <td>분할매수 에피소드 활성 (강력매수 아닌 경우)</td>
+          <td>시작 후 60일</td>
+          <td>저평가 진입</td>
+        </tr>
+        <tr>
+          <td style="color:#8b97a7;">⚪ 관망</td>
+          <td>활성 에피소드 없음</td>
+          <td>—</td>
+          <td>중립, 대기</td>
+        </tr>
+        <tr>
+          <td style="color:#fbbf24;">🟠 매도</td>
+          <td>매도 에피소드 활성</td>
+          <td>시작 후 60일</td>
+          <td>천장권, 익절 검토</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>2026년 Zone 흐름 요약</h3>
+    <ul>
+      <li>1월: HOLD (buy_core ~4.4, BTC 130만원대 고점)</li>
+      <li>2/1: BUY 에피소드 시작 (bc 6.8, 하락 시작)</li>
+      <li>2/5: STRONG_BUY 에피소드 1 (bc 8.75) → 4/6까지</li>
+      <li>4/7~6/1: HOLD (에피소드 만료)</li>
+      <li>6/3: BUY 에피소드 재진입</li>
+      <li>6/5~현재: <strong>STRONG_BUY 에피소드 2 활성</strong> (8/4까지)</li>
+    </ul>
+  </div>
+
+  <!-- 6. 차트 읽기 -->
+  <div class="section" id="chart">
+    <h2><span class="section-num">06</span>차트 읽기</h2>
+
+    <h3>① 가격 차트 (상단)</h3>
+    <ul>
+      <li>⭐ <strong>노란 별</strong> = 강력매수 에피소드 첫날</li>
+      <li>▲ <strong>초록 삼각</strong> = 분할매수 에피소드 첫날</li>
+      <li>▼ <strong>빨간 역삼각</strong> = 매도 에피소드 첫날</li>
+      <li>◇ <strong>작은 다이아몬드</strong> = Zone 변경일 (레이블 포함)</li>
+    </ul>
+
+    <h3>② V18 점수 차트 (가격 차트 바로 아래, 연동)</h3>
+    <ul>
+      <li>🟣 <strong>보라 면적</strong> = buy_core (통합 점수)</li>
+      <li>🔴 <strong>빨간 점선</strong> = 유포리아 점수 (우측 축)</li>
+      <li><strong>녹색 점선</strong> +8.5 = 강력매수 임계 / +6.5 = 분할매수 임계</li>
+      <li><strong>빨간 점선</strong> −4.5 = 유포리아 매도 임계 (우측 축)</li>
+      <li>두 차트는 x축 연동 — 한쪽 확대/이동 시 양쪽 동기화</li>
+    </ul>
+
+    <h3>③ V18 전체 역사 차트 (2019~)</h3>
+    <ul>
+      <li>CoinMetrics 기반, 2011년 분포 전체 참조</li>
+      <li>역대 강력매수·매도 에피소드 마커 포함</li>
+      <li>가격 차트와 독립 축 (다른 기간 조회 가능)</li>
+    </ul>
+
+    <h3>상태 바 (우측 상단)</h3>
+    <ul>
+      <li><strong>Zone 필</strong>: 현재 에피소드 상태</li>
+      <li><strong>코어</strong>: 오늘 buy_core 값</li>
+      <li><strong>유포리아</strong>: 양수 = 저평가(매도 조건 없음) / 음수 = 고평가</li>
+      <li><strong>BTC/ETH</strong>: Upbit 최신 KRW 가격</li>
+    </ul>
+  </div>
+
+  <!-- 7. 데이터 소스 -->
+  <div class="section" id="data">
+    <h2><span class="section-num">07</span>데이터 소스 &amp; 업데이트</h2>
+    <table class="zone-table">
+      <thead><tr><th>데이터</th><th>소스</th><th>업데이트</th></tr></thead>
+      <tbody>
+        <tr><td>NUPL, MVRV-Z</td><td>bitcoin-data.com</td><td>매일</td></tr>
+        <tr><td>BTC/ETH 가격</td><td>Upbit API</td><td>매일</td></tr>
+        <tr><td>Puell Multiple</td><td>Upbit 가격 + 반감기 스케줄 계산</td><td>매일</td></tr>
+        <tr><td>Mayer Multiple</td><td>Upbit 가격 ÷ 200일MA</td><td>매일</td></tr>
+        <tr><td>Fear &amp; Greed</td><td>alternative.me</td><td>매일</td></tr>
+        <tr><td>온체인 역사 분포</td><td>CoinMetrics (2011~)</td><td>주 1~2회</td></tr>
+        <tr><td>DXY (달러 지수)</td><td>Yahoo Finance (yfinance)</td><td>매일</td></tr>
+        <tr><td>Net Liquidity</td><td>FRED (M2, 연준 데이터)</td><td>주 1회</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:10px;">리포트 생성: 매일 <strong>09:00 KST</strong> · history.json 자동 push</p>
+  </div>
+
+  <!-- 8. FAQ -->
+  <div class="section" id="faq">
+    <h2><span class="section-num">08</span>FAQ</h2>
+
+    <div class="faq-item">
+      <div class="faq-q">Q. buy_core가 날마다 조금씩 다른 이유?</div>
+      <div class="faq-a">Mayer Multiple(200일MA 비율)은 BTC 가격과 함께 매일 바뀝니다. NUPL·MVRV-Z도 bitcoin-data.com에서 일별 업데이트됩니다. 따라서 buy_core는 매일 소폭 변동합니다.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Q. 강력매수인데 BTC가 더 내려갈 수 있나?</div>
+      <div class="faq-a">있습니다. buy_core는 "사이클 저평가 구간"을 나타내지 가격 바닥을 예측하지 않습니다. 실제 바닥보다 수주~수개월 일찍 신호가 켜지기도 합니다. 분할 매집 전략이 권장되는 이유입니다.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Q. 유포리아 점수가 양수인데 매도가 안 뜨는 이유?</div>
+      <div class="faq-a">유포리아 점수가 양수이면 고평가 조건(≤ −4.5) 자체가 성립하지 않아 매도 에피소드가 발화될 수 없습니다. 현재 +5.42는 오히려 "시장이 저평가 상태"임을 의미합니다.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Q. 60일 그룹화란?</div>
+      <div class="faq-a">신호가 연속으로 또는 60일 이내에 다시 발화하면 같은 에피소드로 묶습니다. 예: buy_core가 8.5를 며칠 만에 왔다갔다해도 "강력매수 1회"로 처리됩니다. 역사적으로 매수 24회→12회, 매도 36회→13회로 정리됐습니다.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Q. ETH도 따로 신호가 있나?</div>
+      <div class="faq-a">V18에서 ETH는 BTC 신호의 "확인 도장" 역할만 합니다. 별도 ETH 매수/매도 신호는 없으며, 포트폴리오 배분(ETH/BTC 비율)에 참고됩니다.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Q. 눌림목 신호와 강력매수의 차이?</div>
+      <div class="faq-a">강력매수는 절대 저평가 수준(역대 하위 백분위)으로 판단합니다. 눌림목은 추세 속 단기 조정 패턴(얕게 올랐다 다시 내려오는 패턴)으로 판단합니다. 서로 독립적으로 작동하며 동시에 발화할 수 있습니다.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Q. HOLD인데 가격이 오를 수 있나?</div>
+      <div class="faq-a">당연히 있습니다. V18은 사이클 위치 판단이지 단기 가격 예측이 아닙니다. HOLD는 "온체인 지표상 특별한 저/고평가 신호가 없는 중립 구간"을 의미합니다.</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  MacTrader Crypto V18 · 매일 09:00 KST 자동 갱신 ·
+  <a href="index.html">← 대시보드로 돌아가기</a><br>
+  <span style="color:#444;margin-top:4px;display:block;">투자 판단의 보조 도구이며 수익을 보장하지 않습니다.</span>
+</footer>
+
+</body>
+</html>
