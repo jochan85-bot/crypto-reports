@@ -26,24 +26,36 @@
     font-size: 14px;
   }
   header {
-    padding: 10px 16px; border-bottom: 1px solid var(--border);
-    display: flex; flex-direction: column; gap: 6px;
+    padding: 10px 16px 8px; border-bottom: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 5px;
   }
   .header-top {
     display: flex; justify-content: space-between; align-items: center;
-    gap: 10px; min-width: 0;
+    gap: 8px;
   }
   h1 { margin: 0; font-size: 15px; font-weight: 600;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  h1 small { color: var(--muted); font-weight: 400; margin-left: 6px; font-size: 11px; }
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    min-width: 0; flex: 1; }
+  h1 small { color: var(--muted); font-weight: 400; margin-left: 5px;
+    font-size: 10px; display: none; } /* 모바일에서 숨김 */
+  @media (min-width: 500px) { h1 small { display: inline; font-size: 11px; } }
+  .guide-btn {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 5px 12px; border-radius: 7px; flex-shrink: 0;
+    border: 1px solid rgba(59,130,246,.5);
+    background: rgba(59,130,246,.13);
+    color: #93c5fd !important; font-size: 13px; font-weight: 500;
+    white-space: nowrap; text-decoration: none !important;
+    transition: background .15s, border-color .15s;
+  }
+  .guide-btn:hover { background: rgba(59,130,246,.25); border-color: #3b82f6; color: #bfdbfe !important; }
   .header-status {
-    display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
-    font-size: 12px; padding-top: 2px;
-    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    display: flex; gap: 8px; align-items: center; flex-wrap: nowrap;
+    font-size: 12px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; padding-bottom: 2px;
   }
-  .status {
-    display: contents; /* children flow into .header-status directly */
-  }
+  .header-status::-webkit-scrollbar { display: none; }
+  .status { display: contents; }
   .pill {
     padding: 4px 10px; border-radius: 999px;
     background: var(--panel); border: 1px solid var(--border);
