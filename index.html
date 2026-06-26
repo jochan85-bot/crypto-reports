@@ -73,6 +73,7 @@
   .card h2 { margin: 0 0 10px; font-size: 14px; font-weight: 600; }
   #priceChart, #scoreChartFull, #scoreChartRecent { width: 100%; height: 420px; touch-action: pan-y; }
   #scoreChartFull { height: 420px; }
+  #priceChartFull { width: 100%; height: 200px; touch-action: pan-y; }
   #scoreChartRecent { height: 260px; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
   th, td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
@@ -129,6 +130,7 @@
         — buy_core(통합점수) · 유포리아 · 매도↓ · 강력매수★
       </span></h2>
       <div id="scoreChartFull"></div>
+      <div id="priceChartFull" style="margin-top:-4px;"></div>
       <div class="chart-note">
         📌 기준선: 강력매수 <span style="color:#22c55e">+8.5</span> · 분할매수 <span style="color:#86efac">+6.5</span> ·
         유포리아 매도임계 <span style="color:#ef4444">−4.5 (우측축)</span> ·
@@ -464,6 +466,83 @@ function renderScoreChartFull(sig) {
   });
 }
 
+// ─── V18 전체 역사 BTC 가격 차트 (v18_signal.json, scoreChartFull 연동)
+function renderPriceChartFull(sig) {
+  const x   = sig.map(r => r.date);
+  const btc = sig.map(r => r.btc_usd);
+
+  const sellEp = sig.filter(r => r.sell_ep);
+  const sb     = sig.filter(r => r.strong_buy);
+  const buyDiv = sig.filter(r => r.buy_div);
+
+  const traces = [
+    {
+      x, y: btc,
+      name: "BTC (USD)",
+      type: "scatter", mode: "lines",
+      line: { color: "#f59e0b", width: 2 },
+      fill: "tozeroy", fillcolor: "rgba(245,158,11,0.04)",
+      yaxis: "y",
+      hovertemplate: "%{x}<br>BTC: <b>$%{y:,.0f}</b><extra></extra>",
+    },
+    sellEp.length ? {
+      x: sellEp.map(r => r.date), y: sellEp.map(r => r.btc_usd),
+      name: "매도 ▼", mode: "markers", type: "scatter",
+      marker: { color: "#ef4444", size: 11, symbol: "triangle-down", line: { color: "#fff", width: 1 } },
+      showlegend: false,
+      hovertemplate: "%{x}<br><b>매도 에피소드</b><extra></extra>",
+    } : null,
+    sb.length ? {
+      x: sb.map(r => r.date), y: sb.map(r => r.btc_usd),
+      name: "강력매수 ★", mode: "markers", type: "scatter",
+      marker: { color: "#fbbf24", size: 13, symbol: "star", line: { color: "#fff", width: 1 } },
+      showlegend: false,
+      hovertemplate: "%{x}<br><b>강력매수</b><extra></extra>",
+    } : null,
+    buyDiv.length ? {
+      x: buyDiv.map(r => r.date), y: buyDiv.map(r => r.btc_usd),
+      name: "분할매수 ▲", mode: "markers", type: "scatter",
+      marker: { color: "#22c55e", size: 9, symbol: "triangle-up", line: { color: "#fff", width: 1 } },
+      showlegend: false,
+      hovertemplate: "%{x}<br><b>분할매수 진입</b><extra></extra>",
+    } : null,
+  ].filter(Boolean);
+
+  const layout = Object.assign({}, PLOTLY_LAYOUT_BASE, {
+    height: 200,
+    margin: { l: 60, r: 60, t: 6, b: 40 },
+    legend: { orientation: "h", y: -0.4 },
+    showlegend: false,
+    xaxis: Object.assign({}, PLOTLY_LAYOUT_BASE.xaxis, { rangeselector: undefined }),
+    yaxis: {
+      title: "BTC (USD)", gridcolor: "#1f2a3a", linecolor: "#1f2a3a",
+      tickformat: "$,.0f",
+    },
+  });
+
+  Plotly.newPlot("priceChartFull", traces, layout, {
+    responsive: true, displaylogo: false, displayModeBar: false, scrollZoom: true,
+  });
+
+  // scoreChartFull ↔ priceChartFull 양방향 x축 연동
+  let _syncing = false;
+  function syncFullCharts(sourceId, targetId, e) {
+    if (_syncing) return;
+    _syncing = true;
+    const patch = {};
+    if (e["xaxis.range[0]"] !== undefined) {
+      patch["xaxis.range[0]"] = e["xaxis.range[0]"];
+      patch["xaxis.range[1]"] = e["xaxis.range[1]"];
+    } else if (e["xaxis.autorange"]) {
+      patch["xaxis.autorange"] = true;
+    }
+    if (Object.keys(patch).length) Plotly.relayout(targetId, patch);
+    _syncing = false;
+  }
+  document.getElementById("scoreChartFull").on("plotly_relayout",  e => syncFullCharts("scoreChartFull",  "priceChartFull", e));
+  document.getElementById("priceChartFull").on("plotly_relayout",  e => syncFullCharts("priceChartFull",  "scoreChartFull", e));
+}
+
 // ─── Signal Log ─────────────────────────────────────────────────────────────
 function renderSignalLog(rows) {
   const changes = rows.filter(r => r.zone_changed).slice().reverse();
@@ -671,6 +750,7 @@ async function main() {
 
   if (sig.length >= 10) {
     renderScoreChartFull(sig);
+    renderPriceChartFull(sig);
   } else {
     document.getElementById("scoreChartFull").innerHTML = '<div class="empty">v18_signal.json 로드 실패 또는 데이터 부족</div>';
   }
