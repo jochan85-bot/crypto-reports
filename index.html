@@ -53,9 +53,8 @@
     border-radius: 10px; padding: 14px; margin-bottom: 14px;
   }
   .card h2 { margin: 0 0 10px; font-size: 14px; font-weight: 600; }
-  #priceChart, #scoreChart, #scoreChartFull { width: 100%; height: 420px; touch-action: pan-y; }
-  #scoreChart { height: 300px; }
-  #scoreChartFull { height: 380px; }
+  #priceChart, #scoreChartFull { width: 100%; height: 420px; touch-action: pan-y; }
+  #scoreChartFull { height: 420px; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
   th, td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
   .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
@@ -105,23 +104,15 @@
       </div>
     </div>
 
-    <!-- 3. 최근 점수 차트 (history.json 기반, V10 score 일별 변화) -->
-    <div class="card">
-      <h2>V10 통합 점수 (05/30~) <span class="muted" style="font-weight:400;font-size:12px;">
-        — 매수 컷 +6.5 · 강력매수 +9.5 · 매도 컷 −6.0
-      </span></h2>
-      <div id="scoreChart"></div>
-    </div>
-
-    <!-- 4. 시그널 로그 -->
+    <!-- 3. 시그널 로그 -->
     <div class="card">
       <h2>시그널 로그 <span class="muted" style="font-weight:400; font-size:12px;">— zone 변경 이벤트</span></h2>
       <div id="signalLog" class="table-wrap"></div>
     </div>
 
-    <!-- 5. 일일 스냅샷 -->
+    <!-- 4. 일일 스냅샷 -->
     <div class="card">
-      <h2>일일 스냅샷 <span class="muted" style="font-weight:400; font-size:12px;">— 최근 30일</span></h2>
+      <h2>일일 스냅샷 <span class="muted" style="font-weight:400; font-size:12px;">— 최근 30일 (V18)</span></h2>
       <div id="dailyTable" class="table-wrap"></div>
     </div>
   </main>
@@ -135,9 +126,9 @@
 
 <script>
 const CFG = {
-  SBUY_ON:  9.5, BUY_ON:  6.5,
-  SELL_ON: -6.0, SSELL_ON: -9.0,
   STRONG_BUY_CORE: 8.5,
+  BUY_CORE:        6.5,
+  SELL_EU:        -4.5,
 };
 const ZONE_LABEL = {
   STRONG_BUY:  "🟢 강력매수",
@@ -184,27 +175,33 @@ function fmtKRW(n) {
   if (n >= 1e4) return (n / 1e4).toFixed(0) + "만";
   return n.toLocaleString();
 }
+function fmtSigned(n, digits=2) {
+  if (n == null || Number.isNaN(n)) return "-";
+  return (n >= 0 ? "+" : "") + (+n).toFixed(digits);
+}
 
-// ─── Status Bar ─────────────────────────────────────────────────────────────
+// ─── Status Bar (V18) ──────────────────────────────────────────────────────
 function renderStatus(latest) {
   const el = document.getElementById("statusBar");
   if (!latest) { el.innerHTML = '<span class="muted">데이터 없음</span>'; return; }
   const zone = latest.zone || "HOLD";
-  const sc   = latest.score != null ? latest.score : 0;
+  const bc   = latest.buy_core_v18;
   const eu   = latest.euphoria_v18;
-  const euTag = eu != null
-    ? `<span title="유포리아 (매도 임계 ≥4.5)" style="color:${eu>=4.5?'#ef4444':eu>=3?'#f59e0b':'#8b97a7'}"><span class="muted">유포리아</span> ${eu>=0?'+':''}${eu.toFixed(1)}</span>`
-    : '';
+  // V18 buy_core: 높을수록 저평가/매수
+  const bcColor = bc == null ? "#e6edf3" : (bc >= 8.5 ? "#22c55e" : (bc >= 6.5 ? "#86efac" : "#e6edf3"));
+  // V18 euphoria (raw): 낮을수록 (음수 깊을수록) 매도 압력
+  const euColor = eu == null ? "#e6edf3" : (eu <= -4.5 ? "#ef4444" : (eu <= -3 ? "#f59e0b" : "#e6edf3"));
   const sellTag = latest.sell_signal_v18 ? '<span style="color:#ef4444">🔻매도신호</span>' : '';
   const sbTag   = latest.strong_buy_v18  ? '<span style="color:#fbbf24">★강력매수</span>' : '';
+  const bdTag   = latest.buy_div_v18     ? '<span style="color:#86efac">▲분할매수진입</span>' : '';
+  const pbTag   = latest.pullback_fresh  ? '<span style="color:#a855f7">🔄눌림목</span>' : '';
   el.innerHTML = `
     <span class="pill zone-${zone}">${ZONE_LABEL[zone] || zone}</span>
-    <span><span class="muted">V10점수</span> <b>${sc >= 0 ? "+" : ""}${(+sc).toFixed(1)}</b></span>
+    <span><span class="muted">코어</span> <b style="color:${bcColor}">${fmtSigned(bc)}</b></span>
+    <span><span class="muted">유포리아</span> <b style="color:${euColor}">${fmtSigned(eu)}</b></span>
     <span><span class="muted">BTC</span> ${fmtKRW(latest.btc_krw)} KRW</span>
     <span><span class="muted">ETH</span> ${fmtKRW(latest.eth_krw)} KRW</span>
-    ${euTag}
-    ${sellTag}
-    ${sbTag}
+    ${sellTag} ${sbTag} ${bdTag} ${pbTag}
     <span class="muted">📅 ${latest.zone_since} 시작 (${latest.zone_days}일째)</span>
     <span class="muted">· 갱신 ${latest.date}</span>
   `;
@@ -219,7 +216,7 @@ function renderPriceChart(rows) {
   const markers = {
     x: changes.map(r => r.date),
     y: changes.map(r => r.btc_krw),
-    text: changes.map(r => `${ZONE_LABEL[r.zone] || r.zone}<br>점수 ${r.score >= 0 ? "+" : ""}${(+r.score).toFixed(1)}`),
+    text: changes.map(r => `${ZONE_LABEL[r.zone] || r.zone}<br>코어 ${fmtSigned(r.buy_core_v18)}`),
     mode: "markers+text",
     type: "scatter",
     name: "Zone 변경",
@@ -251,15 +248,11 @@ function renderPriceChart(rows) {
 // ─── V18 전체 역사 점수 차트 (v18_signal.json) ──────────────────────────────
 function renderScoreChartFull(sig) {
   const x   = sig.map(r => r.date);
-  const bc  = sig.map(r => r.buy_core);   // 통합 점수 (V18 buy_core)
-  const eu  = sig.map(r => r.euphoria);   // 유포리아
-  const v10 = sig.map(r => r.score_v10);  // V10 통합 점수
+  const bc  = sig.map(r => r.buy_core);
+  const eu  = sig.map(r => r.euphoria);
 
-  // 매도 에피소드 (60일 그룹화)
   const sellEp = sig.filter(r => r.sell_ep);
-  // 강력매수 (60일 그룹화)
-  const sb = sig.filter(r => r.strong_buy);
-  // 분할매수 진입
+  const sb     = sig.filter(r => r.strong_buy);
   const buyDiv = sig.filter(r => r.buy_div);
 
   const traces = [
@@ -271,14 +264,6 @@ function renderScoreChartFull(sig) {
       fill: "tozeroy", fillcolor: "rgba(168,85,247,0.08)",
       yaxis: "y",
       hovertemplate: "%{x}<br>buy_core: <b>%{y:.2f}</b><extra></extra>",
-    },
-    {
-      x, y: v10,
-      name: "V10 통합점수",
-      type: "scatter", mode: "lines",
-      line: { color: "#3b82f6", width: 1.2, dash: "dot" },
-      yaxis: "y",
-      hovertemplate: "%{x}<br>V10: %{y:.2f}<extra></extra>",
     },
     {
       x, y: eu,
@@ -308,7 +293,7 @@ function renderScoreChartFull(sig) {
     } : null,
     buyDiv.length ? {
       x: buyDiv.map(r => r.date),
-      y: buyDiv.map(r => r.score_v10),
+      y: buyDiv.map(r => r.buy_core),
       name: "분할매수 진입 ▲",
       mode: "markers", type: "scatter",
       marker: { color: "#22c55e", size: 9, symbol: "triangle-up", line: { color: "#fff", width: 1 } },
@@ -319,68 +304,23 @@ function renderScoreChartFull(sig) {
 
   const shapes = [
     { type: "line", xref: "paper", yref: "y",  x0:0, x1:1, y0: CFG.STRONG_BUY_CORE, y1: CFG.STRONG_BUY_CORE, line:{color:"#22c55e", width:1.2, dash:"dash"} },
-    { type: "line", xref: "paper", yref: "y",  x0:0, x1:1, y0: CFG.BUY_ON,          y1: CFG.BUY_ON,          line:{color:"#86efac", width:1, dash:"dot"} },
+    { type: "line", xref: "paper", yref: "y",  x0:0, x1:1, y0: CFG.BUY_CORE,        y1: CFG.BUY_CORE,        line:{color:"#86efac", width:1, dash:"dot"} },
     { type: "line", xref: "paper", yref: "y",  x0:0, x1:1, y0: 0,                   y1: 0,                   line:{color:"#8b97a7", width:1} },
-    { type: "line", xref: "paper", yref: "y2", x0:0, x1:1, y0: -4.5,               y1: -4.5,                line:{color:"#ef4444", width:1.2, dash:"dash"} },
+    { type: "line", xref: "paper", yref: "y2", x0:0, x1:1, y0: CFG.SELL_EU,         y1: CFG.SELL_EU,         line:{color:"#ef4444", width:1.2, dash:"dash"} },
   ];
   const annotations = [
     { xref:"paper", yref:"y",  x:1.01, y:CFG.STRONG_BUY_CORE, text:"+8.5 강력매수", showarrow:false, font:{color:"#22c55e", size:9}, xanchor:"left" },
-    { xref:"paper", yref:"y",  x:1.01, y:CFG.BUY_ON,          text:"+6.5 분할매수", showarrow:false, font:{color:"#86efac", size:9}, xanchor:"left" },
-    { xref:"paper", yref:"y2", x:0.01, y:-4.5,                text:"유포리아 −4.5", showarrow:false, font:{color:"#ef4444", size:9}, xanchor:"left" },
+    { xref:"paper", yref:"y",  x:1.01, y:CFG.BUY_CORE,        text:"+6.5 분할매수", showarrow:false, font:{color:"#86efac", size:9}, xanchor:"left" },
+    { xref:"paper", yref:"y2", x:0.01, y:CFG.SELL_EU,         text:"유포리아 −4.5", showarrow:false, font:{color:"#ef4444", size:9}, xanchor:"left" },
   ];
 
   const layout = Object.assign({}, PLOTLY_LAYOUT_BASE, {
-    height: 380,
+    height: 420,
     shapes, annotations,
-    yaxis:  { title: "점수 (buy_core / V10)", gridcolor: "#1f2a3a", linecolor: "#1f2a3a", range: [-12, 12] },
+    yaxis:  { title: "buy_core", gridcolor: "#1f2a3a", linecolor: "#1f2a3a", range: [-12, 12] },
     yaxis2: { title: "유포리아", gridcolor: "transparent", linecolor: "#1f2a3a", overlaying:"y", side:"right", range: [-12, 12] },
   });
   Plotly.newPlot("scoreChartFull", traces, layout, {
-    responsive: true, displaylogo: false, displayModeBar: false, scrollZoom: true,
-  });
-}
-
-// ─── 최근 V10 점수 차트 (history.json) ──────────────────────────────────────
-function renderScoreChart(rows) {
-  const x = rows.map(r => r.date);
-  const s = rows.map(r => r.score);
-  const eu = rows.map(r => r.euphoria_v18 != null ? r.euphoria_v18 : null);
-  const hasEu = eu.some(v => v != null);
-
-  const traces = [
-    {
-      x, y: s, name: "V10 통합점수", type: "scatter", mode: "lines+markers",
-      line: { color: "#3b82f6", width: 2 },
-      marker: { size: 5, color: "#3b82f6" },
-      fill: "tozeroy", fillcolor: "rgba(59,130,246,0.10)",
-      yaxis: "y",
-    },
-    hasEu ? {
-      x, y: eu, name: "유포리아 (V18)", type: "scatter", mode: "lines",
-      line: { color: "#ef4444", width: 1.5, dash: "dot" },
-      yaxis: "y2",
-      hovertemplate: "%{x}<br>유포리아 %{y:.2f}<extra></extra>",
-    } : null,
-  ].filter(Boolean);
-
-  const shapes = [
-    { type:"line", xref:"paper", yref:"y", x0:0, x1:1, y0:CFG.BUY_ON,   y1:CFG.BUY_ON,   line:{color:"#86efac", width:1, dash:"dot"} },
-    { type:"line", xref:"paper", yref:"y", x0:0, x1:1, y0:CFG.SBUY_ON,  y1:CFG.SBUY_ON,  line:{color:"#22c55e", width:1, dash:"dash"} },
-    { type:"line", xref:"paper", yref:"y", x0:0, x1:1, y0:0,            y1:0,            line:{color:"#8b97a7", width:1} },
-    { type:"line", xref:"paper", yref:"y", x0:0, x1:1, y0:CFG.SELL_ON,  y1:CFG.SELL_ON,  line:{color:"#f59e0b", width:1, dash:"dot"} },
-  ];
-  const annotations = [
-    { xref:"paper", yref:"y", x:1.01, y:CFG.SBUY_ON, text:"+9.5", showarrow:false, font:{color:"#22c55e", size:10}, xanchor:"left" },
-    { xref:"paper", yref:"y", x:1.01, y:CFG.BUY_ON,  text:"+6.5", showarrow:false, font:{color:"#86efac", size:10}, xanchor:"left" },
-    { xref:"paper", yref:"y", x:1.01, y:CFG.SELL_ON, text:"-6.0", showarrow:false, font:{color:"#f59e0b", size:10}, xanchor:"left" },
-  ];
-  const layout = Object.assign({}, PLOTLY_LAYOUT_BASE, {
-    height: 300,
-    shapes, annotations,
-    yaxis:  { title: "점수", gridcolor: "#1f2a3a", linecolor: "#1f2a3a", range: [-5, 13] },
-    yaxis2: { title: "유포리아", gridcolor: "transparent", linecolor: "#1f2a3a", overlaying:"y", side:"right", range: [-8, 8] },
-  });
-  Plotly.newPlot("scoreChart", traces, layout, {
     responsive: true, displaylogo: false, displayModeBar: false, scrollZoom: true,
   });
 }
@@ -393,54 +333,60 @@ function renderSignalLog(rows) {
     el.innerHTML = '<div class="empty">아직 zone 변경 이벤트 없음. 데이터가 누적되면 여기 표시됩니다.</div>';
     return;
   }
-  let html = '<table><thead><tr><th>날짜</th><th>Zone</th><th class="right">V10점수</th><th class="right">BTC</th><th class="right">ETH</th><th>비고</th></tr></thead><tbody>';
+  let html = '<table><thead><tr><th>날짜</th><th>Zone</th><th class="right">코어</th><th class="right">유포리아</th><th class="right">BTC</th><th class="right">ETH</th></tr></thead><tbody>';
   for (const r of changes) {
     html += `<tr>
       <td>${r.date}</td>
       <td class="zone-cell zone-${r.zone}">${ZONE_LABEL[r.zone] || r.zone}</td>
-      <td class="right">${r.score >= 0 ? "+" : ""}${(+r.score).toFixed(1)}</td>
+      <td class="right">${fmtSigned(r.buy_core_v18)}</td>
+      <td class="right">${fmtSigned(r.euphoria_v18)}</td>
       <td class="right">${fmtKRW(r.btc_krw)}</td>
       <td class="right">${fmtKRW(r.eth_krw)}</td>
-      <td class="muted">${r.allocation || (r.gate || "-")}</td>
     </tr>`;
   }
   html += "</tbody></table>";
   el.innerHTML = html;
 }
 
-// ─── Daily Table ─────────────────────────────────────────────────────────────
+// ─── Daily Table (V18) ─────────────────────────────────────────────────────
 function renderDailyTable(rows) {
   const recent = rows.slice(-30).reverse();
   const el = document.getElementById("dailyTable");
   if (!recent.length) { el.innerHTML = '<div class="empty">데이터 없음</div>'; return; }
   let html = '<table><thead><tr>' +
     '<th>날짜</th><th>Zone</th>' +
-    '<th class="right">V10점수</th>' +
+    '<th class="right" title="V18 buy_core">코어</th>' +
+    '<th class="right" title="V18 유포리아 (raw)">유포리아</th>' +
     '<th class="right">BTC</th><th class="right">ETH</th>' +
     '<th class="right">NUPL</th><th class="right">MVRVz</th><th class="right">F&G</th>' +
-    '<th class="right" title="유포리아 (V18)">유포리아</th>' +
     '<th class="right" title="V18 매도 신호">매도</th>' +
     '<th class="right" title="V18 강력매수">★</th>' +
+    '<th class="right" title="V18 분할매수 진입">▲</th>' +
+    '<th class="right" title="눌림목 신호 (30일내)">🔄</th>' +
     '</tr></thead><tbody>';
   const boolCell = (v, label, color) => v === true
     ? `<td class="right" style="color:${color}"><b>${label}</b></td>`
     : '<td class="right muted">·</td>';
   for (const r of recent) {
     const m   = r.metrics || {};
+    const bc  = r.buy_core_v18;
     const eu  = r.euphoria_v18;
-    const euColor = eu != null && eu >= 4.5 ? '#ef4444' : (eu != null && eu >= 3 ? '#f59e0b' : '#e6edf3');
+    const bcColor = bc == null ? '#e6edf3' : (bc >= 8.5 ? '#22c55e' : (bc >= 6.5 ? '#86efac' : '#e6edf3'));
+    const euColor = eu == null ? '#e6edf3' : (eu <= -4.5 ? '#ef4444' : (eu <= -3 ? '#f59e0b' : '#e6edf3'));
     html += `<tr>
       <td>${r.date}</td>
       <td class="zone-cell zone-${r.zone}">${(ZONE_LABEL[r.zone] || r.zone).replace(/^[\u{1F300}-\u{1FAFF}]\s*/u, "")}</td>
-      <td class="right">${r.score >= 0 ? "+" : ""}${(+r.score).toFixed(1)}</td>
+      <td class="right" style="color:${bcColor}">${fmtSigned(bc)}</td>
+      <td class="right" style="color:${euColor}">${fmtSigned(eu)}</td>
       <td class="right">${fmtKRW(r.btc_krw)}</td>
       <td class="right">${fmtKRW(r.eth_krw)}</td>
       <td class="right">${m.btc_nupl != null ? (+m.btc_nupl).toFixed(3) : "-"}</td>
       <td class="right">${m.btc_mvrv_z != null ? (+m.btc_mvrv_z).toFixed(2) : "-"}</td>
       <td class="right">${m.fng != null ? m.fng : "-"}</td>
-      <td class="right" style="color:${euColor}">${eu != null ? ((eu>=0?'+':'') + eu.toFixed(1)) : "-"}</td>
       ${boolCell(r.sell_signal_v18, '▼', '#ef4444')}
       ${boolCell(r.strong_buy_v18,  '★', '#fbbf24')}
+      ${boolCell(r.buy_div_v18,     '▲', '#86efac')}
+      ${boolCell(r.pullback_fresh,  '🔄', '#a855f7')}
     </tr>`;
   }
   html += "</tbody></table>";
@@ -480,6 +426,7 @@ function bindChartSync(ids) {
 
 // ─── 핀치줌 ─────────────────────────────────────────────────────────────────
 const _pinchState = { chartId: null, startDist: 0, startMidData: 0, startRange: null };
+const _CHART_IDS = ["priceChart", "scoreChartFull"];
 
 function _getChartInfo(chartId, clientX) {
   const gd = document.getElementById(chartId);
@@ -499,7 +446,7 @@ function _getChartInfo(chartId, clientX) {
 }
 function _findChartUnderTouch(t0, t1) {
   const midX = (t0.clientX + t1.clientX) / 2, midY = (t0.clientY + t1.clientY) / 2;
-  for (const id of ["priceChart", "scoreChartFull", "scoreChart"]) {
+  for (const id of _CHART_IDS) {
     const el = document.getElementById(id);
     if (!el) continue;
     const bb = el.getBoundingClientRect();
@@ -508,7 +455,7 @@ function _findChartUnderTouch(t0, t1) {
   return null;
 }
 function _isInsideChart(e) {
-  return ["priceChart", "scoreChartFull", "scoreChart"].some(id => {
+  return _CHART_IDS.some(id => {
     const el = document.getElementById(id);
     return el && el.contains(e.target);
   });
@@ -549,7 +496,7 @@ document.addEventListener("touchmove", e => {
 document.addEventListener("touchend", e => {
   if (e.touches.length < 2) { _pinchState.chartId = null; _pinchState.startRange = null; }
 }, { capture: true });
-for (const id of ["priceChart", "scoreChartFull", "scoreChart"]) {
+for (const id of _CHART_IDS) {
   const el = document.getElementById(id);
   if (!el) continue;
   el.addEventListener("gesturestart",  e => e.preventDefault(), { passive: false });
@@ -559,7 +506,6 @@ for (const id of ["priceChart", "scoreChartFull", "scoreChart"]) {
 
 // ─── Main ───────────────────────────────────────────────────────────────────
 async function main() {
-  // 두 JSON 병렬 로드
   const [histRes, sigRes] = await Promise.allSettled([
     fetch("data/history.json?t=" + Date.now(), { cache: "no-store" }).then(r => r.json()),
     fetch("data/v18_signal.json?t=" + Date.now(), { cache: "no-store" }).then(r => r.json()),
@@ -576,30 +522,16 @@ async function main() {
   const latest = rows.length ? rows[rows.length - 1] : null;
   renderStatus(latest);
 
-  // 가격 차트 (history.json)
   if (rows.length >= 2) {
     renderPriceChart(rows);
   } else {
     document.getElementById("priceChart").innerHTML = '<div class="empty">데이터 누적 중…</div>';
   }
 
-  // V18 전체 역사 점수 차트 (v18_signal.json)
   if (sig.length >= 10) {
     renderScoreChartFull(sig);
   } else {
     document.getElementById("scoreChartFull").innerHTML = '<div class="empty">v18_signal.json 로드 실패 또는 데이터 부족</div>';
-  }
-
-  // 최근 V10 점수 차트 (history.json)
-  if (rows.length >= 2) {
-    renderScoreChart(rows);
-  } else {
-    document.getElementById("scoreChart").innerHTML = '<div class="empty">데이터 누적 중…</div>';
-  }
-
-  // 차트 연동 — price ↔ score (recent). scoreChartFull은 독립 (다른 기간)
-  if (rows.length >= 2) {
-    bindChartSync(["priceChart", "scoreChart"]);
   }
 
   renderSignalLog(rows);
