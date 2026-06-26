@@ -735,7 +735,7 @@
     "zone": "STRONG_BUY",
     "zone_since": "2026-06-26",
     "zone_days": 1,
-    "zone_changed": false,
+    "zone_changed": true,
     "buy_core_v18": 8.5671,
     "euphoria_v18": 5.4202,
     "sell_signal_v18": false,
