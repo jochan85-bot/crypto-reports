@@ -26,15 +26,23 @@
     font-size: 14px;
   }
   header {
-    padding: 14px 18px; border-bottom: 1px solid var(--border);
-    display: flex; justify-content: space-between; align-items: center; gap: 12px;
-    flex-wrap: wrap;
+    padding: 10px 16px; border-bottom: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 6px;
   }
-  h1 { margin: 0; font-size: 16px; font-weight: 600; }
-  h1 small { color: var(--muted); font-weight: 400; margin-left: 8px; font-size: 12px; }
+  .header-top {
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 10px; min-width: 0;
+  }
+  h1 { margin: 0; font-size: 15px; font-weight: 600;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  h1 small { color: var(--muted); font-weight: 400; margin-left: 6px; font-size: 11px; }
+  .header-status {
+    display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+    font-size: 12px; padding-top: 2px;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+  }
   .status {
-    display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
-    font-size: 13px;
+    display: contents; /* children flow into .header-status directly */
   }
   .pill {
     padding: 4px 10px; border-radius: 999px;
@@ -79,12 +87,14 @@
 </head>
 <body>
   <header>
-    <div style="display:flex;align-items:center;gap:10px;min-width:0;flex:1;">
-      <h1 style="white-space:nowrap;">📈 MacTrader · Crypto V18 <small>유포리아+시간차 매도 · 강력매수 max+그룹화</small></h1>
-    </div>
-    <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
-      <div class="status" id="statusBar"><span class="muted">데이터 로드 중…</span></div>
+    <!-- 1줄: 타이틀 + Guide 버튼 -->
+    <div class="header-top">
+      <h1>📈 MacTrader · Crypto V18 <small>V18 신호 · 주요 확인</small></h1>
       <a class="guide-btn" href="guide.html" target="_blank" rel="noopener">📖 Guide</a>
+    </div>
+    <!-- 2줄: 상태바 (수평 스크롤) -->
+    <div class="header-status">
+      <div class="status" id="statusBar"><span class="muted">데이터 로드 중…</span></div>
     </div>
   </header>
 
