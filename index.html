@@ -50,11 +50,9 @@
   }
   .guide-btn:hover { background: rgba(59,130,246,.25); border-color: #3b82f6; color: #bfdbfe !important; }
   .header-status {
-    display: flex; gap: 8px; align-items: center; flex-wrap: nowrap;
-    font-size: 12px; overflow-x: auto; -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; padding-bottom: 2px;
+    display: flex; gap: 6px 12px; align-items: center; flex-wrap: wrap;
+    font-size: 12px; line-height: 1.6;
   }
-  .header-status::-webkit-scrollbar { display: none; }
   .status { display: contents; }
   .pill {
     padding: 4px 10px; border-radius: 999px;
@@ -233,11 +231,9 @@ function renderStatus(latest) {
     <span class="pill zone-${zone}">${ZONE_LABEL[zone] || zone}</span>
     <span><span class="muted">코어</span> <b style="color:${bcColor}">${fmtSigned(bc)}</b></span>
     <span><span class="muted">유포리아</span> <b style="color:${euColor}">${fmtSigned(eu)}</b></span>
-    <span><span class="muted">BTC</span> ${fmtKRW(latest.btc_krw)} KRW</span>
-    <span><span class="muted">ETH</span> ${fmtKRW(latest.eth_krw)} KRW</span>
-    ${sellTag} ${sbTag} ${bdTag} ${pbTag}
-    <span class="muted">📅 ${latest.zone_since} 시작 (${latest.zone_days}일째)</span>
-    <span class="muted">· 갱신 ${latest.date}</span>
+    <span><span class="muted">BTC</span> <b>${fmtKRW(latest.btc_krw)}</b> KRW</span>
+    <span><span class="muted">ETH</span> <b>${fmtKRW(latest.eth_krw)}</b> KRW</span>
+    ${sellTag}${sbTag}${bdTag}${pbTag}
   `;
 }
 
