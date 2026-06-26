@@ -247,7 +247,7 @@ function renderPriceChart(rows) {
   const sbDays   = rows.filter(r => r.strong_buy_v18);   // 에피소드 첫날 ★
   const sellDays = rows.filter(r => r.sell_ep_v18);       // 매도 에피소드 ▼
   const buyDays  = rows.filter(r => r.buy_div_v18);       // 분할매수 진입 ▲
-  const changes  = rows.filter(r => r.zone_changed);      // zone 변경 (작은 다이아몬드)
+  const changes  = rows.filter(r => r.zone_changed && r.zone === 'HOLD');  // zone 변경 → 관망 복귀만 (매수/매도 전환은 ★▲▼으로 표시)
 
   const traces = [
     // 가격선
@@ -283,8 +283,8 @@ function renderPriceChart(rows) {
     changes.length ? {
       x: changes.map(r => r.date),
       y: changes.map(r => r.btc_krw),
-      text: changes.map(r => `${(ZONE_LABEL[r.zone]||r.zone).replace(/^.\s/,'')} bc${r.buy_core_v18>=0?'+':''}${(+r.buy_core_v18).toFixed(1)}`),
-      mode: "markers+text", type: "scatter", name: "Zone 변경",
+      text: changes.map(r => `관망 bc${r.buy_core_v18>=0?'+':''}${(+r.buy_core_v18).toFixed(1)}`),
+      mode: "markers+text", type: "scatter", name: "관망 전환",
       marker: {
         size: 10,
         color: changes.map(r => ZONE_COLOR[r.zone] || "#8b97a7"),
