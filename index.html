@@ -75,15 +75,261 @@
   footer { color: var(--muted); font-size: 12px; padding: 16px; text-align: center; }
   footer a { color: var(--blue); text-decoration: none; }
   .chart-note { font-size: 11px; color: var(--muted); margin-top: 4px; padding: 0 4px; }
+
+  /* ─── Guide 모달 ─── */
+  .guide-btn {
+    padding: 5px 14px; border-radius: 999px; border: 1px solid var(--border);
+    background: var(--panel); color: var(--muted); font-size: 13px;
+    cursor: pointer; white-space: nowrap; transition: border-color .15s, color .15s;
+  }
+  .guide-btn:hover { border-color: var(--blue); color: var(--text); }
+  .guide-overlay {
+    display: none; position: fixed; inset: 0; z-index: 1000;
+    background: rgba(0,0,0,.7); backdrop-filter: blur(4px);
+    overflow-y: auto; -webkit-overflow-scrolling: touch;
+  }
+  .guide-overlay.open { display: block; }
+  .guide-panel {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 12px; max-width: 760px; margin: 20px auto;
+    padding: 28px 24px; position: relative;
+  }
+  @media (max-width: 640px) {
+    .guide-panel { margin: 0; border-radius: 12px 12px 0 0;
+      position: fixed; bottom: 0; left: 0; right: 0;
+      max-height: 90vh; overflow-y: auto; padding: 20px 16px; }
+  }
+  .guide-close {
+    position: absolute; top: 16px; right: 16px;
+    background: none; border: none; color: var(--muted);
+    font-size: 22px; cursor: pointer; line-height: 1;
+  }
+  .guide-close:hover { color: var(--text); }
+  .guide-panel h2 { font-size: 17px; margin: 0 0 6px; }
+  .guide-panel h3 { font-size: 14px; font-weight: 600; margin: 24px 0 8px;
+    color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+  .guide-panel h4 { font-size: 13px; font-weight: 600; margin: 14px 0 4px; color: var(--amber); }
+  .guide-panel p  { margin: 0 0 10px; line-height: 1.65; color: #c8d4df; font-size: 13px; }
+  .guide-panel ul { margin: 0 0 10px; padding-left: 18px; color: #c8d4df; font-size: 13px; }
+  .guide-panel li { margin-bottom: 5px; line-height: 1.55; }
+  .guide-panel code { background: rgba(255,255,255,.07); border-radius: 4px;
+    padding: 1px 5px; font-family: monospace; font-size: 12px; }
+  .guide-tag {
+    display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px;
+    font-weight: 600; margin-right: 6px; vertical-align: middle;
+  }
+  .tag-buy    { background: rgba(34,197,94,.2);  color: #4ade80; }
+  .tag-sell   { background: rgba(239,68,68,.2);  color: #fca5a5; }
+  .tag-hold   { background: rgba(139,151,167,.2); color: #8b97a7; }
+  .tag-metric { background: rgba(59,130,246,.2); color: #93c5fd; }
+  .tag-signal { background: rgba(168,85,247,.2); color: #d8b4fe; }
+  .guide-divider { border: none; border-top: 1px solid var(--border); margin: 6px 0 16px; }
+  .guide-toc { margin: 0 0 20px; padding: 12px 14px; background: rgba(255,255,255,.04);
+    border-radius: 8px; font-size: 12px; }
+  .guide-toc a { color: var(--blue); text-decoration: none; margin-right: 14px;
+    display: inline-block; margin-bottom: 4px; }
+  .guide-toc a:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
   <header>
     <h1>📈 MacTrader · Crypto V18 <small>유포리아+시간차 매도 · 강력매수 max+그룹화</small></h1>
-    <div class="status" id="statusBar">
-      <span class="muted">데이터 로드 중…</span>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+      <div class="status" id="statusBar"><span class="muted">데이터 로드 중…</span></div>
+      <button class="guide-btn" onclick="document.getElementById('guideOverlay').classList.add('open')">📖 Guide</button>
     </div>
   </header>
+
+  <!-- Guide 모달 -->
+  <div class="guide-overlay" id="guideOverlay" onclick="if(event.target===this)this.classList.remove('open')">
+    <div class="guide-panel">
+      <button class="guide-close" onclick="document.getElementById('guideOverlay').classList.remove('open')">✕</button>
+      <h2>📖 MacTrader Crypto V18 가이드</h2>
+      <p style="color:var(--muted);font-size:12px;margin:0 0 16px;">V18 시스템 지표 · 신호 · 판단 기준 완전 설명서</p>
+
+      <div class="guide-toc">
+        <strong style="font-size:11px;color:var(--muted);">바로가기</strong><br>
+        <a href="#g-overview">개요</a>
+        <a href="#g-indicators">온체인 지표</a>
+        <a href="#g-buy-core">통합 점수</a>
+        <a href="#g-signals">3대 신호</a>
+        <a href="#g-zone">Zone 판정</a>
+        <a href="#g-chart">차트 읽기</a>
+        <a href="#g-faq">FAQ</a>
+      </div>
+
+      <!-- 개요 -->
+      <h3 id="g-overview">🧭 시스템 개요</h3>
+      <p>V18은 BTC 사이클 위치를 온체인 지표 4종 + 매크로로 판단해 <strong>매수 / 강력매수 / 매도</strong> 3가지 에피소드 신호를 내는 시스템입니다. 레버리지 진입·청산 타이밍이 아닌 <em>사이클 사이즈</em>를 판단합니다.</p>
+      <ul>
+        <li><strong>매일 09:00 KST</strong> 자동 갱신 (크론 실행)</li>
+        <li>온체인 분포: CoinMetrics 2011년~현재 (PIT 백분위 기준)</li>
+        <li>일별 지표: bitcoin-data.com (NUPL·MVRV-Z), Upbit (가격), Binance F&G</li>
+        <li>모든 신호는 <strong>60일 에피소드 그룹화</strong> — 노이즈 제거</li>
+      </ul>
+
+      <!-- 온체인 지표 -->
+      <h3 id="g-indicators">📊 온체인 지표 4종</h3>
+
+      <h4>1. NUPL (Net Unrealized Profit/Loss)</h4>
+      <p><span class="guide-tag tag-metric">매수</span> 미실현 손익 비율. <code>(시가총액 − 실현가치) / 시가총액</code></p>
+      <ul>
+        <li><strong>0.0 이하</strong>: 보유자 전체 손실권 → 역사적 매수 구간</li>
+        <li><strong>0.15~0.25</strong>: 초기 회복 (현재 구간)</li>
+        <li><strong>0.6 이상</strong>: 심리적 유포리아 → 매도 경보</li>
+        <li>V18 기준: 전체역사 하위 25% 이하면 저평가 점수 최대</li>
+      </ul>
+
+      <h4>2. MVRV-Z Score</h4>
+      <p><span class="guide-tag tag-metric">매수</span> 시가총액 대비 실현가치의 표준편차. 역사적 고·저평가 측정.</p>
+      <ul>
+        <li><strong>0 이하</strong>: 실현가 이하 거래 → 강한 저평가</li>
+        <li><strong>0~2</strong>: 적정 구간 (현재 0.33)</li>
+        <li><strong>6 이상</strong>: 역사적 버블 → 매도 구간</li>
+        <li>NUPL과 함께 <em>유포리아 점수</em>의 핵심 입력값</li>
+      </ul>
+
+      <h4>3. Puell Multiple</h4>
+      <p><span class="guide-tag tag-metric">매수</span> 오늘 채굴자 수익 / 365일 평균 채굴자 수익.</p>
+      <ul>
+        <li><strong>0.5 이하</strong>: 채굴자 극심한 고통 → 바닥 신호</li>
+        <li><strong>1.0</strong>: 역사 평균 (현재 0.69)</li>
+        <li><strong>3.5 이상</strong>: 채굴자 과잉 수익 → 천장 경보</li>
+        <li>반감기 직후 낮아짐 — 매수 점수 가중</li>
+      </ul>
+
+      <h4>4. Mayer Multiple</h4>
+      <p><span class="guide-tag tag-metric">매수</span> 현재 BTC 가격 / 200일 이동평균선 비율.</p>
+      <ul>
+        <li><strong>0.8 이하</strong>: 200MA 심하게 하회 → 저평가 (현재 0.81)</li>
+        <li><strong>1.0</strong>: 200MA 위</li>
+        <li><strong>2.4 이상</strong>: 역사적 과열 → 주의</li>
+        <li>4개 지표 중 <em>가장 실시간에 가까운</em> 값 (매일 업데이트)</li>
+      </ul>
+
+      <!-- 통합 점수 -->
+      <h3 id="g-buy-core">🔢 통합 점수 (buy_core)</h3>
+      <p>4개 지표 각각의 <strong>PIT(Point-in-Time) 백분위</strong>를 가중 합산한 값입니다.</p>
+      <p><code>cheap(x) = (0.5 − percentile(x)) × 2</code> → 낮을수록 +1, 높을수록 −1</p>
+      <p><code>buy_core = max(전체역사 기준, 3년창 기준)</code> × 가중치(MVRV×3, NUPL×3, Puell×2, Mayer×1)</p>
+      <ul>
+        <li><strong>max 채택 이유</strong>: 2019년 이후 BTC 성숙으로 지표 압축 → 전체역사만 쓰면 바닥을 못 잡음. 3년창과 max를 취해 현대 사이클 저점도 포착.</li>
+        <li>범위: 약 −9 ~ +9</li>
+        <li><strong>+6.5 이상</strong> → 분할매수 에피소드 진입</li>
+        <li><strong>+8.5 이상</strong> → 강력매수 에피소드 진입</li>
+      </ul>
+      <p style="background:rgba(168,85,247,.1);border-left:3px solid #a855f7;padding:8px 12px;border-radius:4px;">
+        현재(2026-06-26): <strong style="color:#d8b4fe;">+8.57</strong> — 강력매수 에피소드 활성</p>
+
+      <!-- 3대 신호 -->
+      <h3 id="g-signals">🚦 3대 신호</h3>
+      <hr class="guide-divider">
+
+      <h4>⭐ 강력매수 (STRONG_BUY)</h4>
+      <p><span class="guide-tag tag-buy">진입</span> buy_core ≥ 8.5 에피소드 시작 → 이후 60일간 강력매수 에피소드 활성</p>
+      <ul>
+        <li>역대 발화: 2014·2018·2022·2026 사이클 바닥 (사이클당 1~2회)</li>
+        <li>60일 그룹화: bc가 잠깐 8.5 아래로 내려가도 에피소드 기간 내 유지</li>
+        <li>액션: <em>사이클 바닥권 — 적극 분할 진입 검토</em></li>
+      </ul>
+
+      <h4>▲ 분할매수 (BUY)</h4>
+      <p><span class="guide-tag tag-buy">진입</span> buy_core ≥ 6.5 에피소드 시작 → 이후 60일간 BUY 에피소드 활성</p>
+      <ul>
+        <li>강력매수보다 넓은 저평가 구간 포착</li>
+        <li>강력매수 에피소드가 활성이면 BUY보다 우선</li>
+        <li>액션: <em>분할 진입 적극 고려</em></li>
+      </ul>
+
+      <h4>▼ 매도 에피소드 (SELL)</h4>
+      <p><span class="guide-tag tag-sell">청산</span> 아래 <strong>3가지 조건 동시 충족</strong> 시 발화 — 60일 그룹화</p>
+      <ul>
+        <li><strong>유포리아 점수 ≤ −4.5</strong>: MVRV-Z·NUPL 전체역사 상위권 (고평가)</li>
+        <li><strong>매크로 게이트</strong>: 달러 긴축(60일 +1.5%↑) OR 유동성 수축</li>
+        <li><strong>가격 꺾임</strong>: 30일 고점 대비 −8% 이상 하락 (천장 롤오버 확인)</li>
+      </ul>
+      <p>왜 세 조건이냐: 온체인 고평가는 가격이 아직 신고가일 때 켜짐 → 가격이 실제 꺾인 뒤 발화해야 조기매도 억제. 2025-10 천장 포함 역대 대형 폭락 4/4 포착.</p>
+      <p style="background:rgba(239,68,68,.08);border-left:3px solid #ef4444;padding:8px 12px;border-radius:4px;">
+        유포리아 점수가 <strong>양수</strong>이면 매도 조건 원천 차단. 현재 +5.42 → 매도 신호 없음.</p>
+
+      <h4>🔄 눌림목 신호 (현물 전용)</h4>
+      <p><span class="guide-tag tag-hold">현물</span> buy_core가 <em>얕게 양전(+3.5 미만) → 120일 내 다시 음전</em> 패턴. 주요 추세 속 단기 조정 매집 신호.</p>
+      <ul>
+        <li>레버리지 금지 — 현물 분할 매집 전용</li>
+        <li>진입 후 −12% 손절 (가짜 눌림목 제한)</li>
+        <li>마지막 발화: 2025-10-18</li>
+      </ul>
+
+      <!-- Zone 판정 -->
+      <h3 id="g-zone">🗺️ Zone 판정 기준</h3>
+      <table style="width:100%;font-size:12px;">
+        <thead><tr style="color:var(--muted);">
+          <th style="padding:6px 8px;">Zone</th>
+          <th style="padding:6px 8px;">조건</th>
+          <th style="padding:6px 8px;">의미</th>
+        </tr></thead>
+        <tbody>
+          <tr><td style="padding:6px 8px;"><span class="zone-STRONG_BUY">🟢 강력매수</span></td><td style="padding:6px 8px;">강력매수 에피소드 활성 (시작 후 60일)</td><td style="padding:6px 8px;">사이클 바닥권</td></tr>
+          <tr><td style="padding:6px 8px;"><span class="zone-BUY">🟢 분할매수</span></td><td style="padding:6px 8px;">분할매수 에피소드 활성 (STRONG_BUY 아닌 경우)</td><td style="padding:6px 8px;">저평가 진입 구간</td></tr>
+          <tr><td style="padding:6px 8px;"><span class="zone-HOLD">⚪ 관망</span></td><td style="padding:6px 8px;">에피소드 없음</td><td style="padding:6px 8px;">중립, 대기</td></tr>
+          <tr><td style="padding:6px 8px;"><span class="zone-SELL">🟠 매도</span></td><td style="padding:6px 8px;">매도 에피소드 발화</td><td style="padding:6px 8px;">천장권, 익절/청산</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:10px;">Zone은 에피소드 시작일 기준 60일간 유지. bc가 8.5를 잠깐 하회해도 에피소드 기간 내 강력매수 유지 (노이즈 제거).</p>
+
+      <!-- 차트 읽기 -->
+      <h3 id="g-chart">📉 차트 읽기</h3>
+
+      <h4>① 가격 차트 (상단)</h4>
+      <ul>
+        <li>⭐ 노란 별 = 강력매수 에피소드 첫날</li>
+        <li>▲ 초록 삼각 = 분할매수 에피소드 첫날</li>
+        <li>▼ 빨간 역삼각 = 매도 에피소드</li>
+        <li>◇ 작은 다이아몬드 = Zone 변경일 (레이블 포함)</li>
+      </ul>
+
+      <h4>② V18 점수 차트 (가격 차트 연동)</h4>
+      <ul>
+        <li>🟣 보라 면적 = buy_core (통합 점수) — 8.5/6.5 기준선과 비교</li>
+        <li>🔴 빨간 점선 = 유포리아 점수 — −4.5 아래로 내려가면 매도 1차 조건</li>
+      </ul>
+
+      <h4>③ V18 전체 역사 차트 (2019~)</h4>
+      <ul>
+        <li>CoinMetrics 기반, 2011년 분포 전체 참조</li>
+        <li>⭐ 강력매수 에피소드: 2020코로나, 2022베어, 2026-02, 2026-06</li>
+        <li>▼ 매도 에피소드: 2021-04, 2021-11, 2025-10 등</li>
+      </ul>
+
+      <!-- FAQ -->
+      <h3 id="g-faq">❓ FAQ</h3>
+
+      <h4>Q. buy_core가 날마다 조금씩 다른 이유?</h4>
+      <p>Mayer Multiple(200일MA 비율)은 BTC 가격과 함께 매일 바뀝니다. NUPL·MVRV-Z는 bitcoin-data.com 기준 일별 업데이트, Puell도 가격 기반 일별 계산. 따라서 buy_core는 매일 소폭 변동합니다.</p>
+
+      <h4>Q. 강력매수인데 BTC가 더 내려갈 수도 있나?</h4>
+      <p>있습니다. buy_core는 <em>사이클 저평가 구간</em>을 나타내지 가격 바닥을 예측하지 않습니다. 실제 바닥보다 수주 일찍 신호가 켜지기도 합니다. 분할 매집 전략이 권장되는 이유입니다.</p>
+
+      <h4>Q. 유포리아 점수가 양수이면 매도 불가?</h4>
+      <p>유포리아 ≤ −4.5 조건이 충족되지 않으므로 매도 에피소드 자체가 발화하지 않습니다. 현재 +5.42로 매도 조건 원천 차단 상태입니다.</p>
+
+      <h4>Q. 데이터 업데이트 주기?</h4>
+      <ul>
+        <li>온체인(CoinMetrics): 주 1~2회 업데이트 (역사 분포 참조용)</li>
+        <li>NUPL·MVRV-Z(bitcoin-data.com): 매일</li>
+        <li>가격·Puell·Mayer: 매일 (Upbit 기준)</li>
+        <li>Fear &amp; Greed: 매일</li>
+        <li>전체 리포트: 매일 09:00 KST</li>
+      </ul>
+
+      <h4>Q. 눌림목 신호와 강력매수의 차이?</h4>
+      <p>강력매수는 절대 저평가 수준(역대 극히 낮은 백분위)으로 판단. 눌림목은 추세 중 단기 조정 패턴으로 판단. 서로 독립적으로 작동하며 동시에 발화할 수도 있습니다.</p>
+
+      <p style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);color:var(--muted);font-size:11px;">
+        MacTrader Crypto V18 · 매일 09:00 KST 자동 갱신 · 투자 판단의 보조 도구이며 수익을 보장하지 않습니다.
+      </p>
+    </div>
+  </div>
 
   <main>
     <!-- 1. 최근 가격 차트 (history.json, KRW) -->
