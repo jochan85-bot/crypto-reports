@@ -219,29 +219,61 @@ function renderPriceChart(rows) {
   const x   = rows.map(r => r.date);
   const btc = rows.map(r => r.btc_krw);
   const eth = rows.map(r => r.eth_krw);
-  const changes = rows.filter(r => r.zone_changed);
-  const markers = {
-    x: changes.map(r => r.date),
-    y: changes.map(r => r.btc_krw),
-    text: changes.map(r => `${ZONE_LABEL[r.zone] || r.zone}<br>코어 ${fmtSigned(r.buy_core_v18)}`),
-    mode: "markers+text",
-    type: "scatter",
-    name: "Zone 변경",
-    marker: {
-      size: 14,
-      color: changes.map(r => ZONE_COLOR[r.zone] || "#8b97a7"),
-      symbol: "diamond",
-      line: { color: "#0b0f17", width: 2 },
-    },
-    textposition: "top center",
-    textfont: { size: 10, color: "#e6edf3" },
-    hovertemplate: "%{x}<br><b>%{text}</b><extra></extra>",
-  };
+
+  // V18 신호 마커 (아래 차트와 동일한 심볼)
+  const sbDays   = rows.filter(r => r.strong_buy_v18);   // 에피소드 첫날 ★
+  const sellDays = rows.filter(r => r.sell_ep_v18);       // 매도 에피소드 ▼
+  const buyDays  = rows.filter(r => r.buy_div_v18);       // 분할매수 진입 ▲
+  const changes  = rows.filter(r => r.zone_changed);      // zone 변경 (작은 다이아몬드)
+
   const traces = [
-    { x, y: btc, name: "BTC (KRW)", type: "scatter", mode: "lines", line: { color: "#f59e0b", width: 2 }, yaxis: "y" },
-    { x, y: eth, name: "ETH (KRW)", type: "scatter", mode: "lines", line: { color: "#3b82f6", width: 1.5 }, yaxis: "y2" },
-    markers,
-  ];
+    // 가격선
+    { x, y: btc, name: "BTC (KRW)", type: "scatter", mode: "lines",
+      line: { color: "#f59e0b", width: 2 }, yaxis: "y" },
+    { x, y: eth, name: "ETH (KRW)", type: "scatter", mode: "lines",
+      line: { color: "#3b82f6", width: 1.5 }, yaxis: "y2" },
+    // 강력매수 ★ (노란 별)
+    sbDays.length ? {
+      x: sbDays.map(r => r.date), y: sbDays.map(r => r.btc_krw),
+      name: "강력매수 ★", mode: "markers", type: "scatter",
+      marker: { color: "#fbbf24", size: 16, symbol: "star", line: { color: "#fff", width: 1.5 } },
+      yaxis: "y",
+      hovertemplate: "%{x}<br><b>강력매수 에피소드</b><extra></extra>",
+    } : null,
+    // 분할매수 진입 ▲ (초록 삼각)
+    buyDays.length ? {
+      x: buyDays.map(r => r.date), y: buyDays.map(r => r.btc_krw),
+      name: "분할매수 진입 ▲", mode: "markers", type: "scatter",
+      marker: { color: "#22c55e", size: 13, symbol: "triangle-up", line: { color: "#fff", width: 1.5 } },
+      yaxis: "y",
+      hovertemplate: "%{x}<br><b>분할매수 진입</b><extra></extra>",
+    } : null,
+    // 매도 에피소드 ▼ (빨간 역삼각)
+    sellDays.length ? {
+      x: sellDays.map(r => r.date), y: sellDays.map(r => r.btc_krw),
+      name: "매도 에피소드 ▼", mode: "markers", type: "scatter",
+      marker: { color: "#ef4444", size: 13, symbol: "triangle-down", line: { color: "#fff", width: 1.5 } },
+      yaxis: "y",
+      hovertemplate: "%{x}<br><b>매도 에피소드</b><extra></extra>",
+    } : null,
+    // Zone 변경 (작은 다이아몬드 — 세부 이벤트)
+    changes.length ? {
+      x: changes.map(r => r.date),
+      y: changes.map(r => r.btc_krw),
+      text: changes.map(r => `${(ZONE_LABEL[r.zone]||r.zone).replace(/^.\s/,'')} bc${r.buy_core_v18>=0?'+':''}${(+r.buy_core_v18).toFixed(1)}`),
+      mode: "markers+text", type: "scatter", name: "Zone 변경",
+      marker: {
+        size: 10,
+        color: changes.map(r => ZONE_COLOR[r.zone] || "#8b97a7"),
+        symbol: "diamond", line: { color: "#0b0f17", width: 1.5 },
+      },
+      textposition: "top center",
+      textfont: { size: 9, color: "#8b97a7" },
+      yaxis: "y",
+      hovertemplate: "%{x}<br><b>%{text}</b><extra></extra>",
+    } : null,
+  ].filter(Boolean);
+
   const layout = Object.assign({}, PLOTLY_LAYOUT_BASE, {
     height: 420,
     yaxis:  { title: "BTC (KRW)", gridcolor: "#1f2a3a", linecolor: "#1f2a3a", side: "left" },
