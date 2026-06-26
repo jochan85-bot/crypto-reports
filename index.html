@@ -53,8 +53,9 @@
     border-radius: 10px; padding: 14px; margin-bottom: 14px;
   }
   .card h2 { margin: 0 0 10px; font-size: 14px; font-weight: 600; }
-  #priceChart, #scoreChartFull { width: 100%; height: 420px; touch-action: pan-y; }
+  #priceChart, #scoreChartFull, #scoreChartRecent { width: 100%; height: 420px; touch-action: pan-y; }
   #scoreChartFull { height: 420px; }
+  #scoreChartRecent { height: 260px; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
   th, td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
   .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
@@ -89,6 +90,12 @@
     <div class="card">
       <h2>가격 · Zone 변경 이벤트 <span class="muted" style="font-weight:400;font-size:12px;">— KRW 기준, 05/30~</span></h2>
       <div id="priceChart"></div>
+    </div>
+
+    <!-- 1-1. 가격 차트 연동 V18 점수/유포리아 (history.json) -->
+    <div class="card" style="margin-top:-8px; border-top:none; border-radius:0 0 10px 10px;">
+      <h2 style="color:var(--muted);font-size:12px;font-weight:500;">V18 점수 · 유포리아 <span style="font-weight:400;">— 가격 차트 연동</span></h2>
+      <div id="scoreChartRecent"></div>
     </div>
 
     <!-- 2. V18 전체 역사 점수 차트 (v18_signal.json, 2019~) -->
@@ -241,6 +248,82 @@ function renderPriceChart(rows) {
     yaxis2: { title: "ETH (KRW)", gridcolor: "transparent", linecolor: "#1f2a3a", overlaying: "y", side: "right" },
   });
   Plotly.newPlot("priceChart", traces, layout, {
+    responsive: true, displaylogo: false, displayModeBar: false, scrollZoom: true,
+  });
+}
+
+// ─── V18 점수 차트 (history.json, 가격 차트 연동) ─────────────────────────────
+function renderScoreChartRecent(rows) {
+  const x  = rows.map(r => r.date);
+  const bc = rows.map(r => r.buy_core_v18);
+  const eu = rows.map(r => r.euphoria_v18);
+  const sbDays   = rows.filter(r => r.strong_buy_v18);
+  const sellDays = rows.filter(r => r.sell_ep_v18);
+  const buyDays  = rows.filter(r => r.buy_div_v18);
+
+  const traces = [
+    {
+      x, y: bc, name: "buy_core (V18)",
+      type: "scatter", mode: "lines+markers",
+      line: { color: "#a855f7", width: 2 },
+      marker: { size: 4, color: "#a855f7" },
+      fill: "tozeroy", fillcolor: "rgba(168,85,247,0.10)",
+      yaxis: "y",
+      hovertemplate: "%{x}<br>buy_core: <b>%{y:.2f}</b><extra></extra>",
+    },
+    {
+      x, y: eu, name: "유포리아",
+      type: "scatter", mode: "lines",
+      line: { color: "#ef4444", width: 1.5, dash: "dot" },
+      yaxis: "y2",
+      hovertemplate: "%{x}<br>유포리아: <b>%{y:.2f}</b><extra></extra>",
+    },
+    sbDays.length ? {
+      x: sbDays.map(r => r.date), y: sbDays.map(r => r.buy_core_v18),
+      name: "강력매수 ★", mode: "markers", type: "scatter",
+      marker: { color: "#fbbf24", size: 14, symbol: "star", line: { color: "#fff", width: 1 } },
+      yaxis: "y",
+      hovertemplate: "%{x}<br><b>강력매수</b><extra></extra>",
+    } : null,
+    sellDays.length ? {
+      x: sellDays.map(r => r.date), y: sellDays.map(r => r.buy_core_v18),
+      name: "매도 에피소드 ▼", mode: "markers", type: "scatter",
+      marker: { color: "#ef4444", size: 12, symbol: "triangle-down", line: { color: "#fff", width: 1 } },
+      yaxis: "y",
+      hovertemplate: "%{x}<br><b>매도 에피소드</b><extra></extra>",
+    } : null,
+    buyDays.length ? {
+      x: buyDays.map(r => r.date), y: buyDays.map(r => r.buy_core_v18),
+      name: "분할매수 진입 ▲", mode: "markers", type: "scatter",
+      marker: { color: "#22c55e", size: 9, symbol: "triangle-up", line: { color: "#fff", width: 1 } },
+      yaxis: "y",
+      hovertemplate: "%{x}<br><b>분할매수 진입</b><extra></extra>",
+    } : null,
+  ].filter(Boolean);
+
+  const shapes = [
+    { type:"line", xref:"paper", yref:"y", x0:0, x1:1, y0:8.5, y1:8.5, line:{color:"#22c55e", width:1.2, dash:"dash"} },
+    { type:"line", xref:"paper", yref:"y", x0:0, x1:1, y0:6.5, y1:6.5, line:{color:"#86efac", width:1,   dash:"dot"} },
+    { type:"line", xref:"paper", yref:"y", x0:0, x1:1, y0:0,   y1:0,   line:{color:"#8b97a7", width:1} },
+    { type:"line", xref:"paper", yref:"y2", x0:0, x1:1, y0:-4.5, y1:-4.5, line:{color:"#ef4444", width:1, dash:"dash"} },
+  ];
+  const annotations = [
+    { xref:"paper", yref:"y",  x:1.01, y:8.5,  text:"+8.5", showarrow:false, font:{color:"#22c55e", size:9}, xanchor:"left" },
+    { xref:"paper", yref:"y",  x:1.01, y:6.5,  text:"+6.5", showarrow:false, font:{color:"#86efac", size:9}, xanchor:"left" },
+    { xref:"paper", yref:"y2", x:0.01, y:-4.5, text:"-4.5", showarrow:false, font:{color:"#ef4444", size:9}, xanchor:"left" },
+  ];
+
+  const layout = Object.assign({}, PLOTLY_LAYOUT_BASE, {
+    height: 260,
+    shapes, annotations,
+    margin: { l: 60, r: 60, t: 10, b: 40 },
+    legend: { orientation: "h", y: -0.28 },
+    xaxis: Object.assign({}, PLOTLY_LAYOUT_BASE.xaxis, { rangeselector: undefined }),
+    yaxis:  { title: "buy_core", gridcolor: "#1f2a3a", linecolor: "#1f2a3a", range: [0, 12] },
+    yaxis2: { title: "유포리아", gridcolor: "transparent", linecolor: "#1f2a3a", overlaying:"y", side:"right", range: [-2, 10] },
+  });
+
+  Plotly.newPlot("scoreChartRecent", traces, layout, {
     responsive: true, displaylogo: false, displayModeBar: false, scrollZoom: true,
   });
 }
@@ -426,7 +509,7 @@ function bindChartSync(ids) {
 
 // ─── 핀치줌 ─────────────────────────────────────────────────────────────────
 const _pinchState = { chartId: null, startDist: 0, startMidData: 0, startRange: null };
-const _CHART_IDS = ["priceChart", "scoreChartFull"];
+const _CHART_IDS = ["priceChart", "scoreChartRecent", "scoreChartFull"];  // scoreChartRecent 연동
 
 function _getChartInfo(chartId, clientX) {
   const gd = document.getElementById(chartId);
@@ -524,8 +607,10 @@ async function main() {
 
   if (rows.length >= 2) {
     renderPriceChart(rows);
+    renderScoreChartRecent(rows);  // 가격 차트 연동 V18 점수 차트
   } else {
     document.getElementById("priceChart").innerHTML = '<div class="empty">데이터 누적 중…</div>';
+    document.getElementById("scoreChartRecent").innerHTML = '<div class="empty">데이터 누적 중…</div>';
   }
 
   if (sig.length >= 10) {
