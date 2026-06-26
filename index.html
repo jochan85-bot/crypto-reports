@@ -113,7 +113,7 @@
   <main>
     <!-- 1. 최근 가격 차트 (history.json, KRW) -->
     <div class="card">
-      <h2>가격 · Zone 변경 이벤트 <span class="muted" style="font-weight:400;font-size:12px;">— KRW 기준, 05/30~</span></h2>
+      <h2>가격 · Zone 변경 이벤트</h2>
       <div id="priceChart"></div>
     </div>
 
@@ -231,9 +231,10 @@ function renderStatus(latest) {
     <span class="pill zone-${zone}">${ZONE_LABEL[zone] || zone}</span>
     <span><span class="muted">코어</span> <b style="color:${bcColor}">${fmtSigned(bc)}</b></span>
     <span><span class="muted">유포리아</span> <b style="color:${euColor}">${fmtSigned(eu)}</b></span>
+    ${sellTag}${sbTag}${bdTag}${pbTag}
+    <span style="flex-basis:100%;height:0"></span>
     <span><span class="muted">BTC</span> <b>${fmtKRW(latest.btc_krw)}</b> KRW</span>
     <span><span class="muted">ETH</span> <b>${fmtKRW(latest.eth_krw)}</b> KRW</span>
-    ${sellTag}${sbTag}${bdTag}${pbTag}
   `;
 }
 
