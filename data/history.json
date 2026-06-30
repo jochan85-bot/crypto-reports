@@ -5041,13 +5041,13 @@
   },
   {
     "date": "2026-06-30",
-    "btc_krw": 90350000,
+    "btc_krw": 90381000,
     "eth_krw": 2413000,
     "zone": "BUY",
     "zone_since": "2026-06-04",
     "zone_days": 27,
     "zone_changed": false,
-    "buy_core_v19": 8.5945,
+    "buy_core_v19": 8.5927,
     "euphoria_v19": 5.5814,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -5058,7 +5058,7 @@
     "metrics": {
       "btc_nupl": 0.125,
       "btc_mvrv_z": 0.23,
-      "puell": 0.68,
+      "puell": 0.69,
       "mayer": 0.81,
       "fng": 15
     },
