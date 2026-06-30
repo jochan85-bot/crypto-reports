@@ -73,8 +73,8 @@
   }
   .card h2 { margin: 0 0 10px; font-size: 14px; font-weight: 600; }
   #priceChart, #scoreChartFull, #scoreChartRecent { width: 100%; height: 420px; touch-action: pan-y; }
-  #scoreChartFull { height: 420px; }
-  #priceChartFull { width: 100%; height: 200px; touch-action: pan-y; }
+  #scoreChartFull { height: 240px; }
+  #priceChartFull { width: 100%; height: 360px; touch-action: pan-y; }
   #scoreChartRecent { height: 260px; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
   th, td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
@@ -129,10 +129,10 @@
     <!-- 2. V19 전체 역사 점수 차트 (v18_signal.json, 2019~) -->
     <div class="card">
       <h2>V19 시그널 전체 역사 (2019~) <span class="muted" style="font-weight:400;font-size:12px;">
-        — buy_core(통합점수) · 유포리아 · 매도↓ · 매수●
+        — buy_core(통합점수) · 유포리아 · 매도↓ · 매수▲
       </span></h2>
+      <div id="priceChartFull" style="margin-bottom:-4px;"></div>
       <div id="scoreChartFull"></div>
-      <div id="priceChartFull" style="margin-top:-4px;"></div>
       <div class="chart-note">
         📌 기준선: 매수 <span style="color:#22c55e">+7.0</span> · (참고: +6.5/+8.5 회색 점선) ·
         유포리아 매도임계 <span style="color:#ef4444">−4.5 (우측축)</span> ·
@@ -237,7 +237,7 @@ function renderStatus(latest) {
   // V19 euphoria (raw): 낮을수록 (음수 깊을수록) 매도 압력
   const euColor = eu == null ? "#e6edf3" : (eu <= -4.5 ? "#ef4444" : (eu <= -3 ? "#f59e0b" : "#e6edf3"));
   const sellTag = _ss(latest) ? '<span style="color:#ef4444">🔻매도신호</span>' : '';
-  const bvTag   = _bv(latest) ? '<span style="color:#22c55e">●매수신호</span>' : '';
+  const bvTag   = _bv(latest) ? '<span style="color:#22c55e">▲매수신호</span>' : '';
   const pbTag   = latest.pullback_fresh  ? '<span style="color:#a855f7">🔄눌림목</span>' : '';
   el.innerHTML = `
     <span class="pill zone-${zone}">${ZONE_LABEL[zone] || zone}</span>
@@ -270,8 +270,8 @@ function renderPriceChart(rows) {
     // 매수 ● (초록 원) — V19 단일 신호
     buyDays.length ? {
       x: buyDays.map(r => r.date), y: buyDays.map(r => r.btc_krw),
-      name: "매수 ●", mode: "markers", type: "scatter",
-      marker: { color: "#22c55e", size: 14, symbol: "circle", line: { color: "#fff", width: 1.5 } },
+      name: "매수 ▲", mode: "markers", type: "scatter",
+      marker: { color: "#22c55e", size: 14, symbol: "triangle-up", line: { color: "#fff", width: 1.5 } },
       yaxis: "y",
       hovertemplate: "%{x}<br><b>매수 에피소드 시작</b><extra></extra>",
     } : null,
@@ -345,8 +345,8 @@ function renderScoreChartRecent(rows) {
     } : null,
     buyDays.length ? {
       x: buyDays.map(r => r.date), y: buyDays.map(r => _bc(r)),
-      name: "매수 ●", mode: "markers", type: "scatter",
-      marker: { color: "#22c55e", size: 12, symbol: "circle", line: { color: "#fff", width: 1 } },
+      name: "매수 ▲", mode: "markers", type: "scatter",
+      marker: { color: "#22c55e", size: 12, symbol: "triangle-up", line: { color: "#fff", width: 1 } },
       yaxis: "y",
       hovertemplate: "%{x}<br><b>매수 에피소드 시작</b><extra></extra>",
     } : null,
@@ -440,9 +440,9 @@ function renderScoreChartFull(sig) {
     buyEp.length ? {
       x: buyEp.map(r => r.date),
       y: buyEp.map(r => r.buy_core),
-      name: "매수 ●",
+      name: "매수 ▲",
       mode: "markers", type: "scatter",
-      marker: { color: "#22c55e", size: 12, symbol: "circle", line: { color: "#fff", width: 1 } },
+      marker: { color: "#22c55e", size: 12, symbol: "triangle-up", line: { color: "#fff", width: 1 } },
       yaxis: "y",
       hovertemplate: "%{x}<br><b>매수 에피소드 시작</b><extra></extra>",
     } : null,
@@ -502,8 +502,8 @@ function renderPriceChartFull(sig) {
     } : null,
     buyEp.length ? {
       x: buyEp.map(r => r.date), y: buyEp.map(r => r.btc_usd),
-      name: "매수 ●", mode: "markers", type: "scatter",
-      marker: { color: "#22c55e", size: 12, symbol: "circle", line: { color: "#fff", width: 1 } },
+      name: "매수 ▲", mode: "markers", type: "scatter",
+      marker: { color: "#22c55e", size: 12, symbol: "triangle-up", line: { color: "#fff", width: 1 } },
       showlegend: false,
       hovertemplate: "%{x}<br><b>매수 에피소드 시작</b><extra></extra>",
     } : null,
@@ -579,7 +579,7 @@ function renderDailyTable(rows) {
     '<th class="right">BTC</th><th class="right">ETH</th>' +
     '<th class="right">NUPL</th><th class="right">MVRVz</th><th class="right">F&G</th>' +
     '<th class="right" title="V19 매도 신호">매도</th>' +
-    '<th class="right" title="V19 매수 신호 (임계 7.0)">●</th>' +
+    '<th class="right" title="V19 매수 신호 (임계 7.0)">▲</th>' +
     '<th class="right" title="눌림목 신호 (30일내)">🔄</th>' +
     '</tr></thead><tbody>';
   const boolCell = (v, label, color) => v === true
