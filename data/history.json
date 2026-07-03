@@ -5122,5 +5122,33 @@
       "dollar_tailwind": false,
       "nl_expanding": false
     }
+  },
+  {
+    "date": "2026-07-03",
+    "btc_krw": 92950000,
+    "eth_krw": 2571000,
+    "zone": "BUY",
+    "zone_since": "2026-06-04",
+    "zone_days": 30,
+    "zone_changed": false,
+    "buy_core_v19": 8.4612,
+    "euphoria_v19": 5.6491,
+    "sell_signal_v19": false,
+    "sell_ep_v19": false,
+    "buy_v19": false,
+    "pullback_fresh": false,
+    "pullback_date": "2025-10-18",
+    "ethbtc": 0.0277,
+    "metrics": {
+      "btc_nupl": 0.123,
+      "btc_mvrv_z": 0.2,
+      "puell": 0.71,
+      "mayer": 0.84,
+      "fng": 21
+    },
+    "macro": {
+      "dollar_tailwind": false,
+      "nl_expanding": false
+    }
   }
 ]
