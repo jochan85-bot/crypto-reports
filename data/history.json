@@ -4011,7 +4011,7 @@
     "zone_since": "2026-04-06",
     "zone_days": 49,
     "zone_changed": false,
-    "buy_core_v19": 5.0548,
+    "buy_core_v19": null,
     "euphoria_v19": 2.4041,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4029,7 +4029,8 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-05-25",
@@ -4039,7 +4040,7 @@
     "zone_since": "2026-04-06",
     "zone_days": 50,
     "zone_changed": false,
-    "buy_core_v19": 5.011,
+    "buy_core_v19": null,
     "euphoria_v19": 2.3425,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4057,7 +4058,8 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-05-26",
@@ -4067,7 +4069,7 @@
     "zone_since": "2026-04-06",
     "zone_days": 51,
     "zone_changed": false,
-    "buy_core_v19": 5.3763,
+    "buy_core_v19": null,
     "euphoria_v19": 2.4772,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4085,7 +4087,8 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-05-27",
@@ -4095,7 +4098,7 @@
     "zone_since": "2026-04-06",
     "zone_days": 52,
     "zone_changed": false,
-    "buy_core_v19": 5.7324,
+    "buy_core_v19": null,
     "euphoria_v19": 2.7166,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4113,7 +4116,8 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-05-28",
@@ -4123,7 +4127,7 @@
     "zone_since": "2026-04-06",
     "zone_days": 53,
     "zone_changed": false,
-    "buy_core_v19": 6.0009,
+    "buy_core_v19": null,
     "euphoria_v19": 2.9397,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4141,7 +4145,8 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-05-29",
@@ -4151,7 +4156,7 @@
     "zone_since": "2026-04-06",
     "zone_days": 54,
     "zone_changed": false,
-    "buy_core_v19": 6.0612,
+    "buy_core_v19": null,
     "euphoria_v19": 3.0252,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4169,7 +4174,8 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-05-30",
@@ -4179,7 +4185,7 @@
     "zone_since": "2026-04-06",
     "zone_days": 55,
     "zone_changed": false,
-    "buy_core_v19": 6.0393,
+    "buy_core_v19": null,
     "euphoria_v19": 3.0395,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4197,7 +4203,8 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-05-31",
@@ -4207,7 +4214,7 @@
     "zone_since": "2026-04-06",
     "zone_days": 56,
     "zone_changed": false,
-    "buy_core_v19": 6.0137,
+    "buy_core_v19": null,
     "euphoria_v19": 3.0373,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4225,7 +4232,8 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-06-01",
@@ -4235,7 +4243,7 @@
     "zone_since": "2026-04-06",
     "zone_days": 57,
     "zone_changed": false,
-    "buy_core_v19": 5.9863,
+    "buy_core_v19": null,
     "euphoria_v19": 2.9777,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4253,7 +4261,8 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-06-02",
@@ -4263,7 +4272,7 @@
     "zone_since": "2026-04-06",
     "zone_days": 58,
     "zone_changed": false,
-    "buy_core_v19": 6.4922,
+    "buy_core_v19": null,
     "euphoria_v19": 3.2297,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4281,7 +4290,8 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-06-03",
@@ -4291,7 +4301,7 @@
     "zone_since": "2026-04-06",
     "zone_days": 59,
     "zone_changed": false,
-    "buy_core_v19": 6.6566,
+    "buy_core_v19": null,
     "euphoria_v19": 3.2275,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4309,21 +4319,22 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-06-04",
     "btc_krw": 95506000,
     "eth_krw": 2649000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 1,
-    "zone_changed": true,
-    "buy_core_v19": 7.5553,
+    "zone_changed": false,
+    "buy_core_v19": null,
     "euphoria_v19": 3.9782,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
-    "buy_v19": true,
+    "buy_v19": false,
     "pullback_fresh": false,
     "pullback_date": null,
     "ethbtc": 0.0277,
@@ -4337,17 +4348,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-06-05",
     "btc_krw": 93000000,
     "eth_krw": 2414000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 2,
     "zone_changed": false,
-    "buy_core_v19": 7.5443,
+    "buy_core_v19": null,
     "euphoria_v19": 3.9759,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4365,17 +4377,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-06-06",
     "btc_krw": 92560000,
     "eth_krw": 2386000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 3,
     "zone_changed": false,
-    "buy_core_v19": 8.5397,
+    "buy_core_v19": null,
     "euphoria_v19": 5.2286,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4393,17 +4406,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-06-07",
     "btc_krw": 95430000,
     "eth_krw": 2549000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 4,
     "zone_changed": false,
-    "buy_core_v19": 8.5982,
+    "buy_core_v19": null,
     "euphoria_v19": 5.4188,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4421,17 +4435,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-06-08",
     "btc_krw": 94730000,
     "eth_krw": 2536000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 5,
     "zone_changed": false,
-    "buy_core_v19": 8.463,
+    "buy_core_v19": null,
     "euphoria_v19": 5.5346,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4449,17 +4464,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-06-09",
     "btc_krw": 92555000,
     "eth_krw": 2459000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 6,
     "zone_changed": false,
-    "buy_core_v19": 8.463,
+    "buy_core_v19": null,
     "euphoria_v19": 5.3911,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4477,17 +4493,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-06-10",
     "btc_krw": 92601000,
     "eth_krw": 2440000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 7,
     "zone_changed": false,
-    "buy_core_v19": 8.5123,
+    "buy_core_v19": null,
     "euphoria_v19": 5.2823,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4505,17 +4522,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-06-11",
     "btc_krw": 95623000,
     "eth_krw": 2517000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 8,
     "zone_changed": false,
-    "buy_core_v19": 8.5288,
+    "buy_core_v19": null,
     "euphoria_v19": 5.3711,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4533,17 +4551,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-06-12",
     "btc_krw": 96029000,
     "eth_krw": 2514000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 9,
     "zone_changed": false,
-    "buy_core_v19": 8.39,
+    "buy_core_v19": null,
     "euphoria_v19": 5.4419,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4561,17 +4580,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-06-13",
     "btc_krw": 97475000,
     "eth_krw": 2543000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 10,
     "zone_changed": false,
-    "buy_core_v19": 8.3461,
+    "buy_core_v19": null,
     "euphoria_v19": 5.3405,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4589,17 +4609,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-06-14",
     "btc_krw": 99190000,
     "eth_krw": 2605000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 11,
     "zone_changed": false,
-    "buy_core_v19": 8.1671,
+    "buy_core_v19": null,
     "euphoria_v19": 5.2371,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4617,17 +4638,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-06-15",
     "btc_krw": 99588000,
     "eth_krw": 2697000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 12,
     "zone_changed": false,
-    "buy_core_v19": 8.0301,
+    "buy_core_v19": null,
     "euphoria_v19": 5.1896,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4645,17 +4667,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-06-16",
     "btc_krw": 98645000,
     "eth_krw": 2693000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 13,
     "zone_changed": false,
-    "buy_core_v19": 7.937,
+    "buy_core_v19": null,
     "euphoria_v19": 5.0246,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4673,17 +4696,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-06-17",
     "btc_krw": 97219000,
     "eth_krw": 2638000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 14,
     "zone_changed": false,
-    "buy_core_v19": 7.6539,
+    "buy_core_v19": null,
     "euphoria_v19": 4.7735,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4701,17 +4725,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-06-18",
     "btc_krw": 94988000,
     "eth_krw": 2582000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 15,
     "zone_changed": false,
-    "buy_core_v19": 7.7452,
+    "buy_core_v19": null,
     "euphoria_v19": 4.7606,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4729,17 +4754,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-06-19",
     "btc_krw": 96102000,
     "eth_krw": 2588000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 16,
     "zone_changed": false,
-    "buy_core_v19": 8.0228,
+    "buy_core_v19": null,
     "euphoria_v19": 4.9468,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4757,17 +4783,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-06-20",
     "btc_krw": 97291000,
     "eth_krw": 2635000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 17,
     "zone_changed": false,
-    "buy_core_v19": 8.2164,
+    "buy_core_v19": null,
     "euphoria_v19": 5.1869,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4785,17 +4812,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-06-21",
     "btc_krw": 95395000,
     "eth_krw": 2572000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 18,
     "zone_changed": false,
-    "buy_core_v19": 8.1616,
+    "buy_core_v19": null,
     "euphoria_v19": 5.2735,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4813,17 +4841,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-06-22",
     "btc_krw": 96640000,
     "eth_krw": 2609000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 19,
     "zone_changed": false,
-    "buy_core_v19": 8.1616,
+    "buy_core_v19": null,
     "euphoria_v19": 5.1864,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4841,17 +4870,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-06-23",
     "btc_krw": 94490000,
     "eth_krw": 2514000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 20,
     "zone_changed": false,
-    "buy_core_v19": 8.0959,
+    "buy_core_v19": null,
     "euphoria_v19": 5.1716,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4869,17 +4899,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-06-24",
     "btc_krw": 92583000,
     "eth_krw": 2460000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 21,
     "zone_changed": false,
-    "buy_core_v19": 8.2475,
+    "buy_core_v19": null,
     "euphoria_v19": 5.2214,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4897,17 +4928,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-06-25",
     "btc_krw": 90890000,
     "eth_krw": 2383000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 22,
     "zone_changed": false,
-    "buy_core_v19": 8.3479,
+    "buy_core_v19": null,
     "euphoria_v19": 5.2214,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4925,17 +4957,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-06-26",
     "btc_krw": 90744000,
     "eth_krw": 2382000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 23,
     "zone_changed": false,
-    "buy_core_v19": 8.5671,
+    "buy_core_v19": null,
     "euphoria_v19": 5.4202,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4953,17 +4986,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-06-27",
     "btc_krw": 91300000,
     "eth_krw": 2396000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 24,
     "zone_changed": false,
-    "buy_core_v19": 8.5635,
+    "buy_core_v19": null,
     "euphoria_v19": 5.5902,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -4981,17 +5015,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-06-28",
     "btc_krw": 91143000,
     "eth_krw": 2389000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 25,
     "zone_changed": false,
-    "buy_core_v19": 8.5635,
+    "buy_core_v19": null,
     "euphoria_v19": 5.5902,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -5009,17 +5044,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-06-29",
     "btc_krw": 90931000,
     "eth_krw": 2400000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 26,
     "zone_changed": false,
-    "buy_core_v19": 8.5635,
+    "buy_core_v19": null,
     "euphoria_v19": 5.5971,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -5037,17 +5073,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-06-30",
     "btc_krw": 90381000,
     "eth_krw": 2414000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 27,
     "zone_changed": false,
-    "buy_core_v19": 8.5927,
+    "buy_core_v19": null,
     "euphoria_v19": 5.5814,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -5065,17 +5102,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-07-01",
     "btc_krw": 89302000,
     "eth_krw": 2391000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 28,
     "zone_changed": false,
-    "buy_core_v19": 8.6274,
+    "buy_core_v19": null,
     "euphoria_v19": 5.5814,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -5093,17 +5131,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-07-02",
     "btc_krw": 91196000,
     "eth_krw": 2443000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 29,
     "zone_changed": false,
-    "buy_core_v19": 8.5379,
+    "buy_core_v19": null,
     "euphoria_v19": 5.6315,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -5121,17 +5160,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-07-03",
     "btc_krw": 92950000,
     "eth_krw": 2571000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 30,
     "zone_changed": false,
-    "buy_core_v19": 8.4612,
+    "buy_core_v19": null,
     "euphoria_v19": 5.6491,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -5149,17 +5189,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-07-04",
     "btc_krw": 94389000,
     "eth_krw": 2654000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 31,
     "zone_changed": false,
-    "buy_core_v19": 8.3699,
+    "buy_core_v19": null,
     "euphoria_v19": 5.3495,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -5177,17 +5218,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-07-05",
     "btc_krw": 95242000,
     "eth_krw": 2685000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 32,
     "zone_changed": false,
-    "buy_core_v19": 8.3059,
+    "buy_core_v19": null,
     "euphoria_v19": 5.3495,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -5205,17 +5247,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-07-06",
     "btc_krw": 95690000,
     "eth_krw": 2686000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 33,
     "zone_changed": false,
-    "buy_core_v19": 8.2913,
+    "buy_core_v19": null,
     "euphoria_v19": 5.2793,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -5233,17 +5276,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-07-07",
     "btc_krw": 96110000,
     "eth_krw": 2699000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 34,
     "zone_changed": false,
-    "buy_core_v19": 8.2384,
+    "buy_core_v19": null,
     "euphoria_v19": 5.2168,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -5261,17 +5305,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-07-08",
     "btc_krw": 94903000,
     "eth_krw": 2656000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 35,
     "zone_changed": false,
-    "buy_core_v19": 8.2566,
+    "buy_core_v19": null,
     "euphoria_v19": 5.1668,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -5289,17 +5334,18 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   },
   {
     "date": "2026-07-09",
     "btc_krw": 92910000,
     "eth_krw": 2601000,
-    "zone": "BUY",
+    "zone": "HOLD",
     "zone_since": "2026-06-04",
     "zone_days": 36,
     "zone_changed": false,
-    "buy_core_v19": 8.39,
+    "buy_core_v19": null,
     "euphoria_v19": 5.1689,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -5317,6 +5363,7 @@
     "macro": {
       "dollar_tailwind": false,
       "nl_expanding": false
-    }
+    },
+    "buy_episode_active": false
   }
 ]
