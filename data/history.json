@@ -6113,19 +6113,19 @@
   },
   {
     "date": "2026-08-04",
-    "btc_krw": 90373000,
-    "eth_krw": 2648000,
+    "btc_krw": 90451000,
+    "eth_krw": 2647000,
     "zone": "HOLD",
     "zone_since": "2026-08-01",
     "zone_days": 4,
     "zone_changed": false,
-    "buy_core_v19": null,
-    "euphoria_v19": null,
+    "buy_core_v19": 7.7671,
+    "euphoria_v19": 5.1653,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
     "buy_v19": false,
     "pullback_fresh": false,
-    "pullback_date": null,
+    "pullback_date": "2025-10-18",
     "ethbtc": 0.0293,
     "metrics": {
       "btc_nupl": 0.176,
@@ -6136,10 +6136,18 @@
     },
     "macro": {
       "dollar_tailwind": false,
-      "nl_expanding": null
+      "nl_expanding": false
     },
-    "percentiles": {},
-    "gate_inputs": {},
-    "kimchi_premium_pct": 3.118
+    "percentiles": {
+      "mvrv_z_pctl": 0.2205,
+      "nupl_pctl": 0.2056,
+      "puell_pctl": 0.2142,
+      "mayer_pctl": 0.2331
+    },
+    "gate_inputs": {
+      "dxy_chg_60d": 0.0204,
+      "nl_ratio": 0.0159
+    },
+    "kimchi_premium_pct": 3.317
   }
 ]
