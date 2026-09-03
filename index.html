@@ -96,6 +96,8 @@
   footer { color: var(--muted); font-size: 12px; padding: 16px; text-align: center; }
   footer a { color: var(--blue); text-decoration: none; }
   .chart-note { font-size: 11px; color: var(--muted); margin-top: 4px; padding: 0 4px; }
+  /* Allow vertical scroll to pass through Plotly drag layers */
+  .js-plotly-plot .nsewdrag { touch-action: pan-y !important; }
 </style>
 </head>
 <body>
@@ -219,6 +221,7 @@ const PLOTLY_LAYOUT_BASE = {
   legend: { orientation: "h", y: -0.22 },
   xaxis: {
     gridcolor: "#1f2a3a", linecolor: "#1f2a3a",
+    tickformat: "%Y.%m",
     rangeslider: { visible: false },
     rangeselector: {
       bgcolor: "#0b0f17", activecolor: "#3b82f6", bordercolor: "#1f2a3a",
@@ -330,7 +333,7 @@ function renderPriceChart(rows) {
     yaxis2: { title: "ETH (KRW)", gridcolor: "transparent", linecolor: "#1f2a3a", overlaying: "y", side: "right" },
   });
   Plotly.newPlot("priceChart", traces, layout, {
-    responsive: true, displaylogo: false, displayModeBar: false, scrollZoom: true,
+    responsive: true, displaylogo: false, displayModeBar: false, scrollZoom: false,
   });
 }
 
@@ -405,7 +408,7 @@ function renderScoreChartRecent(rows) {
   });
 
   Plotly.newPlot("scoreChartRecent", traces, layout, {
-    responsive: true, displaylogo: false, displayModeBar: false, scrollZoom: true,
+    responsive: true, displaylogo: false, displayModeBar: false, scrollZoom: false,
   });
 }
 
@@ -498,7 +501,7 @@ function renderScoreChartFull(sig) {
     yaxis2: { title: "유포리아", gridcolor: "transparent", linecolor: "#1f2a3a", overlaying:"y", side:"right", range: [-12, 12] },
   });
   Plotly.newPlot("scoreChartFull", traces, layout, {
-    responsive: true, displaylogo: false, displayModeBar: false, scrollZoom: true,
+    responsive: true, displaylogo: false, displayModeBar: false, scrollZoom: false,
   });
 }
 
@@ -550,26 +553,8 @@ function renderPriceChartFull(sig) {
   });
 
   Plotly.newPlot("priceChartFull", traces, layout, {
-    responsive: true, displaylogo: false, displayModeBar: false, scrollZoom: true,
+    responsive: true, displaylogo: false, displayModeBar: false, scrollZoom: false,
   });
-
-  // scoreChartFull ↔ priceChartFull 양방향 x축 연동
-  let _syncing = false;
-  function syncFullCharts(sourceId, targetId, e) {
-    if (_syncing) return;
-    _syncing = true;
-    const patch = {};
-    if (e["xaxis.range[0]"] !== undefined) {
-      patch["xaxis.range[0]"] = e["xaxis.range[0]"];
-      patch["xaxis.range[1]"] = e["xaxis.range[1]"];
-    } else if (e["xaxis.autorange"]) {
-      patch["xaxis.autorange"] = true;
-    }
-    if (Object.keys(patch).length) Plotly.relayout(targetId, patch);
-    _syncing = false;
-  }
-  document.getElementById("scoreChartFull").on("plotly_relayout",  e => syncFullCharts("scoreChartFull",  "priceChartFull", e));
-  document.getElementById("priceChartFull").on("plotly_relayout",  e => syncFullCharts("priceChartFull",  "scoreChartFull", e));
 }
 
 // ─── Signal Log ─────────────────────────────────────────────────────────────
@@ -703,7 +688,7 @@ function bindChartSync(ids) {
 
 // ─── 핀치줌 ─────────────────────────────────────────────────────────────────
 const _pinchState = { chartId: null, startDist: 0, startMidData: 0, startRange: null };
-const _CHART_IDS = ["priceChart", "scoreChartRecent", "scoreChartFull"];  // scoreChartRecent 연동
+const _CHART_IDS = ["priceChart", "scoreChartRecent", "priceChartFull", "scoreChartFull"];
 
 function _getChartInfo(chartId, clientX) {
   const gd = document.getElementById(chartId);
@@ -801,15 +786,17 @@ async function main() {
 
   if (rows.length >= 2) {
     renderPriceChart(rows);
-    renderScoreChartRecent(rows);  // 가격 차트 연동 V19 점수 차트
+    renderScoreChartRecent(rows);
+    bindChartSync(["priceChart", "scoreChartRecent"]);
   } else {
     document.getElementById("priceChart").innerHTML = '<div class="empty">데이터 누적 중…</div>';
     document.getElementById("scoreChartRecent").innerHTML = '<div class="empty">데이터 누적 중…</div>';
   }
 
   if (sig.length >= 10) {
-    renderScoreChartFull(sig);
     renderPriceChartFull(sig);
+    renderScoreChartFull(sig);
+    bindChartSync(["priceChartFull", "scoreChartFull"]);
   } else {
     document.getElementById("scoreChartFull").innerHTML = '<div class="empty">v18_signal.json 로드 실패 또는 데이터 부족</div>';
   }
