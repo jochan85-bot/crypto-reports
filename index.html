@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>📈 MacTrader · Crypto V19 Live</title>
+<title>₿ Crypto Signal · V19 Live</title>
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
 <style>
   :root {
@@ -102,7 +102,7 @@
   <header>
     <!-- 1줄: 타이틀 + Guide 버튼 -->
     <div class="header-top">
-      <h1>📈 MacTrader · Crypto V19 <small>매수 단일 신호 · 임계 7.0</small></h1>
+      <h1>₿ Crypto Signal · BTC/ETH V19 <small>매수 단일 신호 · 임계 7.0</small></h1>
       <a class="guide-btn" href="guide.html" target="_blank" rel="noopener">📖 Guide</a>
     </div>
     <!-- 2줄: 상태바 (수평 스크롤) -->
@@ -158,11 +158,28 @@
   <footer>
     데이터 갱신: 매일 09:00 KST ·
     <a href="data/history.json">history.json</a> ·
-    <a href="data/v18_signal.json">v18_signal.json</a> ·
+    <a href="data/v18_signal.json">V19 시그널 데이터</a> ·
     <a href="https://github.com/jochan85-bot/crypto-reports">GitHub</a>
   </footer>
 
 <script>
+function buildZoneShapes(rows, isBuy, isSell) {
+  const shapes = [];
+  let curType = null, start = null, last = null;
+  rows.forEach(r => {
+    const t = isBuy(r) ? 'buy' : (isSell(r) ? 'sell' : null);
+    if (t !== curType) {
+      if (curType) shapes.push({ type:'rect', xref:'x', yref:'paper', x0:start, x1:last, y0:0, y1:1,
+        fillcolor: curType === 'buy' ? 'rgba(34,197,94,0.08)' : 'rgba(239,68,68,0.08)', line:{width:0} });
+      curType = t; start = r.date;
+    }
+    last = r.date;
+  });
+  if (curType) shapes.push({ type:'rect', xref:'x', yref:'paper', x0:start, x1:last, y0:0, y1:1,
+    fillcolor: curType === 'buy' ? 'rgba(34,197,94,0.08)' : 'rgba(239,68,68,0.08)', line:{width:0} });
+  return shapes;
+}
+
 const CFG = {
   BUY_CORE:   7.0,    // V19 매수 단일 임계
   REF_LOW:    6.5,    // 참고선 (구 V18 분할매수)
@@ -303,8 +320,12 @@ function renderPriceChart(rows) {
     } : null,
   ].filter(Boolean);
 
+  const zoneShapes = buildZoneShapes(rows,
+    r => r.zone === 'BUY' || r.zone === 'STRONG_BUY',
+    r => r.zone === 'SELL' || r.zone === 'STRONG_SELL');
   const layout = Object.assign({}, PLOTLY_LAYOUT_BASE, {
     height: 420,
+    shapes: zoneShapes,
     yaxis:  { title: "BTC (KRW)", gridcolor: "#1f2a3a", linecolor: "#1f2a3a", side: "left" },
     yaxis2: { title: "ETH (KRW)", gridcolor: "transparent", linecolor: "#1f2a3a", overlaying: "y", side: "right" },
   });
@@ -362,6 +383,9 @@ function renderScoreChartRecent(rows) {
     { type:"line", xref:"paper", yref:"y", x0:0, x1:1, y0:6.5, y1:6.5, line:{color:"#475569", width:1,   dash:"dot"} },
     { type:"line", xref:"paper", yref:"y", x0:0, x1:1, y0:0,   y1:0,   line:{color:"#8b97a7", width:1} },
     { type:"line", xref:"paper", yref:"y2", x0:0, x1:1, y0:-4.5, y1:-4.5, line:{color:"#ef4444", width:1, dash:"dash"} },
+    ...buildZoneShapes(rows,
+      r => r.zone === 'BUY' || r.zone === 'STRONG_BUY',
+      r => r.zone === 'SELL' || r.zone === 'STRONG_SELL'),
   ];
   const annotations = [
     { xref:"paper", yref:"y",  x:1.01, y:7.0,  text:"+7.0 매수", showarrow:false, font:{color:"#22c55e", size:9}, xanchor:"left" },
@@ -458,6 +482,7 @@ function renderScoreChartFull(sig) {
     { type: "line", xref: "paper", yref: "y",  x0:0, x1:1, y0: CFG.REF_LOW,  y1: CFG.REF_LOW,  line:{color:"#475569", width:1, dash:"dot"} },
     { type: "line", xref: "paper", yref: "y",  x0:0, x1:1, y0: 0,            y1: 0,            line:{color:"#8b97a7", width:1} },
     { type: "line", xref: "paper", yref: "y2", x0:0, x1:1, y0: CFG.SELL_EU,  y1: CFG.SELL_EU,  line:{color:"#ef4444", width:1.2, dash:"dash"} },
+    ...buildZoneShapes(sig, r => r.buy_core != null && r.buy_core >= CFG.BUY_CORE, r => r.sell_raw === true),
   ];
   const annotations = [
     { xref:"paper", yref:"y",  x:1.01, y:CFG.BUY_CORE, text:"+7.0 매수", showarrow:false, font:{color:"#22c55e", size:9}, xanchor:"left" },
@@ -516,6 +541,7 @@ function renderPriceChartFull(sig) {
     margin: { l: 60, r: 60, t: 6, b: 40 },
     legend: { orientation: "h", y: -0.4 },
     showlegend: false,
+    shapes: buildZoneShapes(sig, r => r.buy_core != null && r.buy_core >= CFG.BUY_CORE, r => r.sell_raw === true),
     xaxis: Object.assign({}, PLOTLY_LAYOUT_BASE.xaxis, { rangeselector: undefined }),
     yaxis: {
       title: "BTC (USD)", gridcolor: "#1f2a3a", linecolor: "#1f2a3a",
