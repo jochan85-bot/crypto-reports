@@ -7774,13 +7774,13 @@
   },
   {
     "date": "2026-09-16",
-    "btc_krw": 102937000,
-    "eth_krw": 3265000,
+    "btc_krw": 102947000,
+    "eth_krw": 3266000,
     "zone": "HOLD",
     "zone_since": "2026-08-01",
     "zone_days": 47,
     "zone_changed": false,
-    "buy_core_v19": 4.1026,
+    "buy_core_v19": 4.0971,
     "euphoria_v19": 1.8076,
     "sell_signal_v19": false,
     "sell_ep_v19": false,
@@ -7802,13 +7802,13 @@
     "percentiles": {
       "mvrv_z_pctl": 0.4187,
       "nupl_pctl": 0.3805,
-      "puell_pctl": 0.3508,
-      "mayer_pctl": 0.3704
+      "puell_pctl": 0.3509,
+      "mayer_pctl": 0.3705
     },
     "gate_inputs": {
       "dxy_chg_60d": -0.0166,
       "nl_ratio": -0.0129
     },
-    "kimchi_premium_pct": -1.374
+    "kimchi_premium_pct": -1.356
   }
 ]
