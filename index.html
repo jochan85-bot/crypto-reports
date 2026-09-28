@@ -537,6 +537,21 @@ function renderPriceChartFull(sig) {
       showlegend: false,
       hovertemplate: "%{x}<br><b>매수 에피소드 시작</b><extra></extra>",
     } : null,
+    // V19_SIGNAL_V2_DIFF_FIX(e): 눈금(R조건 유효)/X 마커. export_v18_signal.py diff(c)가 채우는
+    // rung_fires_v2(빈 배열이 아닌 날)를 그대로 사용 — signal_mode="v2"가 아니면 이 필드 자체가
+    // 없으므로(diff c) rungFires가 빈 배열이 되어 이 trace는 조용히 그려지지 않는다.
+    (() => {
+      const rungFires = sig.filter(r => Array.isArray(r.rung_fires_v2) && r.rung_fires_v2.length);
+      if (!rungFires.length) return null;
+      return {
+        x: rungFires.map(r => r.date), y: rungFires.map(r => r.btc_usd),
+        name: "v2 눈금/X (관찰용)", mode: "markers", type: "scatter",
+        marker: { color: "#f97316", size: 10, symbol: "diamond", line: { color: "#111827", width: 1 } },
+        showlegend: true,
+        text: rungFires.map(r => r.rung_fires_v2.join(",")),
+        hovertemplate: "%{x}<br>v2 발화: %{text}<extra></extra>",
+      };
+    })(),
   ].filter(Boolean);
 
   const layout = Object.assign({}, PLOTLY_LAYOUT_BASE, {
@@ -544,7 +559,13 @@ function renderPriceChartFull(sig) {
     margin: { l: 60, r: 60, t: 6, b: 40 },
     legend: { orientation: "h", y: -0.4 },
     showlegend: false,
-    shapes: buildZoneShapes(sig, r => r.buy_core != null && r.buy_core >= CFG.BUY_CORE, r => r.sell_raw === true),
+    shapes: [
+      ...buildZoneShapes(sig, r => r.buy_core != null && r.buy_core >= CFG.BUY_CORE, r => r.sell_raw === true),
+      // v2 BUY존(buy_zone_v2) 음영 — legacy BUY존과 구분되는 연한 보라색 배경.
+      // export_v18_signal.py diff(c)가 buy_zone_v2를 채우지 않으면(legacy 모드) 빈 배열.
+      ...buildZoneShapes(sig, r => r.buy_zone_v2 === true, () => false)
+        .map(s => Object.assign({}, s, { fillcolor: "rgba(168,85,247,0.10)" })),
+    ],
     xaxis: Object.assign({}, PLOTLY_LAYOUT_BASE.xaxis, { rangeselector: undefined }),
     yaxis: {
       title: "BTC (USD)", gridcolor: "#1f2a3a", linecolor: "#1f2a3a",
