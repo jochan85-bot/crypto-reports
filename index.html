@@ -443,8 +443,8 @@ function renderScoreChartRecent(rows) {
     margin: { l: 60, r: 60, t: 10, b: 40 },
     legend: { orientation: "h", y: -0.28 },
     xaxis: Object.assign({}, PLOTLY_LAYOUT_BASE.xaxis, { rangeselector: undefined }),
-    yaxis:  { title: "buy_core", gridcolor: "#1f2a3a", linecolor: "#1f2a3a", range: [0, 12] },
-    yaxis2: { title: "유포리아_sym", gridcolor: "transparent", linecolor: "#1f2a3a", overlaying:"y", side:"right", range: [-9.5, 10] },
+    yaxis:  { title: "buy_core", gridcolor: "#1f2a3a", linecolor: "#1f2a3a", range: [-12, 12] },
+    yaxis2: { title: "유포리아_sym", gridcolor: "transparent", linecolor: "#1f2a3a", overlaying:"y", side:"right", range: [-12, 12] },
   });
 
   Plotly.newPlot("scoreChartRecent", traces, layout, {
