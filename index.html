@@ -142,7 +142,8 @@
       <div class="chart-note">
         📌 기준선: 매수 존 <span style="color:#22c55e">+7.0 진입</span>/<span style="color:#64748b">+6.0 이탈</span> ·
         매도 <span style="color:#ef4444">−6.0 진입</span> ·
-        온체인: CoinMetrics(2일 지연)·Puell 결정론(지연 0), 유포리아 = min(전체 이력, 3년창) 백분위, DXY는 표기만
+        온체인: CoinMetrics(2일 지연)·Puell 결정론(지연 0), 유포리아 = min(전체 이력, 3년창) 백분위, DXY는 표기만 ·
+        <span style="color:#6b7684">회색(참고, 제외)</span> = 2019 이전 — 진폭 감소 전제로 설계 표본 제외, 판정 무영향
       </div>
     </div>
 
@@ -226,6 +227,15 @@ function _xSignalDays(rows) {
 }
 function _invalidCrossingDays(rows) {
   return rows.filter(r => Array.isArray(r.crossings_v2_invalid) && r.crossings_v2_invalid.length);
+}
+// V20_HISTORY_EXT — 2019 이전(reference:true) 행은 표시는 하되 "참고(제외)"로 구분한다.
+// v18_signal.json에만 존재하는 필드(history.json은 항상 2019 이후만이라 reference가 없음
+// 또는 항상 false) — undefined도 false로 취급.
+function _splitRef(arr) {
+  return {
+    normal: arr.filter(r => r.reference !== true),
+    ref:    arr.filter(r => r.reference === true),
+  };
 }
 function _invalidText(r) {
   return r.crossings_v2_invalid.map(c => `${c.level}(${c.reason})`).join(", ");
@@ -502,9 +512,9 @@ function renderScoreChartFull(sig) {
   const bc  = sig.map(r => r.buy_core);
   const eu  = sig.map(r => r.euphoria_sym_v2);
 
-  const buyEp    = _computeV20BuyEpisodes(sig);
-  const rungDays = _rungSignalDays(sig);
-  const xDays    = _xSignalDays(sig);
+  const buyEp    = _splitRef(_computeV20BuyEpisodes(sig));
+  const rungDays = _splitRef(_rungSignalDays(sig));
+  const xDays    = _splitRef(_xSignalDays(sig));
   const invalidDays = _invalidCrossingDays(sig);
 
   const traces = [
@@ -525,29 +535,52 @@ function renderScoreChartFull(sig) {
       yaxis: "y2",
       hovertemplate: "%{x}<br>유포리아_sym: <b>%{y:.2f}</b><extra></extra>",
     },
-    buyEp.length ? {
-      x: buyEp.map(r => r.date),
-      y: buyEp.map(r => r.buy_core),
+    buyEp.normal.length ? {
+      x: buyEp.normal.map(r => r.date),
+      y: buyEp.normal.map(r => r.buy_core),
       name: "매수",
       mode: "markers", type: "scatter",
       marker: { color: "#22c55e", size: 12, symbol: "triangle-up", line: { color: "#fff", width: 1 } },
       yaxis: "y",
       hovertemplate: "%{x}<br><b>매수존 진입 (buy_zone_v2)</b><extra></extra>",
     } : null,
-    rungDays.length ? {
-      x: rungDays.map(r => r.date), y: rungDays.map(r => r.euphoria_sym_v2),
+    rungDays.normal.length ? {
+      x: rungDays.normal.map(r => r.date), y: rungDays.normal.map(r => r.euphoria_sym_v2),
       name: "매도", mode: "markers", type: "scatter",
       marker: { color: "#ef4444", size: 9, symbol: "triangle-down", line: { color: "#111827", width: 1 } },
       yaxis: "y2",
-      text: rungDays.map(r => r.signals_v2.filter(l => l !== 'X').join(",")),
+      text: rungDays.normal.map(r => r.signals_v2.filter(l => l !== 'X').join(",")),
       hovertemplate: "%{x}<br>매도: %{text}<extra></extra>",
     } : null,
-    xDays.length ? {
-      x: xDays.map(r => r.date), y: xDays.map(r => r.euphoria_sym_v2),
+    xDays.normal.length ? {
+      x: xDays.normal.map(r => r.date), y: xDays.normal.map(r => r.euphoria_sym_v2),
       name: "청산 탈출", mode: "markers", type: "scatter",
       marker: { color: "#a855f7", size: 10, symbol: "diamond", line: { color: "#fff", width: 1.5 } },
       yaxis: "y2",
       hovertemplate: "%{x}<br><b>청산 탈출(−6.0 상향돌파)</b><extra></extra>",
+    } : null,
+    // V20_HISTORY_EXT — 2019 이전(reference:true) 매수/매도/청산탈출 = 회색, "참고(제외)"
+    buyEp.ref.length ? {
+      x: buyEp.ref.map(r => r.date), y: buyEp.ref.map(r => r.buy_core),
+      name: "매수 (참고, 제외)", mode: "markers", type: "scatter",
+      marker: { color: "#6b7684", size: 10, symbol: "triangle-up", line: { color: "#111827", width: 1 } },
+      yaxis: "y",
+      hovertemplate: "%{x}<br><b>매수존 진입 — 참고(2019 이전, 설계 표본 제외)</b><extra></extra>",
+    } : null,
+    rungDays.ref.length ? {
+      x: rungDays.ref.map(r => r.date), y: rungDays.ref.map(r => r.euphoria_sym_v2),
+      name: "매도 (참고, 제외)", mode: "markers", type: "scatter",
+      marker: { color: "#6b7684", size: 7, symbol: "triangle-down", line: { color: "#111827", width: 1 } },
+      yaxis: "y2",
+      text: rungDays.ref.map(r => r.signals_v2.filter(l => l !== 'X').join(",")),
+      hovertemplate: "%{x}<br>매도(참고): %{text}<extra></extra>",
+    } : null,
+    xDays.ref.length ? {
+      x: xDays.ref.map(r => r.date), y: xDays.ref.map(r => r.euphoria_sym_v2),
+      name: "청산 탈출 (참고, 제외)", mode: "markers", type: "scatter",
+      marker: { color: "#6b7684", size: 8, symbol: "diamond", line: { color: "#111827", width: 1 } },
+      yaxis: "y2",
+      hovertemplate: "%{x}<br><b>청산 탈출 — 참고(2019 이전, 설계 표본 제외)</b><extra></extra>",
     } : null,
     invalidDays.length ? {
       x: invalidDays.map(r => r.date), y: invalidDays.map(r => r.euphoria_sym_v2),
@@ -591,9 +624,9 @@ function renderPriceChartFull(sig) {
   const x   = sig.map(r => r.date);
   const btc = sig.map(r => r.btc_usd);
 
-  const buyEp     = _computeV20BuyEpisodes(sig);
-  const rungDays  = _rungSignalDays(sig);
-  const xDays     = _xSignalDays(sig);
+  const buyEp     = _splitRef(_computeV20BuyEpisodes(sig));
+  const rungDays  = _splitRef(_rungSignalDays(sig));
+  const xDays     = _splitRef(_xSignalDays(sig));
   const invalidDays = _invalidCrossingDays(sig);
 
   const traces = [
@@ -606,29 +639,52 @@ function renderPriceChartFull(sig) {
       yaxis: "y",
       hovertemplate: "%{x}<br>BTC: <b>$%{y:,.0f}</b><extra></extra>",
     },
-    buyEp.length ? {
-      x: buyEp.map(r => r.date), y: buyEp.map(r => r.btc_usd),
+    buyEp.normal.length ? {
+      x: buyEp.normal.map(r => r.date), y: buyEp.normal.map(r => r.btc_usd),
       name: "매수", mode: "markers", type: "scatter",
       marker: { color: "#22c55e", size: 12, symbol: "triangle-up", line: { color: "#fff", width: 1 } },
       showlegend: false,
       hovertemplate: "%{x}<br><b>매수존 진입 (buy_zone_v2)</b><extra></extra>",
     } : null,
     // 매도(눈금, X 제외, 게이팅 통과분만) — 빨간 역삼각형
-    rungDays.length ? {
-      x: rungDays.map(r => r.date), y: rungDays.map(r => r.btc_usd),
+    rungDays.normal.length ? {
+      x: rungDays.normal.map(r => r.date), y: rungDays.normal.map(r => r.btc_usd),
       name: "매도", mode: "markers", type: "scatter",
       marker: { color: "#ef4444", size: 10, symbol: "triangle-down", line: { color: "#111827", width: 1 } },
       showlegend: true,
-      text: rungDays.map(r => r.signals_v2.filter(l => l !== 'X').join(",")),
+      text: rungDays.normal.map(r => r.signals_v2.filter(l => l !== 'X').join(",")),
       hovertemplate: "%{x}<br>매도: %{text}<extra></extra>",
     } : null,
     // 청산 탈출(X, 게이팅 통과분만) — 보라 마름모
-    xDays.length ? {
-      x: xDays.map(r => r.date), y: xDays.map(r => r.btc_usd),
+    xDays.normal.length ? {
+      x: xDays.normal.map(r => r.date), y: xDays.normal.map(r => r.btc_usd),
       name: "청산 탈출", mode: "markers", type: "scatter",
       marker: { color: "#a855f7", size: 11, symbol: "diamond", line: { color: "#fff", width: 1.5 } },
       showlegend: true,
       hovertemplate: "%{x}<br><b>청산 탈출(−6.0 상향돌파)</b><extra></extra>",
+    } : null,
+    // V20_HISTORY_EXT — 2019 이전(reference:true) = 회색, "참고(제외)"
+    buyEp.ref.length ? {
+      x: buyEp.ref.map(r => r.date), y: buyEp.ref.map(r => r.btc_usd),
+      name: "매수 (참고, 제외)", mode: "markers", type: "scatter",
+      marker: { color: "#6b7684", size: 10, symbol: "triangle-up", line: { color: "#111827", width: 1 } },
+      showlegend: false,
+      hovertemplate: "%{x}<br><b>매수존 진입 — 참고(2019 이전, 설계 표본 제외)</b><extra></extra>",
+    } : null,
+    rungDays.ref.length ? {
+      x: rungDays.ref.map(r => r.date), y: rungDays.ref.map(r => r.btc_usd),
+      name: "매도 (참고, 제외)", mode: "markers", type: "scatter",
+      marker: { color: "#6b7684", size: 8, symbol: "triangle-down", line: { color: "#111827", width: 1 } },
+      showlegend: true,
+      text: rungDays.ref.map(r => r.signals_v2.filter(l => l !== 'X').join(",")),
+      hovertemplate: "%{x}<br>매도(참고): %{text}<extra></extra>",
+    } : null,
+    xDays.ref.length ? {
+      x: xDays.ref.map(r => r.date), y: xDays.ref.map(r => r.btc_usd),
+      name: "청산 탈출 (참고, 제외)", mode: "markers", type: "scatter",
+      marker: { color: "#6b7684", size: 9, symbol: "diamond", line: { color: "#111827", width: 1 } },
+      showlegend: true,
+      hovertemplate: "%{x}<br><b>청산 탈출 — 참고(2019 이전, 설계 표본 제외)</b><extra></extra>",
     } : null,
     // 무효 돌파 — 기본 숨김, 범례 클릭으로 표시
     invalidDays.length ? {
