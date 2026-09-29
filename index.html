@@ -128,15 +128,12 @@
   <!-- Guide 모달 -->
 
   <main>
-    <!-- 1. 최근 가격 차트 (history.json, KRW) -->
+    <!-- 1. 크립토 라이브 시그널 (history.json, KRW) — 오너 지시 2026-09-29: 제목 변경
+         + 가격/점수 차트를 카드 하나로 병합(따로 나뉘어 보이던 것 통합) -->
     <div class="card">
-      <h2>가격 · Zone 변경 이벤트</h2>
+      <h2>크립토 라이브 시그널</h2>
       <div id="priceChart"></div>
-    </div>
-
-    <!-- 1-1. 가격 차트 연동 V20 점수/유포리아 (history.json) -->
-    <div class="card" style="margin-top:-8px; border-top:none; border-radius:0 0 10px 10px;">
-      <h2 style="color:var(--muted);font-size:12px;font-weight:500;">V20 점수 · 유포리아 <span style="font-weight:400;">— 가격 차트 연동</span></h2>
+      <h3 style="color:var(--muted);font-size:12px;font-weight:500;margin:14px 0 8px;">V20 점수 · 유포리아 <span style="font-weight:400;">— 가격 차트 연동</span></h3>
       <div id="scoreChartRecent"></div>
       <!-- 아이콘 인덱스 — 두 차트(가격/점수)의 자체 Plotly 범례는 껐고(showlegend:false),
            이 박스 하나가 유일한 범례다(오너 지시 2026-09-29: 중복·산만한 하단 범례 대신
@@ -154,8 +151,8 @@
           <span class="icon-index-label">신호</span>
           <span style="color:#22c55e">▲ 매수존 진입</span>
           <span style="color:#ef4444">▼ 매도</span>
-          <span style="color:#a855f7">◆ 청산 탈출</span>
-          <span style="color:#a855f7">◆✕ 청산(거짓·재무장)</span>
+          <span><svg width="13" height="13" viewBox="0 0 14 14" style="vertical-align:-2px"><polygon points="7,1 13,7 7,13 1,7" fill="#1e3a8a"/></svg> 청산 탈출</span>
+          <span><svg width="13" height="13" viewBox="0 0 14 14" style="vertical-align:-2px"><polygon points="7,1 13,7 7,13 1,7" fill="#1e3a8a"/><line x1="4" y1="4" x2="10" y2="10" stroke="#000" stroke-width="1.6"/><line x1="10" y1="4" x2="4" y2="10" stroke="#000" stroke-width="1.6"/></svg> 청산(거짓·재무장)</span>
           <span style="color:#8b97a7">◇ 관망 전환</span>
         </div>
       </div>
@@ -180,8 +177,8 @@
           <span class="icon-index-label">신호</span>
           <span style="color:#22c55e">▲ 매수존 진입</span>
           <span style="color:#ef4444">▼ 매도</span>
-          <span style="color:#a855f7">◆ 청산 탈출</span>
-          <span style="color:#a855f7">◆✕ 청산(거짓·재무장)</span>
+          <span><svg width="13" height="13" viewBox="0 0 14 14" style="vertical-align:-2px"><polygon points="7,1 13,7 7,13 1,7" fill="#1e3a8a"/></svg> 청산 탈출</span>
+          <span><svg width="13" height="13" viewBox="0 0 14 14" style="vertical-align:-2px"><polygon points="7,1 13,7 7,13 1,7" fill="#1e3a8a"/><line x1="4" y1="4" x2="10" y2="10" stroke="#000" stroke-width="1.6"/><line x1="10" y1="4" x2="4" y2="10" stroke="#000" stroke-width="1.6"/></svg> 청산(거짓·재무장)</span>
         </div>
       </div>
       <div class="chart-note">
@@ -408,7 +405,7 @@ function renderPriceChart(rows) {
     {
       x: xDays.map(r => r.date), y: xDays.map(r => r.btc_krw),
       name: "청산 탈출", mode: "markers", type: "scatter",
-      marker: { color: "#a855f7", size: 9, symbol: "diamond" },
+      marker: { color: "#1e3a8a", size: 12, symbol: "diamond" },
       yaxis: "y",
       hovertemplate: "%{x}<br><b>청산 탈출(−6.0 상향돌파)</b><extra></extra>",
     },
@@ -417,7 +414,7 @@ function renderPriceChart(rows) {
     {
       x: xFalseDays.map(r => r.date), y: xFalseDays.map(r => r.btc_krw),
       name: "청산(거짓·재무장)", mode: "markers", type: "scatter",
-      marker: { color: "#a855f7", size: 9, symbol: "diamond-x", line: { color: "#111827", width: 1.5 } },
+      marker: { color: "#1e3a8a", size: 12, symbol: "diamond-x", line: { color: "#000", width: 1.8 } },
       yaxis: "y",
       text: xFalseDays.map(r => `H_x=$${(r.x_hx_v2||0).toLocaleString()} 돌파일=${r.x_false_day_v2||''}`),
       hovertemplate: "%{x}<br><b>청산(거짓·재무장)</b><br>%{text}<extra></extra>",
@@ -515,7 +512,7 @@ function renderScoreChartRecent(rows) {
     {
       x: xDays.map(r => r.date), y: xDays.map(r => _eu(r)),
       name: "청산 탈출", mode: "markers", type: "scatter",
-      marker: { color: "#a855f7", size: 8, symbol: "diamond" },
+      marker: { color: "#1e3a8a", size: 11, symbol: "diamond" },
       yaxis: "y2",
       hovertemplate: "%{x}<br><b>청산 탈출(−6.0 상향돌파)</b><extra></extra>",
     },
@@ -523,7 +520,7 @@ function renderScoreChartRecent(rows) {
     {
       x: xFalseDays.map(r => r.date), y: xFalseDays.map(r => _eu(r)),
       name: "청산(거짓·재무장)", mode: "markers", type: "scatter",
-      marker: { color: "#a855f7", size: 8, symbol: "diamond-x", line: { color: "#111827", width: 1.5 } },
+      marker: { color: "#1e3a8a", size: 11, symbol: "diamond-x", line: { color: "#000", width: 1.8 } },
       yaxis: "y2",
       text: xFalseDays.map(r => `H_x=$${(r.x_hx_v2||0).toLocaleString()} 돌파일=${r.x_false_day_v2||''}`),
       hovertemplate: "%{x}<br><b>청산(거짓·재무장)</b><br>%{text}<extra></extra>",
@@ -638,14 +635,14 @@ function renderScoreChartFull(sig) {
     xDays.normal.length ? {
       x: xDays.normal.map(r => r.date), y: xDays.normal.map(r => r.euphoria_sym_v2),
       name: "청산 탈출", mode: "markers", type: "scatter",
-      marker: { color: "#a855f7", size: 7, symbol: "diamond" },
+      marker: { color: "#1e3a8a", size: 10, symbol: "diamond" },
       yaxis: "y2",
       hovertemplate: "%{x}<br><b>청산 탈출(−6.0 상향돌파)</b><extra></extra>",
     } : null,
     xRefDays.normal.length ? {
       x: xRefDays.normal.map(r => r.date), y: xRefDays.normal.map(r => r.euphoria_sym_v2),
       name: "청산 탈출 (참고, 제외)", mode: "markers", type: "scatter",
-      marker: { color: "#6b7684", size: 6, symbol: "diamond" },
+      marker: { color: "#6b7684", size: 8, symbol: "diamond" },
       yaxis: "y2", showlegend: false,
       hovertemplate: "%{x}<br><b>청산 탈출 — 참고(2019 이전, 설계 표본 제외)</b><extra></extra>",
     } : null,
@@ -654,7 +651,7 @@ function renderScoreChartFull(sig) {
     xDays.falsed.length ? {
       x: xDays.falsed.map(r => r.date), y: xDays.falsed.map(r => r.euphoria_sym_v2),
       name: "청산(거짓·재무장)", mode: "markers", type: "scatter",
-      marker: { color: "#a855f7", size: 7, symbol: "diamond-x", line: { color: "#111827", width: 1.2 } },
+      marker: { color: "#1e3a8a", size: 10, symbol: "diamond-x", line: { color: "#000", width: 1.6 } },
       yaxis: "y2",
       text: xDays.falsed.map(r => `H_x=$${(r.x_hx_v2||0).toLocaleString()} 돌파일=${r.x_false_day_v2||''}`),
       hovertemplate: "%{x}<br><b>청산(거짓·재무장)</b><br>%{text}<extra></extra>",
@@ -662,7 +659,7 @@ function renderScoreChartFull(sig) {
     xRefDays.falsed.length ? {
       x: xRefDays.falsed.map(r => r.date), y: xRefDays.falsed.map(r => r.euphoria_sym_v2),
       name: "청산(거짓·재무장) (참고, 제외)", mode: "markers", type: "scatter",
-      marker: { color: "#6b7684", size: 6, symbol: "diamond-x", line: { color: "#111827", width: 1.2 } },
+      marker: { color: "#6b7684", size: 8, symbol: "diamond-x", line: { color: "#000", width: 1.4 } },
       yaxis: "y2", showlegend: false,
       text: xRefDays.falsed.map(r => `H_x=$${(r.x_hx_v2||0).toLocaleString()} 돌파일=${r.x_false_day_v2||''}`),
       hovertemplate: "%{x}<br><b>청산(거짓·재무장) — 참고(2019 이전, 설계 표본 제외)</b><br>%{text}<extra></extra>",
@@ -728,7 +725,8 @@ function renderScoreChartFull(sig) {
   ];
 
   const layout = Object.assign({}, PLOTLY_LAYOUT_BASE, {
-    height: 420,
+    height: 260,  // 바로 위 '크립토 라이브 시그널'의 연동 점수 차트(scoreChartRecent)와 동일 높이로
+                  // 복구(오너 지시 2026-09-29 — 가격 차트만 늘려달란 것이었지 이 차트는 아니었음)
     shapes, annotations,
     showlegend: false,  // 자체 범례는 끄고, 차트 아래 커스텀 아이콘 인덱스 하나로 통일
     // 기본 표시 범위 = 최근 5년(데이터는 2010-07~ 전체 그대로 실려 있음 — "5년"·"전체"
@@ -770,14 +768,14 @@ function renderPriceChartFull(sig) {
     xDays.normal.length ? {
       x: xDays.normal.map(r => r.date), y: xDays.normal.map(r => r.btc_usd),
       name: "청산 탈출", mode: "markers", type: "scatter",
-      marker: { color: "#a855f7", size: 8, symbol: "diamond" },
+      marker: { color: "#1e3a8a", size: 11, symbol: "diamond" },
       showlegend: true,
       hovertemplate: "%{x}<br><b>청산 탈출(−6.0 상향돌파)</b><extra></extra>",
     } : null,
     xRefDays.normal.length ? {
       x: xRefDays.normal.map(r => r.date), y: xRefDays.normal.map(r => r.btc_usd),
       name: "청산 탈출 (참고, 제외)", mode: "markers", type: "scatter",
-      marker: { color: "#6b7684", size: 7, symbol: "diamond" },
+      marker: { color: "#6b7684", size: 9, symbol: "diamond" },
       showlegend: false,
       hovertemplate: "%{x}<br><b>청산 탈출 — 참고(2019 이전, 설계 표본 제외)</b><extra></extra>",
     } : null,
@@ -786,7 +784,7 @@ function renderPriceChartFull(sig) {
     xDays.falsed.length ? {
       x: xDays.falsed.map(r => r.date), y: xDays.falsed.map(r => r.btc_usd),
       name: "청산(거짓·재무장)", mode: "markers", type: "scatter",
-      marker: { color: "#a855f7", size: 8, symbol: "diamond-x", line: { color: "#111827", width: 1.2 } },
+      marker: { color: "#1e3a8a", size: 11, symbol: "diamond-x", line: { color: "#000", width: 1.6 } },
       showlegend: true,
       text: xDays.falsed.map(r => `H_x=$${(r.x_hx_v2||0).toLocaleString()} 돌파일=${r.x_false_day_v2||''}`),
       hovertemplate: "%{x}<br><b>청산(거짓·재무장)</b><br>%{text}<extra></extra>",
@@ -794,7 +792,7 @@ function renderPriceChartFull(sig) {
     xRefDays.falsed.length ? {
       x: xRefDays.falsed.map(r => r.date), y: xRefDays.falsed.map(r => r.btc_usd),
       name: "청산(거짓·재무장) (참고, 제외)", mode: "markers", type: "scatter",
-      marker: { color: "#6b7684", size: 7, symbol: "diamond-x", line: { color: "#111827", width: 1.2 } },
+      marker: { color: "#6b7684", size: 9, symbol: "diamond-x", line: { color: "#000", width: 1.4 } },
       showlegend: false,
       text: xRefDays.falsed.map(r => `H_x=$${(r.x_hx_v2||0).toLocaleString()} 돌파일=${r.x_false_day_v2||''}`),
       hovertemplate: "%{x}<br><b>청산(거짓·재무장) — 참고(2019 이전, 설계 표본 제외)</b><br>%{text}<extra></extra>",
