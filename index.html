@@ -72,10 +72,10 @@
     border-radius: 10px; padding: 14px; margin-bottom: 14px;
   }
   .card h2 { margin: 0 0 10px; font-size: 14px; font-weight: 600; }
-  #priceChart, #scoreChartFull, #scoreChartRecent { width: 100%; height: 420px; touch-action: pan-y; }
-  #scoreChartFull { height: 240px; }
-  #priceChartFull { width: 100%; height: 360px; touch-action: pan-y; }
-  #scoreChartRecent { height: 260px; }
+  /* 높이는 CSS에서 고정하지 않는다 — 각 차트의 실제 렌더 높이는 JS의 Plotly layout.height가
+     유일한 기준(이전엔 CSS 고정 높이와 JS layout.height가 서로 달라 차트가 눌려 보이는
+     원인이었음, 오너 확인 2026-09-29). */
+  #priceChart, #scoreChartFull, #scoreChartRecent, #priceChartFull { width: 100%; touch-action: pan-y; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
   th, td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
   .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
@@ -96,6 +96,14 @@
   footer { color: var(--muted); font-size: 12px; padding: 16px; text-align: center; }
   footer a { color: var(--blue); text-decoration: none; }
   .chart-note { font-size: 11px; color: var(--muted); margin-top: 4px; padding: 0 4px; }
+  .icon-index {
+    margin-top: 10px; padding: 10px 14px; background: var(--bg);
+    border: 1px solid var(--border); border-radius: 8px;
+    font-size: 12.5px; line-height: 2;
+  }
+  .icon-index-row { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
+  .icon-index-row + .icon-index-row { margin-top: 4px; }
+  .icon-index-label { color: var(--muted); font-weight: 600; min-width: 34px; }
   /* Allow vertical scroll to pass through Plotly drag layers */
   .js-plotly-plot .nsewdrag { touch-action: pan-y !important; }
 </style>
@@ -130,33 +138,52 @@
     <div class="card" style="margin-top:-8px; border-top:none; border-radius:0 0 10px 10px;">
       <h2 style="color:var(--muted);font-size:12px;font-weight:500;">V20 점수 · 유포리아 <span style="font-weight:400;">— 가격 차트 연동</span></h2>
       <div id="scoreChartRecent"></div>
-      <!-- 아이콘 인덱스 — 두 차트(가격/점수)가 공유하는 선·마커를 한 곳에 순서대로 정리
-           (오너 지시 2026-09-29: BTC·ETH·buy_core·유포리아 다음 매수존 진입·매도·청산 탈출·
-           청산(거짓·재무장)·관망 전환 순서) -->
-      <div class="chart-note" style="font-size:12px; line-height:2;">
-        <b style="color:var(--text)">지표</b>
-        <span style="color:#f59e0b">━ BTC</span> ·
-        <span style="color:#3b82f6">━ ETH</span> ·
-        <span style="color:#a855f7">━ buy_core</span> ·
-        <span style="color:#ef4444">┄ 유포리아</span>
-      </div>
-      <div class="chart-note" style="font-size:12px; line-height:2;">
-        <b style="color:var(--text)">신호</b>
-        <span style="color:#22c55e">▲ 매수존 진입</span> ·
-        <span style="color:#ef4444">▼ 매도</span> ·
-        <span style="color:#a855f7">◆ 청산 탈출</span> ·
-        <span style="color:#a855f7">◆✕ 청산(거짓·재무장)</span> ·
-        <span style="color:#8b97a7">◇ 관망 전환</span>
+      <!-- 아이콘 인덱스 — 두 차트(가격/점수)의 자체 Plotly 범례는 껐고(showlegend:false),
+           이 박스 하나가 유일한 범례다(오너 지시 2026-09-29: 중복·산만한 하단 범례 대신
+           완전한 형태의 인덱스 하나로 통합. 순서: BTC·ETH·buy_core·유포리아 →
+           매수존 진입·매도·청산 탈출·청산(거짓·재무장)·관망 전환) -->
+      <div class="icon-index">
+        <div class="icon-index-row">
+          <span class="icon-index-label">지표</span>
+          <span style="color:#f59e0b">━ BTC</span>
+          <span style="color:#3b82f6">━ ETH</span>
+          <span style="color:#a855f7">━ buy_core</span>
+          <span style="color:#ef4444">┄ 유포리아</span>
+        </div>
+        <div class="icon-index-row">
+          <span class="icon-index-label">신호</span>
+          <span style="color:#22c55e">▲ 매수존 진입</span>
+          <span style="color:#ef4444">▼ 매도</span>
+          <span style="color:#a855f7">◆ 청산 탈출</span>
+          <span style="color:#a855f7">◆✕ 청산(거짓·재무장)</span>
+          <span style="color:#8b97a7">◇ 관망 전환</span>
+        </div>
       </div>
     </div>
 
     <!-- 2. V20 전체 역사 점수 차트 (v20_signal.json, 2010-07~) -->
     <div class="card">
-      <h2>V20 시그널 전체 역사 (2010-07~) <span class="muted" style="font-weight:400;font-size:12px;">
-        — buy_core(통합점수) · 유포리아 · 매도↓ · 매수
-      </span></h2>
+      <h2>V20 시그널 전체 역사 (2010-07~)</h2>
       <div id="priceChartFull" style="margin-bottom:-4px;"></div>
       <div id="scoreChartFull"></div>
+      <!-- 아이콘 인덱스 — 위 두 차트(BTC 가격/V20 점수)의 자체 Plotly 범례는 껐다
+           (showlegend:false). 범례 항목이 많아 Plotly가 자체 스크롤바를 만들던 문제도
+           같이 해결됨(오너 확인 2026-09-29) -->
+      <div class="icon-index">
+        <div class="icon-index-row">
+          <span class="icon-index-label">지표</span>
+          <span style="color:#f59e0b">━ BTC (USD)</span>
+          <span style="color:#a855f7">━ buy_core</span>
+          <span style="color:#ef4444">┄ 유포리아</span>
+        </div>
+        <div class="icon-index-row">
+          <span class="icon-index-label">신호</span>
+          <span style="color:#22c55e">▲ 매수존 진입</span>
+          <span style="color:#ef4444">▼ 매도</span>
+          <span style="color:#a855f7">◆ 청산 탈출</span>
+          <span style="color:#a855f7">◆✕ 청산(거짓·재무장)</span>
+        </div>
+      </div>
       <div class="chart-note">
         📌 기준선: 매수 존 <span style="color:#22c55e">+7.0 진입</span>/<span style="color:#64748b">+6.0 이탈</span> ·
         매도 <span style="color:#ef4444">−6.0 진입</span> ·
@@ -446,6 +473,7 @@ function renderPriceChart(rows) {
   const layout = Object.assign({}, PLOTLY_LAYOUT_BASE, {
     height: 420,
     shapes: zoneShapes,
+    showlegend: false,  // 자체 범례는 끄고, 차트 아래 커스텀 아이콘 인덱스 하나로 통일
     yaxis:  { title: "BTC (KRW)", gridcolor: "#1f2a3a", linecolor: "#1f2a3a", side: "left" },
     yaxis2: { title: "ETH (KRW)", gridcolor: "transparent", linecolor: "#1f2a3a", overlaying: "y", side: "right" },
   });
@@ -548,7 +576,7 @@ function renderScoreChartRecent(rows) {
     height: 260,
     shapes, annotations,
     margin: { l: 60, r: 60, t: 10, b: 40 },
-    legend: { orientation: "h", y: -0.28 },
+    showlegend: false,  // 자체 범례는 끄고, 차트 아래 커스텀 아이콘 인덱스 하나로 통일
     xaxis: Object.assign({}, PLOTLY_LAYOUT_BASE.xaxis, { rangeselector: undefined }),
     yaxis:  { title: "buy_core", gridcolor: "#1f2a3a", linecolor: "#1f2a3a", range: [-12, 12] },
     yaxis2: { title: "유포리아_sym", gridcolor: "transparent", linecolor: "#1f2a3a", overlaying:"y", side:"right", range: [-12, 12] },
@@ -702,6 +730,7 @@ function renderScoreChartFull(sig) {
   const layout = Object.assign({}, PLOTLY_LAYOUT_BASE, {
     height: 420,
     shapes, annotations,
+    showlegend: false,  // 자체 범례는 끄고, 차트 아래 커스텀 아이콘 인덱스 하나로 통일
     // 기본 표시 범위 = 최근 5년(데이터는 2010-07~ 전체 그대로 실려 있음 — "5년"·"전체"
     // 버튼이나 드래그로 언제든 전체 역사까지 확대 가능, 초기 화면만 5년으로 좁힘).
     xaxis: Object.assign({}, PLOTLY_LAYOUT_BASE.xaxis, { range: _last5yRange() }),
@@ -815,10 +844,9 @@ function renderPriceChartFull(sig) {
   ].filter(Boolean);
 
   const layout = Object.assign({}, PLOTLY_LAYOUT_BASE, {
-    height: 200,
+    height: 420,  // 맨 위 가격 차트(priceChart)와 동일 높이로 통일(오너 지시 2026-09-29 — 기존 200은 너무 좁았음)
     margin: { l: 60, r: 60, t: 6, b: 40 },
-    legend: { orientation: "h", y: -0.4 },
-    showlegend: true,
+    showlegend: false,  // 자체 범례는 끄고, 차트 아래 커스텀 아이콘 인덱스 하나로 통일
     shapes: [
       // 매수 존(buy_zone_v2) 음영, 매도구간(sym<X_CUT & G) 음영
       ...buildZoneShapes(sig, r => r.buy_zone_v2 === true,
