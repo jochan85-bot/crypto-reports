@@ -8291,5 +8291,66 @@
       "mvrv_z": 2,
       "puell": 2
     }
+  },
+  {
+    "date": "2026-09-29",
+    "btc_krw": 113497000,
+    "eth_krw": 3651000,
+    "zone": "HOLD",
+    "zone_since": "2026-08-01",
+    "zone_days": 60,
+    "zone_changed": false,
+    "buy_core_v19": 2.9178,
+    "euphoria_v19": 1.0337,
+    "sell_signal_v19": false,
+    "sell_ep_v19": false,
+    "buy_v19": false,
+    "pullback_fresh": false,
+    "pullback_date": "2025-10-20",
+    "ethbtc": 0.0322,
+    "metrics": {
+      "mayer": 1.1,
+      "fng": 73
+    },
+    "macro": {
+      "dollar_tailwind": false,
+      "nl_expanding": false
+    },
+    "percentiles": {
+      "mvrv_z_pctl": 0.4297,
+      "nupl_pctl": 0.4555,
+      "puell_pctl": 0.4084,
+      "mayer_pctl": 0.445
+    },
+    "gate_inputs": {
+      "dxy_chg_60d": 0.0038,
+      "nl_ratio": 0.0035
+    },
+    "kimchi_premium_pct": -1.499,
+    "data_stale": false,
+    "stale_level": "ok",
+    "source_last": {
+      "price": "2026-09-27",
+      "kimchi": "2026-09-29",
+      "nupl": "2026-09-27",
+      "mvrv_z": "2026-09-27",
+      "puell": "2026-09-27"
+    },
+    "source_lag": {
+      "price": 2,
+      "kimchi": 0,
+      "nupl": 2,
+      "mvrv_z": 2,
+      "puell": 2
+    },
+    "buy_zone_v2": false,
+    "buy_cycle_id_v2": 13,
+    "sell_visit_v2": false,
+    "visit_min_v2": null,
+    "rung_fires_v2": [],
+    "x_exit_v2": false,
+    "g_state_v2": false,
+    "g_prev_high_v2": 124824.45,
+    "ratchet_state_v2": false
   }
 ]
