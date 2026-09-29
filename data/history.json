@@ -17345,8 +17345,8 @@
   },
   {
     "date": "2026-09-29",
-    "btc_krw": 113355000,
-    "eth_krw": 3650000,
+    "btc_krw": 112749000,
+    "eth_krw": 3605000,
     "zone": "HOLD",
     "zone_since": "2026-04-06",
     "zone_days": 177,
@@ -17358,7 +17358,7 @@
     "buy_v19": false,
     "pullback_fresh": false,
     "pullback_date": "2025-10-20",
-    "ethbtc": 0.0322,
+    "ethbtc": 0.032,
     "metrics": {
       "mayer": 1.09,
       "fng": 73
@@ -17377,7 +17377,7 @@
       "dxy_chg_60d": -0.0104,
       "nl_ratio": 0.0036
     },
-    "kimchi_premium_pct": -1.695,
+    "kimchi_premium_pct": -1.471,
     "data_stale": false,
     "stale_level": "ok",
     "source_last": {

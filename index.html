@@ -221,18 +221,31 @@ function _sep(r) { return r.sell_ep_v19 != null ? r.sell_ep_v19 : r.sell_ep_v18;
 // displayZone: 'BUY'(buy_zone_v2===true) > 'SELL'(legacy zone) > 'HOLD'.
 // (참고: 상태 표시(pill)·시그널 로그·일일테이블은 실제 executor/sellplan이 쓰는 legacy zone을
 // 그대로 반영해야 하므로 displayZone의 SELL 정의는 바꾸지 않는다 — 아래 매도 "구간 음영"만
-// V20_EUPHORIA_WINDOW §4 지시대로 G 자격 충족 구간으로 별도 좁힌다.)
-function isSellZoneShaded(r) {
-  return r.sell_visit_v2 === true && r.g_state_v2 === true;
-}
+// V20_SYM_APPLY_FINAL §4 지시대로 "X(=-6.0) 아래 & G 자격 충족" 구간으로 좁힌다. B(-4.5)는
+// 순수 추적 경계일 뿐 표시 대상이 아니다 — sellZoneShade는 방문(B) 전체가 아니라 그 안에서
+// X_CUT을 아직 넘기 전(x_exit_v2가 뜬 그날까지 포함) 구간만 잡는다.
 function withDisplayZone(rows) {
   let prev = null;
+  let inVisit = false, belowX = false;
   return rows.map(r => {
     const dz = r.buy_zone_v2 === true ? 'BUY'
       : (r.zone === 'SELL' || r.zone === 'STRONG_SELL' ? 'SELL' : 'HOLD');
     const changed = dz !== prev;
     prev = dz;
-    return Object.assign({}, r, { displayZone: dz, displayZoneChanged: changed });
+
+    const enteringVisit = r.sell_visit_v2 === true && !inVisit;
+    inVisit = r.sell_visit_v2 === true;
+    if (!inVisit) {
+      belowX = false;
+    } else if (enteringVisit) {
+      belowX = true;
+    }
+    const sellZoneShade = inVisit && belowX && r.g_state_v2 === true;
+    if (inVisit && r.x_exit_v2 === true) {
+      belowX = false;  // 다음 날부터는 X 위(더 이상 "X 아래" 구간 아님) — 오늘까지는 포함
+    }
+
+    return Object.assign({}, r, { displayZone: dz, displayZoneChanged: changed, sellZoneShade });
   });
 }
 
@@ -350,7 +363,7 @@ function renderPriceChart(rows) {
 
   const zoneShapes = buildZoneShapes(rows,
     r => r.displayZone === 'BUY',
-    r => isSellZoneShaded(r));  // V20_EUPHORIA_WINDOW §4 — G자격 충족 구간만
+    r => r.sellZoneShade);  // V20_SYM_APPLY_FINAL §4 — X 아래&G 자격 충족 구간만
   const layout = Object.assign({}, PLOTLY_LAYOUT_BASE, {
     height: 420,
     shapes: zoneShapes,
@@ -421,15 +434,19 @@ function renderScoreChartRecent(rows) {
     { type:"line", xref:"paper", yref:"y", x0:0, x1:1, y0:6.5, y1:6.5, line:{color:"#475569", width:1,   dash:"dot"} },
     { type:"line", xref:"paper", yref:"y", x0:0, x1:1, y0:0,   y1:0,   line:{color:"#8b97a7", width:1} },
     { type:"line", xref:"paper", yref:"y2", x0:0, x1:1, y0:-4.5, y1:-4.5, line:{color:"#ef4444", width:1, dash:"dash"} },
+    // V20_SYM_APPLY_FINAL §4: X(탈출 컷, sym 기준) −6.0 — B(-4.5)는 순수 추적경계라 미표시,
+    // 이 선이 실제 v2 매도구간 음영/신호 컷을 나타낸다(관찰용, 보라색으로 구분).
+    { type:"line", xref:"paper", yref:"y2", x0:0, x1:1, y0:-6.0, y1:-6.0, line:{color:"#a855f7", width:1.2, dash:"dash"} },
     ...buildZoneShapes(rows,
       r => r.displayZone === 'BUY',
-      r => isSellZoneShaded(r)),  // V20_EUPHORIA_WINDOW §4 — G자격 충족 구간만
+      r => r.sellZoneShade),  // V20_SYM_APPLY_FINAL §4 — X 아래&G 자격 충족 구간만
   ];
   const annotations = [
     { xref:"paper", yref:"y",  x:1.01, y:7.0,  text:"+7.0 매수", showarrow:false, font:{color:"#22c55e", size:9}, xanchor:"left" },
     { xref:"paper", yref:"y",  x:1.01, y:8.5,  text:"+8.5", showarrow:false, font:{color:"#64748b", size:9}, xanchor:"left" },
     { xref:"paper", yref:"y",  x:1.01, y:6.5,  text:"+6.5", showarrow:false, font:{color:"#64748b", size:9}, xanchor:"left" },
-    { xref:"paper", yref:"y2", x:0.01, y:-4.5, text:"-4.5", showarrow:false, font:{color:"#ef4444", size:9}, xanchor:"left" },
+    { xref:"paper", yref:"y2", x:0.01, y:-4.5, text:"-4.5(legacy)", showarrow:false, font:{color:"#ef4444", size:9}, xanchor:"left" },
+    { xref:"paper", yref:"y2", x:0.01, y:-6.0, text:"X −6.0(sym, 관찰용)", showarrow:false, font:{color:"#a855f7", size:9}, xanchor:"left" },
   ];
 
   const layout = Object.assign({}, PLOTLY_LAYOUT_BASE, {
