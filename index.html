@@ -217,6 +217,22 @@ function _eu(r)  { return r.euphoria_sym_v2; }
 function isSellZone(r) {
   return r.euphoria_sym_v2 != null && r.euphoria_sym_v2 < -6.0 && r.g_state_v2 === true;
 }
+// V20_PAGE_FIX §1/§2 — 매도 마커/로그는 게이팅을 전부 통과한 signals_v2에서만 만든다.
+// rung_fires_v2/x_exit_v2(원시 관찰값)를 직접 그리던 이전 방식은 무효 돌파까지 신호처럼
+// 보여주는 문제가 있어 폐기 — crossings_v2_invalid(탈락 사유)는 기본 숨김 토글로만 노출.
+function _rungSignalDays(rows) {
+  return rows.filter(r => Array.isArray(r.signals_v2) && r.signals_v2.some(l => l !== 'X'));
+}
+function _xSignalDays(rows) {
+  return rows.filter(r => Array.isArray(r.signals_v2) && r.signals_v2.includes('X'));
+}
+function _invalidCrossingDays(rows) {
+  return rows.filter(r => Array.isArray(r.crossings_v2_invalid) && r.crossings_v2_invalid.length);
+}
+function _invalidText(r) {
+  return r.crossings_v2_invalid.map(c => `${c.level}(${c.reason})`).join(", ");
+}
+
 // displayZone: 'BUY'(buy_zone_v2) > 'SELL'(isSellZone) > 'HOLD' — 전부 v2 필드 기준.
 function withDisplayZone(rows) {
   let prev = null;
@@ -275,7 +291,9 @@ function renderStatus(latest) {
   const bcColor = bc == null ? "#e6edf3" : (bc >= 7.0 ? "#22c55e" : (bc >= 6.5 ? "#86efac" : "#e6edf3"));
   // euphoria_sym: 낮을수록(음수 깊을수록) 매도 압력
   const euColor = eu == null ? "#e6edf3" : (eu <= -6.0 ? "#ef4444" : (eu <= -3.0 ? "#f59e0b" : "#e6edf3"));
-  const sellTag = latest.x_exit_v2 === true ? '<span style="color:#ef4444">🔻탈출(X)</span>' : (isSellZone(latest) ? '<span style="color:#ef4444">🔻매도구간</span>' : '');
+  const sellTag = Array.isArray(latest.signals_v2) && latest.signals_v2.length
+    ? `<span style="color:#ef4444">🔻신호(${latest.signals_v2.join(",")})</span>`
+    : (isSellZone(latest) ? '<span style="color:#ef4444">🔻매도구간</span>' : '');
   const bvTag   = latest.buy_zone_v2 === true ? '<span style="color:#22c55e">▲매수존</span>' : '';
   const pbTag   = latest.pullback_fresh  ? '<span style="color:#a855f7">🔄눌림목</span>' : '';
   el.innerHTML = `
@@ -296,10 +314,11 @@ function renderPriceChart(rows) {
   const eth = rows.map(r => r.eth_krw);
 
   // 매수 판정 원천 = buy_zone_v2(EPISODE_B) 진입일
-  const buyDays  = rows.filter(r => r.displayZoneChanged && r.displayZone === 'BUY');  // 매수존 진입일 ●
-  const rungDays = rows.filter(r => Array.isArray(r.rung_fires_v2) && r.rung_fires_v2.some(l => l !== 'X'));
-  const xDays    = rows.filter(r => r.x_exit_v2 === true);
-  const changes  = rows.filter(r => r.displayZoneChanged && r.displayZone === 'HOLD');  // 관망 복귀만 (매수/매도 전환은 ●마커로 표시)
+  const buyDays    = rows.filter(r => r.displayZoneChanged && r.displayZone === 'BUY');  // 매수존 진입일 ●
+  const rungDays   = _rungSignalDays(rows);   // 눈금(게이팅 통과, signals_v2)
+  const xDays      = _xSignalDays(rows);      // X(게이팅 통과, signals_v2)
+  const invalidDays = _invalidCrossingDays(rows);  // 무효 돌파(기본 숨김 토글)
+  const changes    = rows.filter(r => r.displayZoneChanged && r.displayZone === 'HOLD');  // 관망 복귀만 (매수/매도 전환은 ●마커로 표시)
 
   const traces = [
     // 가격선
@@ -315,22 +334,31 @@ function renderPriceChart(rows) {
       yaxis: "y",
       hovertemplate: "%{x}<br><b>매수 에피소드 시작</b><extra></extra>",
     } : null,
-    // 눈금 발화(레벨, X 제외) — 균일 다이아몬드, 레벨은 hover로 구분
+    // 눈금 발화(레벨, X 제외, 게이팅 통과분만) — 균일 다이아몬드, 레벨은 hover로 구분
     rungDays.length ? {
       x: rungDays.map(r => r.date), y: rungDays.map(r => r.btc_krw),
       name: "눈금 발화", mode: "markers", type: "scatter",
       marker: { color: "#f97316", size: 10, symbol: "diamond", line: { color: "#111827", width: 1 } },
       yaxis: "y",
-      text: rungDays.map(r => r.rung_fires_v2.filter(l => l !== 'X').join(",")),
+      text: rungDays.map(r => r.signals_v2.filter(l => l !== 'X').join(",")),
       hovertemplate: "%{x}<br>눈금: %{text}<extra></extra>",
     } : null,
-    // X(탈출) — 별도 마커
+    // X(탈출, 게이팅 통과분만) — 별도 마커
     xDays.length ? {
       x: xDays.map(r => r.date), y: xDays.map(r => r.btc_krw),
       name: "X 탈출", mode: "markers", type: "scatter",
       marker: { color: "#ef4444", size: 13, symbol: "x", line: { color: "#fff", width: 1.5 } },
       yaxis: "y",
       hovertemplate: "%{x}<br><b>X 탈출(−6.0 상향돌파)</b><extra></extra>",
+    } : null,
+    // 무효 돌파(G 미충족·래칫 탈락·슬롯 소진) — 기본 숨김, 범례 클릭으로 표시
+    invalidDays.length ? {
+      x: invalidDays.map(r => r.date), y: invalidDays.map(r => r.btc_krw),
+      name: "무효 돌파(사유)", mode: "markers", type: "scatter",
+      marker: { color: "#6b7684", size: 8, symbol: "diamond-open", line: { color: "#6b7684", width: 1.5 } },
+      yaxis: "y", visible: "legendonly",
+      text: invalidDays.map(_invalidText),
+      hovertemplate: "%{x}<br>무효: %{text}<extra></extra>",
     } : null,
     // Zone 변경 (작은 다이아몬드 — 세부 이벤트)
     changes.length ? {
@@ -372,8 +400,9 @@ function renderScoreChartRecent(rows) {
   const bc = rows.map(r => _bc(r));
   const eu = rows.map(r => _eu(r));
   const buyDays  = rows.filter(r => r.displayZoneChanged && r.displayZone === 'BUY');
-  const rungDays = rows.filter(r => Array.isArray(r.rung_fires_v2) && r.rung_fires_v2.some(l => l !== 'X'));
-  const xDays    = rows.filter(r => r.x_exit_v2 === true);
+  const rungDays = _rungSignalDays(rows);
+  const xDays    = _xSignalDays(rows);
+  const invalidDays = _invalidCrossingDays(rows);
 
   const traces = [
     {
@@ -398,22 +427,31 @@ function renderScoreChartRecent(rows) {
       yaxis: "y",
       hovertemplate: "%{x}<br><b>매수존 진입 (buy_zone_v2)</b><extra></extra>",
     } : null,
-    // 눈금 발화(X 제외) — 균일 다이아몬드
+    // 눈금 발화(X 제외, 게이팅 통과분만) — 균일 다이아몬드
     rungDays.length ? {
       x: rungDays.map(r => r.date), y: rungDays.map(r => _eu(r)),
       name: "눈금 발화", mode: "markers", type: "scatter",
       marker: { color: "#f97316", size: 9, symbol: "diamond", line: { color: "#111827", width: 1 } },
       yaxis: "y2",
-      text: rungDays.map(r => r.rung_fires_v2.filter(l => l !== 'X').join(",")),
+      text: rungDays.map(r => r.signals_v2.filter(l => l !== 'X').join(",")),
       hovertemplate: "%{x}<br>눈금: %{text}<extra></extra>",
     } : null,
-    // X(탈출) — 별도 마커
+    // X(탈출, 게이팅 통과분만) — 별도 마커
     xDays.length ? {
       x: xDays.map(r => r.date), y: xDays.map(r => _eu(r)),
       name: "X 탈출", mode: "markers", type: "scatter",
       marker: { color: "#ef4444", size: 11, symbol: "x", line: { color: "#fff", width: 1.5 } },
       yaxis: "y2",
       hovertemplate: "%{x}<br><b>X 탈출(−6.0 상향돌파)</b><extra></extra>",
+    } : null,
+    // 무효 돌파 — 기본 숨김, 범례 클릭으로 표시
+    invalidDays.length ? {
+      x: invalidDays.map(r => r.date), y: invalidDays.map(r => _eu(r)),
+      name: "무효 돌파(사유)", mode: "markers", type: "scatter",
+      marker: { color: "#6b7684", size: 8, symbol: "diamond-open", line: { color: "#6b7684", width: 1.5 } },
+      yaxis: "y2", visible: "legendonly",
+      text: invalidDays.map(_invalidText),
+      hovertemplate: "%{x}<br>무효: %{text}<extra></extra>",
     } : null,
   ].filter(Boolean);
 
@@ -472,8 +510,9 @@ function renderScoreChartFull(sig) {
   const eu  = sig.map(r => r.euphoria_sym_v2);
 
   const buyEp    = _computeV20BuyEpisodes(sig);
-  const rungDays = sig.filter(r => Array.isArray(r.rung_fires_v2) && r.rung_fires_v2.some(l => l !== 'X'));
-  const xDays    = sig.filter(r => r.x_exit_v2 === true);
+  const rungDays = _rungSignalDays(sig);
+  const xDays    = _xSignalDays(sig);
+  const invalidDays = _invalidCrossingDays(sig);
 
   const traces = [
     {
@@ -507,7 +546,7 @@ function renderScoreChartFull(sig) {
       name: "눈금 발화", mode: "markers", type: "scatter",
       marker: { color: "#f97316", size: 8, symbol: "diamond", line: { color: "#111827", width: 1 } },
       yaxis: "y2",
-      text: rungDays.map(r => r.rung_fires_v2.filter(l => l !== 'X').join(",")),
+      text: rungDays.map(r => r.signals_v2.filter(l => l !== 'X').join(",")),
       hovertemplate: "%{x}<br>눈금: %{text}<extra></extra>",
     } : null,
     xDays.length ? {
@@ -516,6 +555,14 @@ function renderScoreChartFull(sig) {
       marker: { color: "#ef4444", size: 10, symbol: "x", line: { color: "#fff", width: 1.5 } },
       yaxis: "y2",
       hovertemplate: "%{x}<br><b>X 탈출(−6.0 상향돌파)</b><extra></extra>",
+    } : null,
+    invalidDays.length ? {
+      x: invalidDays.map(r => r.date), y: invalidDays.map(r => r.euphoria_sym_v2),
+      name: "무효 돌파(사유)", mode: "markers", type: "scatter",
+      marker: { color: "#6b7684", size: 7, symbol: "diamond-open", line: { color: "#6b7684", width: 1.5 } },
+      yaxis: "y2", visible: "legendonly",
+      text: invalidDays.map(_invalidText),
+      hovertemplate: "%{x}<br>무효: %{text}<extra></extra>",
     } : null,
   ].filter(Boolean);
 
@@ -559,9 +606,10 @@ function renderPriceChartFull(sig) {
   const x   = sig.map(r => r.date);
   const btc = sig.map(r => r.btc_usd);
 
-  const buyEp    = _computeV20BuyEpisodes(sig);
-  const rungDays = sig.filter(r => Array.isArray(r.rung_fires_v2) && r.rung_fires_v2.some(l => l !== 'X'));
-  const xDays    = sig.filter(r => r.x_exit_v2 === true);
+  const buyEp     = _computeV20BuyEpisodes(sig);
+  const rungDays  = _rungSignalDays(sig);
+  const xDays     = _xSignalDays(sig);
+  const invalidDays = _invalidCrossingDays(sig);
 
   const traces = [
     {
@@ -580,16 +628,16 @@ function renderPriceChartFull(sig) {
       showlegend: false,
       hovertemplate: "%{x}<br><b>매수존 진입 (buy_zone_v2)</b><extra></extra>",
     } : null,
-    // 눈금 발화(X 제외) — 균일 다이아몬드
+    // 눈금 발화(X 제외, 게이팅 통과분만) — 균일 다이아몬드
     rungDays.length ? {
       x: rungDays.map(r => r.date), y: rungDays.map(r => r.btc_usd),
       name: "눈금 발화", mode: "markers", type: "scatter",
       marker: { color: "#f97316", size: 9, symbol: "diamond", line: { color: "#111827", width: 1 } },
       showlegend: true,
-      text: rungDays.map(r => r.rung_fires_v2.filter(l => l !== 'X').join(",")),
+      text: rungDays.map(r => r.signals_v2.filter(l => l !== 'X').join(",")),
       hovertemplate: "%{x}<br>눈금: %{text}<extra></extra>",
     } : null,
-    // X(탈출) — 별도 마커
+    // X(탈출, 게이팅 통과분만) — 별도 마커
     xDays.length ? {
       x: xDays.map(r => r.date), y: xDays.map(r => r.btc_usd),
       name: "X 탈출", mode: "markers", type: "scatter",
@@ -597,13 +645,22 @@ function renderPriceChartFull(sig) {
       showlegend: true,
       hovertemplate: "%{x}<br><b>X 탈출(−6.0 상향돌파)</b><extra></extra>",
     } : null,
+    // 무효 돌파 — 기본 숨김, 범례 클릭으로 표시
+    invalidDays.length ? {
+      x: invalidDays.map(r => r.date), y: invalidDays.map(r => r.btc_usd),
+      name: "무효 돌파(사유)", mode: "markers", type: "scatter",
+      marker: { color: "#6b7684", size: 7, symbol: "diamond-open", line: { color: "#6b7684", width: 1.5 } },
+      showlegend: true, visible: "legendonly",
+      text: invalidDays.map(_invalidText),
+      hovertemplate: "%{x}<br>무효: %{text}<extra></extra>",
+    } : null,
   ].filter(Boolean);
 
   const layout = Object.assign({}, PLOTLY_LAYOUT_BASE, {
     height: 200,
     margin: { l: 60, r: 60, t: 6, b: 40 },
     legend: { orientation: "h", y: -0.4 },
-    showlegend: false,
+    showlegend: true,
     shapes: [
       // 매수 존(buy_zone_v2) 음영, 매도구간(sym<X_CUT & G) 음영
       ...buildZoneShapes(sig, r => r.buy_zone_v2 === true,
@@ -688,7 +745,7 @@ function renderDailyTable(rows) {
     '<th class="right" title="euphoria_sym (V20)">유포리아</th>' +
     '<th class="right">BTC</th><th class="right">ETH</th>' +
     '<th class="right">NUPL<br><span class="th-note" style="display:block;font-size:10px;font-weight:400;text-transform:none;letter-spacing:0" title="NUPL 원시값은 공개하지 않으며 백분위(nupl_pctl)로 참조">원시값 비공개, 백분위 참조</span></th><th class="right">MVRVz</th><th class="right">F&G</th>' +
-    '<th class="right" title="매도 탈출(X)">매도</th>' +
+    '<th class="right" title="매도 신호(눈금/X, 게이팅 통과분만)">매도</th>' +
     '<th class="right" title="매수존 진입 (buy_zone_v2, EPISODE_B 7.0/6.0)">▲</th>' +
     '<th class="right" title="눌림목 신호 (30일내)">🔄</th>' +
     '</tr></thead><tbody>';
@@ -711,7 +768,7 @@ function renderDailyTable(rows) {
       <td class="right">${m.btc_nupl != null ? (+m.btc_nupl).toFixed(3) : "-"}</td>
       <td class="right">${m.btc_mvrv_z != null ? (+m.btc_mvrv_z).toFixed(2) : "-"}</td>
       <td class="right">${m.fng != null ? m.fng : "-"}</td>
-      ${boolCell(r.x_exit_v2 === true, '▼', '#ef4444')}
+      ${boolCell(Array.isArray(r.signals_v2) && r.signals_v2.length > 0, '▼', '#ef4444')}
       ${boolCell(r.displayZoneChanged && r.displayZone === 'BUY', '●', '#22c55e')}
       ${boolCell(r.pullback_fresh, '🔄', '#a855f7')}
     </tr>`;
