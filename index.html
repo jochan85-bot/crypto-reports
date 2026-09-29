@@ -111,6 +111,11 @@
     <div class="header-status">
       <div class="status" id="statusBar"><span class="muted">데이터 로드 중…</span></div>
     </div>
+    <div class="chart-note" style="padding:4px 16px 0;">
+      ℹ️ 2026-09-29 V20 전환: 매수 존 표시는 signal_v2(EPISODE_B, 진입 7.0/이탈 6.0) 기준으로
+      바뀌었습니다. 전 이력 동일 방식으로 재산출했고, 과거 V19 병합 방식 판정은 history.json에
+      기록만 보관됩니다(페이지 미표시).
+    </div>
   </header>
 
   <!-- Guide 모달 -->
@@ -209,7 +214,20 @@ function _bc(r)  { return r.buy_core_v19 != null ? r.buy_core_v19 : r.buy_core_v
 function _eu(r)  { return r.euphoria_v19 != null ? r.euphoria_v19 : r.euphoria_v18; }
 function _ss(r)  { return r.sell_signal_v19 != null ? r.sell_signal_v19 : r.sell_signal_v18; }
 function _sep(r) { return r.sell_ep_v19 != null ? r.sell_ep_v19 : r.sell_ep_v18; }
-function _bv(r)  { return r.buy_v19 != null ? r.buy_v19 : (r.buy_div_v18 || r.strong_buy_v18); }
+// V20_CLOSE_NOW_2: 옛 매수 필드(buy_v19 등)는 history.json에 기록만 남기고 표시에는 쓰지 않는다.
+// 표시층의 매수 판정 원천 = buy_zone_v2(EPISODE_B, 진입 7.0/이탈 6.0). 매도 존 표시는 legacy
+// zone(SELL)을 그대로 쓰되(실제 executor/sellplan 판정과 동일), 추가로 v2 눈금/X를 markers로 얹는다.
+// displayZone: 'BUY'(buy_zone_v2===true) > 'SELL'(legacy zone) > 'HOLD'.
+function withDisplayZone(rows) {
+  let prev = null;
+  return rows.map(r => {
+    const dz = r.buy_zone_v2 === true ? 'BUY'
+      : (r.zone === 'SELL' || r.zone === 'STRONG_SELL' ? 'SELL' : 'HOLD');
+    const changed = dz !== prev;
+    prev = dz;
+    return Object.assign({}, r, { displayZone: dz, displayZoneChanged: changed });
+  });
+}
 
 const PLOTLY_LAYOUT_BASE = {
   paper_bgcolor: "#131a26",
@@ -251,7 +269,7 @@ function fmtSigned(n, digits=2) {
 function renderStatus(latest) {
   const el = document.getElementById("statusBar");
   if (!latest) { el.innerHTML = '<span class="muted">데이터 없음</span>'; return; }
-  const zone = latest.zone || "HOLD";
+  const zone = latest.displayZone || "HOLD";
   const bc   = _bc(latest);
   const eu   = _eu(latest);
   // V19 buy_core: 높을수록 저평가/매수 (임계 7.0)
@@ -259,7 +277,7 @@ function renderStatus(latest) {
   // V19 euphoria (raw): 낮을수록 (음수 깊을수록) 매도 압력
   const euColor = eu == null ? "#e6edf3" : (eu <= -4.5 ? "#ef4444" : (eu <= -3 ? "#f59e0b" : "#e6edf3"));
   const sellTag = _ss(latest) ? '<span style="color:#ef4444">🔻매도신호</span>' : '';
-  const bvTag   = _bv(latest) ? '<span style="color:#22c55e">▲매수신호</span>' : '';
+  const bvTag   = latest.buy_zone_v2 === true ? '<span style="color:#22c55e">▲매수존</span>' : '';
   const pbTag   = latest.pullback_fresh  ? '<span style="color:#a855f7">🔄눌림목</span>' : '';
   el.innerHTML = `
     <span class="pill zone-${zone}">${ZONE_LABEL[zone] || zone}</span>
@@ -278,10 +296,10 @@ function renderPriceChart(rows) {
   const btc = rows.map(r => r.btc_krw);
   const eth = rows.map(r => r.eth_krw);
 
-  // V19 신호 마커 (매수 단일 ●)
-  const buyDays  = rows.filter(r => _bv(r));              // 매수 에피소드 첫날 ●
-  const sellDays = rows.filter(r => _sep(r));             // 매도 에피소드 ▼
-  const changes  = rows.filter(r => r.zone_changed && r.zone === 'HOLD');  // 관망 복귀만 (매수/매도 전환은 ●▼으로 표시)
+  // V19 신호 마커 (매수 단일 ●) — 매수 판정 원천 = buy_zone_v2(EPISODE_B) 진입일
+  const buyDays  = rows.filter(r => r.displayZoneChanged && r.displayZone === 'BUY');  // 매수존 진입일 ●
+  const sellDays = rows.filter(r => _sep(r));             // 매도 에피소드 ▼ (legacy, 실제 executor 판정과 동일)
+  const changes  = rows.filter(r => r.displayZoneChanged && r.displayZone === 'HOLD');  // 관망 복귀만 (매수/매도 전환은 ●▼으로 표시)
 
   const traces = [
     // 가격선
@@ -313,7 +331,7 @@ function renderPriceChart(rows) {
       mode: "markers+text", type: "scatter", name: "관망 전환",
       marker: {
         size: 10,
-        color: changes.map(r => ZONE_COLOR[r.zone] || "#8b97a7"),
+        color: changes.map(r => ZONE_COLOR[r.displayZone] || "#8b97a7"),
         symbol: "diamond", line: { color: "#0b0f17", width: 1.5 },
       },
       textposition: "top center",
@@ -324,8 +342,8 @@ function renderPriceChart(rows) {
   ].filter(Boolean);
 
   const zoneShapes = buildZoneShapes(rows,
-    r => r.zone === 'BUY' || r.zone === 'STRONG_BUY',
-    r => r.zone === 'SELL' || r.zone === 'STRONG_SELL');
+    r => r.displayZone === 'BUY',
+    r => r.displayZone === 'SELL');
   const layout = Object.assign({}, PLOTLY_LAYOUT_BASE, {
     height: 420,
     shapes: zoneShapes,
@@ -343,7 +361,8 @@ function renderScoreChartRecent(rows) {
   const bc = rows.map(r => _bc(r));
   const eu = rows.map(r => _eu(r));
   const sellDays = rows.filter(r => _sep(r));
-  const buyDays  = rows.filter(r => _bv(r));
+  const buyDays  = rows.filter(r => r.displayZoneChanged && r.displayZone === 'BUY');
+  const rungDays = rows.filter(r => Array.isArray(r.rung_fires_v2) && r.rung_fires_v2.length);  // v2 눈금/X (관찰용)
 
   const traces = [
     {
@@ -371,10 +390,19 @@ function renderScoreChartRecent(rows) {
     } : null,
     buyDays.length ? {
       x: buyDays.map(r => r.date), y: buyDays.map(r => _bc(r)),
-      name: "매수 ▲", mode: "markers", type: "scatter",
+      name: "매수존 진입 ▲", mode: "markers", type: "scatter",
       marker: { color: "#22c55e", size: 12, symbol: "triangle-up", line: { color: "#fff", width: 1 } },
       yaxis: "y",
-      hovertemplate: "%{x}<br><b>매수 에피소드 시작</b><extra></extra>",
+      hovertemplate: "%{x}<br><b>매수존 진입 (buy_zone_v2)</b><extra></extra>",
+    } : null,
+    // v2 눈금/X (관찰용) — 매도는 legacy 에피소드 ▼(실제 판정)에 더해 눈금/X도 함께 표시
+    rungDays.length ? {
+      x: rungDays.map(r => r.date), y: rungDays.map(r => _bc(r)),
+      name: "v2 눈금/X (관찰용)", mode: "markers", type: "scatter",
+      marker: { color: "#f97316", size: 9, symbol: "diamond", line: { color: "#111827", width: 1 } },
+      yaxis: "y",
+      text: rungDays.map(r => r.rung_fires_v2.join(",")),
+      hovertemplate: "%{x}<br>v2 발화: %{text}<extra></extra>",
     } : null,
   ].filter(Boolean);
 
@@ -387,8 +415,8 @@ function renderScoreChartRecent(rows) {
     { type:"line", xref:"paper", yref:"y", x0:0, x1:1, y0:0,   y1:0,   line:{color:"#8b97a7", width:1} },
     { type:"line", xref:"paper", yref:"y2", x0:0, x1:1, y0:-4.5, y1:-4.5, line:{color:"#ef4444", width:1, dash:"dash"} },
     ...buildZoneShapes(rows,
-      r => r.zone === 'BUY' || r.zone === 'STRONG_BUY',
-      r => r.zone === 'SELL' || r.zone === 'STRONG_SELL'),
+      r => r.displayZone === 'BUY',
+      r => r.displayZone === 'SELL'),
   ];
   const annotations = [
     { xref:"paper", yref:"y",  x:1.01, y:7.0,  text:"+7.0 매수", showarrow:false, font:{color:"#22c55e", size:9}, xanchor:"left" },
@@ -580,7 +608,8 @@ function renderPriceChartFull(sig) {
 
 // ─── Signal Log ─────────────────────────────────────────────────────────────
 function renderSignalLog(rows) {
-  const changes = rows.filter(r => r.zone_changed).slice().reverse();
+  // displayZone 전환(buy_zone_v2 진입/이탈, legacy SELL) 기준 — zone_changed(legacy) 대신.
+  const changes = rows.filter(r => r.displayZoneChanged).slice().reverse();
   const el = document.getElementById("signalLog");
   if (!changes.length) {
     el.innerHTML = '<div class="empty">아직 zone 변경 이벤트 없음. 데이터가 누적되면 여기 표시됩니다.</div>';
@@ -590,7 +619,7 @@ function renderSignalLog(rows) {
   for (const r of changes) {
     html += `<tr>
       <td>${r.date}</td>
-      <td class="zone-cell zone-${r.zone}">${ZONE_LABEL[r.zone] || r.zone}</td>
+      <td class="zone-cell zone-${r.displayZone}">${ZONE_LABEL[r.displayZone] || r.displayZone}</td>
       <td class="right">${fmtSigned(_bc(r))}</td>
       <td class="right">${fmtSigned(_eu(r))}</td>
       <td class="right">${fmtKRW(r.btc_krw)}</td>
@@ -645,7 +674,7 @@ function renderDailyTable(rows) {
     '<th class="right">BTC</th><th class="right">ETH</th>' +
     '<th class="right">NUPL<br><span class="th-note" style="display:block;font-size:10px;font-weight:400;text-transform:none;letter-spacing:0" title="NUPL 원시값은 공개하지 않으며 백분위(nupl_pctl)로 참조">원시값 비공개, 백분위 참조</span></th><th class="right">MVRVz</th><th class="right">F&G</th>' +
     '<th class="right" title="V19 매도 신호">매도</th>' +
-    '<th class="right" title="V19 매수 신호 (임계 7.0)">▲</th>' +
+    '<th class="right" title="매수존 진입 (buy_zone_v2, EPISODE_B 7.0/6.0)">▲</th>' +
     '<th class="right" title="눌림목 신호 (30일내)">🔄</th>' +
     '</tr></thead><tbody>';
   const boolCell = (v, label, color) => v === true
@@ -659,7 +688,7 @@ function renderDailyTable(rows) {
     const euColor = eu == null ? '#e6edf3' : (eu <= -4.5 ? '#ef4444' : (eu <= -3 ? '#f59e0b' : '#e6edf3'));
     html += `<tr>
       <td>${r.date}</td>
-      <td class="zone-cell zone-${r.zone}">${(ZONE_LABEL[r.zone] || r.zone).replace(/^[\u{1F300}-\u{1FAFF}]\s*/u, "")}</td>
+      <td class="zone-cell zone-${r.displayZone}">${(ZONE_LABEL[r.displayZone] || r.displayZone).replace(/^[\u{1F300}-\u{1FAFF}]\s*/u, "")}</td>
       <td class="right" style="color:${bcColor}">${fmtSigned(bc)}</td>
       <td class="right" style="color:${euColor}">${fmtSigned(eu)}</td>
       <td class="right">${fmtKRW(r.btc_krw)}</td>
@@ -668,7 +697,7 @@ function renderDailyTable(rows) {
       <td class="right">${m.btc_mvrv_z != null ? (+m.btc_mvrv_z).toFixed(2) : "-"}</td>
       <td class="right">${m.fng != null ? m.fng : "-"}</td>
       ${boolCell(_ss(r), '▼', '#ef4444')}
-      ${boolCell(_bv(r), '●', '#22c55e')}
+      ${boolCell(r.displayZoneChanged && r.displayZone === 'BUY', '●', '#22c55e')}
       ${boolCell(r.pullback_fresh, '🔄', '#a855f7')}
     </tr>`;
   }
@@ -886,6 +915,7 @@ async function main() {
 
   let rows = (histRes.status === "fulfilled" ? histRes.value : []).sort((a, b) => a.date < b.date ? -1 : 1);
   let sig  = (sigRes.status  === "fulfilled" ? sigRes.value  : []).sort((a, b) => a.date < b.date ? -1 : 1);
+  rows = withDisplayZone(rows);  // V20_CLOSE_NOW_2: 매수 판정 원천 = buy_zone_v2 (표시층 전환)
 
   if (!rows.length && !sig.length) {
     document.getElementById("statusBar").innerHTML = '<span style="color:#ef4444">데이터 로드 실패</span>';
