@@ -114,7 +114,8 @@
     <div class="chart-note" style="padding:4px 16px 0;">
       ℹ️ 2026-09-29 V20 전환: 매수 존 표시는 signal_v2(EPISODE_B, 진입 7.0/이탈 6.0) 기준으로
       바뀌었습니다. 전 이력 동일 방식으로 재산출했고, 과거 V19 병합 방식 판정은 history.json에
-      기록만 보관됩니다(페이지 미표시).
+      기록만 보관됩니다(페이지 미표시). 매도 구간 음영은 유포리아 방문 전체가 아니라 G 자격
+      충족(T=25일 롤링 최저 종가 > 전고점) 구간만 표시합니다.
     </div>
   </header>
 
@@ -218,6 +219,12 @@ function _sep(r) { return r.sell_ep_v19 != null ? r.sell_ep_v19 : r.sell_ep_v18;
 // 표시층의 매수 판정 원천 = buy_zone_v2(EPISODE_B, 진입 7.0/이탈 6.0). 매도 존 표시는 legacy
 // zone(SELL)을 그대로 쓰되(실제 executor/sellplan 판정과 동일), 추가로 v2 눈금/X를 markers로 얹는다.
 // displayZone: 'BUY'(buy_zone_v2===true) > 'SELL'(legacy zone) > 'HOLD'.
+// (참고: 상태 표시(pill)·시그널 로그·일일테이블은 실제 executor/sellplan이 쓰는 legacy zone을
+// 그대로 반영해야 하므로 displayZone의 SELL 정의는 바꾸지 않는다 — 아래 매도 "구간 음영"만
+// V20_EUPHORIA_WINDOW §4 지시대로 G 자격 충족 구간으로 별도 좁힌다.)
+function isSellZoneShaded(r) {
+  return r.sell_visit_v2 === true && r.g_state_v2 === true;
+}
 function withDisplayZone(rows) {
   let prev = null;
   return rows.map(r => {
@@ -343,7 +350,7 @@ function renderPriceChart(rows) {
 
   const zoneShapes = buildZoneShapes(rows,
     r => r.displayZone === 'BUY',
-    r => r.displayZone === 'SELL');
+    r => isSellZoneShaded(r));  // V20_EUPHORIA_WINDOW §4 — G자격 충족 구간만
   const layout = Object.assign({}, PLOTLY_LAYOUT_BASE, {
     height: 420,
     shapes: zoneShapes,
@@ -416,7 +423,7 @@ function renderScoreChartRecent(rows) {
     { type:"line", xref:"paper", yref:"y2", x0:0, x1:1, y0:-4.5, y1:-4.5, line:{color:"#ef4444", width:1, dash:"dash"} },
     ...buildZoneShapes(rows,
       r => r.displayZone === 'BUY',
-      r => r.displayZone === 'SELL'),
+      r => isSellZoneShaded(r)),  // V20_EUPHORIA_WINDOW §4 — G자격 충족 구간만
   ];
   const annotations = [
     { xref:"paper", yref:"y",  x:1.01, y:7.0,  text:"+7.0 매수", showarrow:false, font:{color:"#22c55e", size:9}, xanchor:"left" },
