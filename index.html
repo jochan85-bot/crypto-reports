@@ -132,7 +132,7 @@
       <div id="scoreChartRecent"></div>
     </div>
 
-    <!-- 2. V20 전체 역사 점수 차트 (v18_signal.json, 2010-07~) -->
+    <!-- 2. V20 전체 역사 점수 차트 (v20_signal.json, 2010-07~) -->
     <div class="card">
       <h2>V20 시그널 전체 역사 (2010-07~) <span class="muted" style="font-weight:400;font-size:12px;">
         — buy_core(통합점수) · 유포리아 · 매도↓ · 매수
@@ -165,7 +165,7 @@
   <footer>
     데이터 갱신: 매일 09:00 KST ·
     <a href="data/history.json">history.json</a> ·
-    <a href="data/v18_signal.json">V20 시그널 데이터</a> ·
+    <a href="data/v20_signal.json">V20 시그널 데이터</a> ·
     <a href="https://github.com/jochan85-bot/crypto-reports">GitHub</a>
   </footer>
 
@@ -237,7 +237,7 @@ function _invalidCrossingDays(rows) {
   return rows.filter(r => Array.isArray(r.crossings_v2_invalid) && r.crossings_v2_invalid.length);
 }
 // V20_HISTORY_EXT — 2019 이전(reference:true) 행은 표시는 하되 "참고(제외)"로 구분한다.
-// v18_signal.json에만 존재하는 필드(history.json은 항상 2019 이후만이라 reference가 없음
+// v20_signal.json에만 존재하는 필드(history.json은 항상 2019 이후만이라 reference가 없음
 // 또는 항상 false) — undefined도 false로 취급.
 function _splitRef(arr) {
   return {
@@ -534,7 +534,7 @@ function renderScoreChartRecent(rows) {
   });
 }
 
-// ─── V20 전체 역사 점수 차트 (v18_signal.json) ──────────────────────────────
+// ─── V20 전체 역사 점수 차트 (v20_signal.json) ──────────────────────────────
 function _computeV20BuyEpisodes(sig) {
   // V20: buy_zone_v2 진입일(EPISODE_B, 7.0 진입/6.0 이탈) — 이전 행 대비 buy_zone_v2가
   // false→true로 바뀌는 날. 옛 60일 병합 체인이 아니라 buy_zone_v2 그 자체를 그대로 읽는다.
@@ -685,7 +685,7 @@ function renderScoreChartFull(sig) {
   });
 }
 
-// ─── V20 전체 역사 BTC 가격 차트 (v18_signal.json, scoreChartFull 연동)
+// ─── V20 전체 역사 BTC 가격 차트 (v20_signal.json, scoreChartFull 연동)
 function renderPriceChartFull(sig) {
   const x   = sig.map(r => r.date);
   const btc = sig.map(r => r.btc_usd);
@@ -967,20 +967,31 @@ function _readAxes(gd, clientX, clientY) {
     y2: gd._fullLayout.yaxis2 ? _axisInfo(gd, "yaxis2", clientY, true) : null,
   };
 }
+// 터치 제스처 버그 수정(2026-09-29, 오너 지적) — 예전엔 차트 div 전체(범례·기간선택
+// 버튼·여백 포함)를 "차트 안"으로 쳐서 (a) 기간 버튼(1달/6달/.../전체)을 터치하면
+// 버튼 클릭 대신 패닝이 먼저 채가고 (b) 차트 위젯 안의 여백(실제 그래프 밖)을 터치해도
+// 확대/이동이 됐다. 이제 Plotly가 실제로 데이터를 그리는 좌표(gd._fullLayout._size —
+// 여백·범례·버튼·제목 영역 제외)만 "차트 안"으로 본다.
+function _plotAreaRect(gd) {
+  const bb = gd.getBoundingClientRect();
+  const sz = gd._fullLayout && gd._fullLayout._size;
+  if (!sz) return bb;
+  return {
+    left: bb.left + sz.l, right: bb.left + sz.l + sz.w,
+    top: bb.top + sz.t, bottom: bb.top + sz.t + sz.h,
+  };
+}
 function _findChartUnderPoint(clientX, clientY) {
   for (const id of _CHART_IDS) {
     const el = document.getElementById(id);
-    if (!el) continue;
-    const bb = el.getBoundingClientRect();
-    if (clientX >= bb.left && clientX <= bb.right && clientY >= bb.top && clientY <= bb.bottom) return id;
+    if (!el || !el._fullLayout) continue;
+    const r = _plotAreaRect(el);
+    if (clientX >= r.left && clientX <= r.right && clientY >= r.top && clientY <= r.bottom) return id;
   }
   return null;
 }
-function _isInsideChart(e) {
-  return _CHART_IDS.some(id => {
-    const el = document.getElementById(id);
-    return el && el.contains(e.target);
-  });
+function _isInsideChart(clientX, clientY) {
+  return _findChartUnderPoint(clientX, clientY) !== null;
 }
 
 const _gesture = { mode: null, chartId: null };  // mode: 'pan' | 'pinch'
@@ -1032,7 +1043,8 @@ function _applyGesture() {
 }
 
 document.addEventListener("touchstart", e => {
-  if (!_isInsideChart(e)) return;
+  const _t0chk = e.touches[0];
+  if (!_t0chk || !_isInsideChart(_t0chk.clientX, _t0chk.clientY)) return;
   e.stopPropagation();  // Plotly 자체 dragElement.onStart가 아예 실행되지 않게 차단
   e.preventDefault();
   if (e.touches.length === 1) {
@@ -1064,7 +1076,8 @@ document.addEventListener("touchstart", e => {
 }, { passive: false, capture: true });
 
 document.addEventListener("touchmove", e => {
-  if (!_isInsideChart(e) || !_gesture.mode) return;
+  const _t0mv = e.touches[0];
+  if (!_gesture.mode || !_t0mv || !_isInsideChart(_t0mv.clientX, _t0mv.clientY)) return;
   e.preventDefault();
   e.stopPropagation();
   if (_gesture.mode === "pinch" && e.touches.length === 2) {
@@ -1111,7 +1124,7 @@ for (const id of _CHART_IDS) {
 async function main() {
   const [histRes, sigRes] = await Promise.allSettled([
     fetch("data/history.json?t=" + Date.now(), { cache: "no-store" }).then(r => r.json()),
-    fetch("data/v18_signal.json?t=" + Date.now(), { cache: "no-store" }).then(r => r.json()),
+    fetch("data/v20_signal.json?t=" + Date.now(), { cache: "no-store" }).then(r => r.json()),
   ]);
 
   let rows = (histRes.status === "fulfilled" ? histRes.value : []).sort((a, b) => a.date < b.date ? -1 : 1);
@@ -1140,7 +1153,7 @@ async function main() {
     renderScoreChartFull(sig);
     bindChartSync(["priceChartFull", "scoreChartFull"]);
   } else {
-    document.getElementById("scoreChartFull").innerHTML = '<div class="empty">v18_signal.json 로드 실패 또는 데이터 부족</div>';
+    document.getElementById("scoreChartFull").innerHTML = '<div class="empty">v20_signal.json 로드 실패 또는 데이터 부족</div>';
   }
 
   renderSignalLog(rows);
