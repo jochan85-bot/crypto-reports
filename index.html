@@ -260,6 +260,16 @@ function withDisplayZone(rows) {
   });
 }
 
+// 오늘 기준 최근 5년 [시작, 끝] ISO 날짜 문자열 — 전체 역사 차트 기본 표시 범위용.
+// 하드코딩 아님, 페이지를 여는 시점마다 다시 계산되므로 항상 "최근 5년"을 가리킨다.
+function _last5yRange() {
+  const end = new Date();
+  const start = new Date(end);
+  start.setFullYear(start.getFullYear() - 5);
+  const iso = d => d.toISOString().slice(0, 10);
+  return [iso(start), iso(end)];
+}
+
 const PLOTLY_LAYOUT_BASE = {
   paper_bgcolor: "#131a26",
   plot_bgcolor:  "#0b0f17",
@@ -279,6 +289,7 @@ const PLOTLY_LAYOUT_BASE = {
         { count: 6,   label: "6달",  step: "month", stepmode: "backward" },
         { count: 1,   label: "1년",  step: "year",  stepmode: "backward" },
         { count: 3,   label: "3년",  step: "year",  stepmode: "backward" },
+        { count: 5,   label: "5년",  step: "year",  stepmode: "backward" },
         { step: "all", label: "전체" },
       ]
     }
@@ -663,6 +674,9 @@ function renderScoreChartFull(sig) {
   const layout = Object.assign({}, PLOTLY_LAYOUT_BASE, {
     height: 420,
     shapes, annotations,
+    // 기본 표시 범위 = 최근 5년(데이터는 2010-07~ 전체 그대로 실려 있음 — "5년"·"전체"
+    // 버튼이나 드래그로 언제든 전체 역사까지 확대 가능, 초기 화면만 5년으로 좁힘).
+    xaxis: Object.assign({}, PLOTLY_LAYOUT_BASE.xaxis, { range: _last5yRange() }),
     yaxis:  { title: "buy_core", gridcolor: "#1f2a3a", linecolor: "#1f2a3a", range: [-12, 12] },
     yaxis2: { title: "유포리아_sym", gridcolor: "transparent", linecolor: "#1f2a3a", overlaying:"y", side:"right", range: [-12, 12] },
   });
@@ -779,7 +793,9 @@ function renderPriceChartFull(sig) {
       ...buildZoneShapes(sig, r => r.buy_zone_v2 === true,
         r => r.euphoria_sym_v2 != null && r.euphoria_sym_v2 < CFG.X_CUT && r.g_state_v2 === true),
     ],
-    xaxis: Object.assign({}, PLOTLY_LAYOUT_BASE.xaxis, { rangeselector: undefined }),
+    // scoreChartFull과 동일 기본 범위(최근 5년) — 두 차트는 bindChartSync로 줌만 연동되고
+    // 초기 range는 각자 지정해야 함(연동은 사용자 상호작용 이후에만 작동).
+    xaxis: Object.assign({}, PLOTLY_LAYOUT_BASE.xaxis, { rangeselector: undefined, range: _last5yRange() }),
     yaxis: {
       title: "BTC (USD)", gridcolor: "#1f2a3a", linecolor: "#1f2a3a",
       tickformat: "$,.0f",
