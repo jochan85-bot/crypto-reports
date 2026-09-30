@@ -122,6 +122,8 @@
     <div class="chart-note" style="padding:4px 16px 0;">
       ℹ️ V20 — 온체인 CM·Puell 결정론·매수 존 7.0/6.0·유포리아 3년창 대칭 보정·매도 눈금/탈출,
       2026-09-30 전 이력 재산출.
+      <span class="bs-only"><br>▲ 매수시작(T75) = 존 안 buy_core 7.5 하향 돌파(방문 최고−7.5 ≥ 0.5), 사이클당 1회 — 이후 존 안 월요일 1/12씩 12회
+      <b>예정</b>(표시 전용·자동집행 아님·매수 경로 buy_mode=off, 체결 기록 아님).</span>
     </div>
   </header>
 
@@ -138,7 +140,7 @@
       <!-- 아이콘 인덱스 — 두 차트(가격/점수)의 자체 Plotly 범례는 껐고(showlegend:false),
            이 박스 하나가 유일한 범례다(오너 지시 2026-09-29: 중복·산만한 하단 범례 대신
            완전한 형태의 인덱스 하나로 통합. 순서: BTC·ETH·buy_core·유포리아 →
-           매수존 진입·매도·청산 탈출·청산(거짓·재무장)·관망 전환) -->
+           매수시작(T75)·매도·청산 탈출·청산(거짓·재무장)·관망 전환) -->
       <div class="icon-index">
         <div class="icon-index-row">
           <span class="icon-index-label">지표</span>
@@ -149,7 +151,7 @@
         </div>
         <div class="icon-index-row">
           <span class="icon-index-label">신호</span>
-          <span style="color:#22c55e">▲ 매수존 진입</span>
+          <span class="bs-only" style="color:#22c55e" title="존 안 buy_core 7.5 하향 돌파(방문 최고−7.5≥0.5), 사이클당 1회 · 표시 전용(집행 미연동)">▲ 매수시작(T75)</span>
           <span style="color:#ef4444">▼ 매도</span>
           <span><svg width="13" height="13" viewBox="0 0 14 14" style="vertical-align:-2px"><polygon points="7,1 13,7 7,13 1,7" fill="#1e3a8a"/></svg> 청산 탈출</span>
           <span><svg width="13" height="13" viewBox="0 0 14 14" style="vertical-align:-2px"><polygon points="7,1 13,7 7,13 1,7" fill="#1e3a8a"/><line x1="4" y1="4" x2="10" y2="10" stroke="#000" stroke-width="1.6"/><line x1="10" y1="4" x2="4" y2="10" stroke="#000" stroke-width="1.6"/></svg> 청산(거짓·재무장)</span>
@@ -175,7 +177,7 @@
         </div>
         <div class="icon-index-row">
           <span class="icon-index-label">신호</span>
-          <span style="color:#22c55e">▲ 매수존 진입</span>
+          <span class="bs-only" style="color:#22c55e" title="존 안 buy_core 7.5 하향 돌파(방문 최고−7.5≥0.5), 사이클당 1회 · 표시 전용(집행 미연동)">▲ 매수시작(T75)</span>
           <span style="color:#ef4444">▼ 매도</span>
           <span><svg width="13" height="13" viewBox="0 0 14 14" style="vertical-align:-2px"><polygon points="7,1 13,7 7,13 1,7" fill="#1e3a8a"/></svg> 청산 탈출</span>
           <span><svg width="13" height="13" viewBox="0 0 14 14" style="vertical-align:-2px"><polygon points="7,1 13,7 7,13 1,7" fill="#1e3a8a"/><line x1="4" y1="4" x2="10" y2="10" stroke="#000" stroke-width="1.6"/><line x1="10" y1="4" x2="4" y2="10" stroke="#000" stroke-width="1.6"/></svg> 청산(거짓·재무장)</span>
@@ -183,6 +185,7 @@
       </div>
       <div class="chart-note">
         📌 기준선: 매수 존 <span style="color:#22c55e">+7.0 진입</span>/<span style="color:#64748b">+6.0 이탈</span> ·
+        <span class="bs-only"><span style="color:#22c55e">매수시작(T75) 7.5 하향돌파</span> ·</span>
         매도 <span style="color:#ef4444">−6.0 진입</span> ·
         온체인: CoinMetrics(2일 지연)·Puell 결정론(지연 0), 유포리아 = min(전체 이력, 3년창) 백분위, DXY는 표기만
       </div>
@@ -294,6 +297,35 @@ function _invalidText(r) {
   return r.crossings_v2_invalid.map(c => `${c.level}(${c.reason})`).join(", ");
 }
 
+// V20_BUY_START_DISPLAY(PREREG v1.6 §9) — 매수시작(T75) 마커 = buy_start_v2 발화일(사이클당 1회, 이력 소급).
+// 되돌림(BUY_START_MODE=off): 최신 행에 buy_start_v2 키가 없으면 마커·배지를 그리지 않는다(과거 행에 키가 남아 있어도).
+function _buyStartOn(arr) {
+  return arr.length > 0 && Object.prototype.hasOwnProperty.call(arr[arr.length - 1], 'buy_start_v2');
+}
+function _buyStartDays(arr) {
+  return _buyStartOn(arr) ? arr.filter(r => r.buy_start_v2 === true) : [];
+}
+// 상태 배지 — 상태는 사이클에 귀속(기한 없음): 12/12 소진 후 "소진(마지막 회차일)"을 사이클 종료(첫 매도 신호 발화)까지 유지,
+// 종료 후 "사이클 종료·다음 존 대기". series = 발화일·회차일을 찾을 전 이력(v20_signal + history 최신분).
+function _buyStartBadge(latest, series) {
+  if (!latest || !Object.prototype.hasOwnProperty.call(latest, 'buy_start_v2')) return '';
+  const st = latest.buy_tranche_state_v2, cyc = latest.buy_start_cycle_v2;
+  const TIP = '표시 전용 예정값 — 자동집행 아님·매수 경로 buy_mode=off·체결 기록 아님 (PREREG v1.6 §9)';
+  const wrap = (color, txt) => `<span style="color:${color}" title="${TIP}">${txt}</span>`;
+  if (cyc == null) return wrap('#8b97a7', '매수시작 · 사이클 종료·다음 존 대기');
+  if (st == null) return wrap('#8b97a7', '매수시작 · 존 진입 — 무장(T75) 대기');
+  const inCyc = series.filter(r => r.buy_start_cycle_v2 === cyc);
+  const fire = inCyc.find(r => r.buy_start_v2 === true);
+  const buys = inCyc.filter(r => r.buy_tranche_state_v2 && r.buy_tranche_state_v2.state === 'buy');
+  const head = '매수시작 ✓' + (fire ? ' ' + fire.date : '');
+  if (st.state === 'exhausted') {
+    const last = buys.length ? '(마지막 ' + buys[buys.length - 1].date.slice(5) + ')' : '';
+    return wrap('#22c55e', `${head} · 소진 ${st.n}/${st.of}${last} · 집행 미연동`);
+  }
+  const paused = st.state === 'paused' ? ' · 존 이탈 정지' : '';
+  return wrap('#22c55e', `${head} · 트랜치 ${st.n}/${st.of} 예정${paused}(집행 미연동)`);
+}
+
 // displayZone: 'BUY'(buy_zone_v2) > 'SELL'(isSellZone) > 'HOLD' — 전부 v2 필드 기준.
 function withDisplayZone(rows) {
   let prev = null;
@@ -353,7 +385,7 @@ function fmtSigned(n, digits=2) {
 }
 
 // ─── Status Bar (V20) ──────────────────────────────────────────────────────
-function renderStatus(latest) {
+function renderStatus(latest, series) {
   const el = document.getElementById("statusBar");
   if (!latest) { el.innerHTML = '<span class="muted">데이터 없음</span>'; return; }
   const zone = latest.displayZone || "HOLD";
@@ -366,7 +398,8 @@ function renderStatus(latest) {
   const sellTag = Array.isArray(latest.signals_v2) && latest.signals_v2.length
     ? `<span style="color:#ef4444">🔻신호(${latest.signals_v2.join(",")})</span>`
     : (isSellZone(latest) ? '<span style="color:#ef4444">🔻매도구간</span>' : '');
-  const bvTag   = latest.buy_zone_v2 === true ? '<span style="color:#22c55e">▲매수존</span>' : '';
+  const bvTag   = latest.buy_zone_v2 === true ? '<span style="color:#22c55e">●매수존</span>' : '';   // 존 안 여부(▲는 매수시작 전용)
+  const bsBadge = _buyStartBadge(latest, series || []);
   const pbTag   = latest.pullback_fresh  ? '<span style="color:#a855f7">🔄눌림목</span>' : '';
   el.innerHTML = `
     <span class="pill zone-${zone}">${ZONE_LABEL[zone] || zone}</span>
@@ -376,6 +409,7 @@ function renderStatus(latest) {
     <span style="flex-basis:100%;height:0"></span>
     <span><span class="muted">BTC</span> <b>${fmtKRW(latest.btc_krw)}</b> KRW</span>
     <span><span class="muted">ETH</span> <b>${fmtKRW(latest.eth_krw)}</b> KRW</span>
+    ${bsBadge ? '<span style="flex-basis:100%;height:0"></span>' + bsBadge : ''}
   `;
 }
 
@@ -385,8 +419,8 @@ function renderPriceChart(rows) {
   const btc = rows.map(r => r.btc_krw);
   const eth = rows.map(r => r.eth_krw);
 
-  // 매수 판정 원천 = buy_zone_v2(EPISODE_B) 진입일
-  const buyDays    = rows.filter(r => r.displayZoneChanged && r.displayZone === 'BUY');  // 매수존 진입일 ●
+  // 매수시작(T75) 마커 원천 = buy_start_v2 발화일(사이클당 1회) — 존 진입일이 아님(V20_BUY_START_DISPLAY)
+  const buyDays    = _buyStartDays(rows);  // 매수시작 ▲
   const rungDays   = _rungSignalDays(rows);   // 눈금(게이팅 통과, signals_v2)
   const xSplit     = _splitXFalse(_xSignalDays(rows));  // V20_XP_APPLY — 거짓 재무장 분리
   const xDays      = xSplit.normal;
@@ -428,13 +462,13 @@ function renderPriceChart(rows) {
       text: invalidDays.map(_invalidText),
       hovertemplate: "%{x}<br>무효: %{text}<extra></extra>",
     } : null,
-    // 매수 ● (초록 삼각형) — buy_zone_v2 진입
+    // 매수시작 ▲ (초록 삼각형) — buy_start_v2 발화일(T75)
     buyDays.length ? {
       x: buyDays.map(r => r.date), y: buyDays.map(r => r.btc_krw),
-      name: "매수존 진입", mode: "markers", type: "scatter",
+      name: "매수시작(T75)", mode: "markers", type: "scatter",
       marker: { color: "#22c55e", size: 14, symbol: "triangle-up", line: { color: "#fff", width: 1.5 } },
       yaxis: "y",
-      hovertemplate: "%{x}<br><b>매수 에피소드 시작</b><extra></extra>",
+      hovertemplate: "%{x}<br><b>매수시작 (T75 · buy_start_v2)</b><br>이후 존 안 월요일 1/12 × 12회 예정(집행 미연동)<extra></extra>",
     } : null,
     // 매도(눈금, X 제외, 게이팅 통과분만) — 빨간 역삼각형, 매수와 동일 크기·흰 테두리, 레벨은 hover로 구분
     // 데이터가 없는 구간에도 범례에 항상 표시(추후 발화될 아이콘 인덱스 목적)
@@ -484,7 +518,7 @@ function renderScoreChartRecent(rows) {
   const x  = rows.map(r => r.date);
   const bc = rows.map(r => _bc(r));
   const eu = rows.map(r => _eu(r));
-  const buyDays  = rows.filter(r => r.displayZoneChanged && r.displayZone === 'BUY');
+  const buyDays  = _buyStartDays(rows);   // 매수시작(T75) — buy_start_v2 발화일
   const rungDays = _rungSignalDays(rows);
   const xSplit   = _splitXFalse(_xSignalDays(rows));  // V20_XP_APPLY — 거짓 재무장 분리
   const xDays    = xSplit.normal;
@@ -527,10 +561,10 @@ function renderScoreChartRecent(rows) {
     },
     buyDays.length ? {
       x: buyDays.map(r => r.date), y: buyDays.map(r => _bc(r)),
-      name: "매수존 진입", mode: "markers", type: "scatter",
+      name: "매수시작(T75)", mode: "markers", type: "scatter",
       marker: { color: "#22c55e", size: 12, symbol: "triangle-up", line: { color: "#fff", width: 1 } },
       yaxis: "y",
-      hovertemplate: "%{x}<br><b>매수존 진입 (buy_zone_v2)</b><extra></extra>",
+      hovertemplate: "%{x}<br><b>매수시작 (T75 · buy_start_v2)</b><extra></extra>",
     } : null,
     // 매도(눈금, X 제외, 게이팅 통과분만) — 매수와 동일 크기·흰 테두리. 데이터 없어도 범례 항상 표시
     {
@@ -586,16 +620,9 @@ function renderScoreChartRecent(rows) {
 
 // ─── V20 전체 역사 점수 차트 (v20_signal.json) ──────────────────────────────
 function _computeV20BuyEpisodes(sig) {
-  // V20: buy_zone_v2 진입일(EPISODE_B, 7.0 진입/6.0 이탈) — 이전 행 대비 buy_zone_v2가
-  // false→true로 바뀌는 날. 옛 60일 병합 체인이 아니라 buy_zone_v2 그 자체를 그대로 읽는다.
-  const arr = [];
-  let prev = false;
-  for (let i = 0; i < sig.length; i++) {
-    const cur = sig[i].buy_zone_v2 === true;
-    if (cur && !prev) arr.push(sig[i]);
-    prev = cur;
-  }
-  return arr;
+  // V20_BUY_START_DISPLAY: 마커 = buy_start_v2 발화일(T75, 사이클당 1회). 옛 구현(buy_zone_v2 false→true 존 진입일)은
+  // 제거 — 함수 이름만 호출부 호환으로 유지한다. 키 부재(모드 off)면 빈 배열.
+  return _buyStartDays(sig);
 }
 
 function renderScoreChartFull(sig) {
@@ -667,11 +694,11 @@ function renderScoreChartFull(sig) {
     buyEp.normal.length ? {
       x: buyEp.normal.map(r => r.date),
       y: buyEp.normal.map(r => r.buy_core),
-      name: "매수존 진입",
+      name: "매수시작(T75)",
       mode: "markers", type: "scatter",
       marker: { color: "#22c55e", size: 12, symbol: "triangle-up", line: { color: "#fff", width: 1 } },
       yaxis: "y",
-      hovertemplate: "%{x}<br><b>매수존 진입 (buy_zone_v2)</b><extra></extra>",
+      hovertemplate: "%{x}<br><b>매수시작 (T75 · buy_start_v2)</b><extra></extra>",
     } : null,
     rungDays.normal.length ? {
       x: rungDays.normal.map(r => r.date), y: rungDays.normal.map(r => r.euphoria_sym_v2),
@@ -685,10 +712,10 @@ function renderScoreChartFull(sig) {
     // 접어서(showlegend:false) 차트 설명은 아래 각주 하나로 통합(오너 지시 2026-09-29)
     buyEp.ref.length ? {
       x: buyEp.ref.map(r => r.date), y: buyEp.ref.map(r => r.buy_core),
-      name: "매수존 진입 (참고, 제외)", mode: "markers", type: "scatter",
+      name: "매수시작 (참고, 제외)", mode: "markers", type: "scatter",
       marker: { color: "#6b7684", size: 10, symbol: "triangle-up", line: { color: "#111827", width: 1 } },
       yaxis: "y", showlegend: false,
-      hovertemplate: "%{x}<br><b>매수존 진입 — 참고(2019 이전, 설계 표본 제외)</b><extra></extra>",
+      hovertemplate: "%{x}<br><b>매수시작 — 참고(2019 이전, 설계 표본 제외)</b><extra></extra>",
     } : null,
     rungDays.ref.length ? {
       x: rungDays.ref.map(r => r.date), y: rungDays.ref.map(r => r.euphoria_sym_v2),
@@ -799,10 +826,10 @@ function renderPriceChartFull(sig) {
     } : null,
     buyEp.normal.length ? {
       x: buyEp.normal.map(r => r.date), y: buyEp.normal.map(r => r.btc_usd),
-      name: "매수존 진입", mode: "markers", type: "scatter",
+      name: "매수시작(T75)", mode: "markers", type: "scatter",
       marker: { color: "#22c55e", size: 12, symbol: "triangle-up", line: { color: "#fff", width: 1 } },
       showlegend: false,
-      hovertemplate: "%{x}<br><b>매수존 진입 (buy_zone_v2)</b><extra></extra>",
+      hovertemplate: "%{x}<br><b>매수시작 (T75 · buy_start_v2)</b><extra></extra>",
     } : null,
     // 매도(눈금, X 제외, 게이팅 통과분만) — 매수와 동일 크기·흰 테두리
     rungDays.normal.length ? {
@@ -817,10 +844,10 @@ function renderPriceChartFull(sig) {
     // (showlegend:false) 차트 설명은 아래 각주 하나로 통합(오너 지시 2026-09-29)
     buyEp.ref.length ? {
       x: buyEp.ref.map(r => r.date), y: buyEp.ref.map(r => r.btc_usd),
-      name: "매수존 진입 (참고, 제외)", mode: "markers", type: "scatter",
+      name: "매수시작 (참고, 제외)", mode: "markers", type: "scatter",
       marker: { color: "#6b7684", size: 10, symbol: "triangle-up", line: { color: "#111827", width: 1 } },
       showlegend: false,
-      hovertemplate: "%{x}<br><b>매수존 진입 — 참고(2019 이전, 설계 표본 제외)</b><extra></extra>",
+      hovertemplate: "%{x}<br><b>매수시작 — 참고(2019 이전, 설계 표본 제외)</b><extra></extra>",
     } : null,
     rungDays.ref.length ? {
       x: rungDays.ref.map(r => r.date), y: rungDays.ref.map(r => r.btc_usd),
@@ -923,6 +950,7 @@ function renderDailyTableForMonth(month) {
 
 function renderDailyTable(rows) {
   const recent = rows.slice().reverse();
+  const _bsOn = _buyStartOn(_allRows);   // 모드 off(최신 행에 키 없음)면 과거 행의 키가 남아 있어도 표시 안 함
   const el = document.getElementById("dailyTable");
   if (!recent.length) { el.innerHTML = '<div class="empty">데이터 없음</div>'; return; }
   let html = '<table><thead><tr>' +
@@ -932,7 +960,7 @@ function renderDailyTable(rows) {
     '<th class="right">BTC</th><th class="right">ETH</th>' +
     '<th class="right">NUPL<br><span class="th-note" style="display:block;font-size:10px;font-weight:400;text-transform:none;letter-spacing:0" title="NUPL 원시값은 공개하지 않으며 백분위(nupl_pctl)로 참조">원시값 비공개, 백분위 참조</span></th><th class="right">MVRVz</th><th class="right">F&G</th>' +
     '<th class="right" title="매도 신호(눈금/X, 게이팅 통과분만)">매도</th>' +
-    '<th class="right" title="매수존 진입 (buy_zone_v2, EPISODE_B 7.0/6.0)">▲</th>' +
+    '<th class="right" title="매수시작 (T75, buy_start_v2 — 존 안 7.5 하향돌파·사이클당 1회)">▲</th>' +
     '<th class="right" title="눌림목 신호 (30일내)">🔄</th>' +
     '</tr></thead><tbody>';
   const boolCell = (v, label, color) => v === true
@@ -955,7 +983,7 @@ function renderDailyTable(rows) {
       <td class="right">${m.btc_mvrv_z != null ? (+m.btc_mvrv_z).toFixed(2) : "-"}</td>
       <td class="right">${m.fng != null ? m.fng : "-"}</td>
       ${boolCell(Array.isArray(r.signals_v2) && r.signals_v2.length > 0, '▼', '#ef4444')}
-      ${boolCell(r.displayZoneChanged && r.displayZone === 'BUY', '●', '#22c55e')}
+      ${boolCell(r.buy_start_v2 === true && _bsOn, '▲', '#22c55e')}
       ${boolCell(r.pullback_fresh, '🔄', '#a855f7')}
     </tr>`;
   }
@@ -1178,6 +1206,7 @@ for (const id of _CHART_IDS) {
 }
 
 // ─── Main ───────────────────────────────────────────────────────────────────
+let _allRows = [];   // main() 이 채움 — renderDailyTable 의 모드 판정용
 async function main() {
   const [histRes, sigRes] = await Promise.allSettled([
     fetch("data/history.json?t=" + Date.now(), { cache: "no-store" }).then(r => r.json()),
@@ -1194,7 +1223,12 @@ async function main() {
   }
 
   const latest = rows.length ? rows[rows.length - 1] : null;
-  renderStatus(latest);
+  // 상태 배지용 전 이력(v20_signal 전체 + history 의 그 이후 행) — 발화일·마지막 회차일 탐색
+  const _sigLast = sig.length ? sig[sig.length - 1].date : '';
+  _allRows = sig.concat(rows.filter(r => r.date > _sigLast));
+  renderStatus(latest, _allRows);
+  // 되돌림(off): 매수시작 범례·안내 문구도 함께 숨긴다(정적 HTML 이라 JS 로 처리)
+  if (!_buyStartOn(_allRows)) document.querySelectorAll('.bs-only').forEach(e => { e.style.display = 'none'; });
 
   if (rows.length >= 2) {
     renderPriceChart(rows);
