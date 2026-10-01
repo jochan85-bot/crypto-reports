@@ -119,14 +119,6 @@
     <div class="header-status">
       <div class="status" id="statusBar"><span class="muted">데이터 로드 중…</span></div>
     </div>
-    <div class="chart-note" style="padding:4px 16px 0;">
-      ℹ️ V20 — 온체인 CM·Puell 결정론·매수 존 7.0/6.0·유포리아 3년창 대칭 보정·매도 눈금/탈출,
-      2026-09-30 전 이력 재산출.
-      <span class="bs-only"><br>▲ 매수시작(T75) = 존 안 buy_core 7.5 하향 돌파(방문 최고−7.5 ≥ 0.5), 사이클당 1회 — 이후 존 안 월요일 1/12씩 12회
-      <b>예정</b>(표시 전용·자동집행 아님·매수 경로 buy_mode=off, 체결 기록 아님).</span>
-      <span class="ss-only"><br>▼ 매도시작 = 사이클 첫 매도 신호(눈금 또는 X), 사이클당 1회 — 이후 매도 구간(−6.0 ∧ G) 안 날 기준 84일 연속 TWAP <b>예정</b>
-      (표시 전용·집행 미연동 — 현행 집행은 sellplan_rule=ladder 눈금 10%·X 20%, 체결 기록 아님). ▽ 참고 신호 = 같은 사이클의 이후 눈금·X(집행 무관, 재량 판단용).</span>
-    </div>
   </header>
 
   <!-- Guide 모달 -->
@@ -148,12 +140,12 @@
           <span class="icon-index-label">지표</span>
           <span style="color:#f59e0b">━ BTC</span>
           <span style="color:#3b82f6">━ ETH</span>
-          <span style="color:#a855f7">━ buy_core</span>
+          <span style="color:#a855f7">━ 매수점수</span>
           <span style="color:#ef4444">┄ 유포리아</span>
         </div>
         <div class="icon-index-row">
           <span class="icon-index-label">신호</span>
-          <span class="bs-only" style="color:#22c55e" title="존 안 buy_core 7.5 하향 돌파(방문 최고−7.5≥0.5), 사이클당 1회 · 표시 전용(집행 미연동)">▲ 매수시작(T75)</span>
+          <span class="bs-only" style="color:#22c55e" title="존 안 매수점수 7.5 하향 돌파(방문 최고−7.5≥0.5), 사이클당 1회 · 표시 전용(집행 미연동)">▲ 매수시작</span>
           <span class="ss-off" style="color:#ef4444">▼ 매도</span>
           <span class="ss-only" style="color:#b91c1c" title="사이클 첫 매도 신호(눈금 또는 X), 사이클당 1회 · 표시 전용(집행 미연동)">▼ 매도시작</span>
           <span class="ss-only" style="color:#ef4444;opacity:.6" title="같은 사이클의 이후 눈금·X — 집행 무관, 재량 판단용">▽ 참고 신호</span>
@@ -177,12 +169,12 @@
         <div class="icon-index-row">
           <span class="icon-index-label">지표</span>
           <span style="color:#f59e0b">━ BTC (USD)</span>
-          <span style="color:#a855f7">━ buy_core</span>
+          <span style="color:#a855f7">━ 매수점수</span>
           <span style="color:#ef4444">┄ 유포리아</span>
         </div>
         <div class="icon-index-row">
           <span class="icon-index-label">신호</span>
-          <span class="bs-only" style="color:#22c55e" title="존 안 buy_core 7.5 하향 돌파(방문 최고−7.5≥0.5), 사이클당 1회 · 표시 전용(집행 미연동)">▲ 매수시작(T75)</span>
+          <span class="bs-only" style="color:#22c55e" title="존 안 매수점수 7.5 하향 돌파(방문 최고−7.5≥0.5), 사이클당 1회 · 표시 전용(집행 미연동)">▲ 매수시작</span>
           <span class="ss-off" style="color:#ef4444">▼ 매도</span>
           <span class="ss-only" style="color:#b91c1c" title="사이클 첫 매도 신호(눈금 또는 X), 사이클당 1회 · 표시 전용(집행 미연동)">▼ 매도시작</span>
           <span class="ss-only" style="color:#ef4444;opacity:.6" title="같은 사이클의 이후 눈금·X — 집행 무관, 재량 판단용">▽ 참고 신호</span>
@@ -190,17 +182,6 @@
           <span class="ss-off"><svg width="13" height="13" viewBox="0 0 14 14" style="vertical-align:-2px"><polygon points="7,1 13,7 7,13 1,7" fill="#1e3a8a"/></svg> 청산 탈출</span>
           <span class="ss-off"><svg width="13" height="13" viewBox="0 0 14 14" style="vertical-align:-2px"><polygon points="7,1 13,7 7,13 1,7" fill="#1e3a8a"/><line x1="4" y1="4" x2="10" y2="10" stroke="#000" stroke-width="1.6"/><line x1="10" y1="4" x2="4" y2="10" stroke="#000" stroke-width="1.6"/></svg> 청산(거짓·재무장)</span>
         </div>
-      </div>
-      <div class="chart-note">
-        📌 기준선: 매수 존 <span style="color:#22c55e">+7.0 진입</span>/<span style="color:#64748b">+6.0 이탈</span> ·
-        <span class="bs-only"><span style="color:#22c55e">매수시작(T75) 7.5 하향돌파</span> ·</span>
-        매도 <span style="color:#ef4444">−6.0 진입</span> ·
-        <span class="ss-only"><span style="color:#b91c1c">매도시작(사이클 첫 신호)</span> ·</span>
-        온체인: CoinMetrics(2일 지연)·Puell 결정론(지연 0), 유포리아 = min(전체 이력, 3년창) 백분위, DXY는 표기만
-      </div>
-      <div class="chart-note">
-        ※ <span style="color:#6b7684">회색 마커</span>는 2019년 이전 구간에 대해 참고용으로 산출한 값입니다.
-        설계 표본(2019년~) 밖이라 실제 판정에는 쓰이지 않고, 구분을 위해 참고용으로만 회색으로 표시합니다.
       </div>
     </div>
 
@@ -478,6 +459,7 @@ function renderStatus(latest, series) {
   const ssBadge = _sellStartBadge(latest, series || []);
   const pbTag   = latest.pullback_fresh  ? '<span style="color:#a855f7">🔄눌림목</span>' : '';
   el.innerHTML = `
+    <span class="muted">${latest.date}</span>
     <span class="pill zone-${zone}">${ZONE_LABEL[zone] || zone}</span>
     <span><span class="muted">코어</span> <b style="color:${bcColor}">${fmtSigned(bc)}</b></span>
     <span><span class="muted">유포리아</span> <b style="color:${euColor}">${fmtSigned(eu)}</b></span>
@@ -608,19 +590,19 @@ function renderScoreChartRecent(rows) {
 
   const traces = [
     {
-      x, y: bc, name: "buy_core (V20)",
+      x, y: bc, name: "매수점수 (V20)",
       type: "scatter", mode: "lines+markers",
       line: { color: "#a855f7", width: 2 },
       marker: { size: 4, color: "#a855f7" },
       fill: "tozeroy", fillcolor: "rgba(168,85,247,0.10)",
       yaxis: "y",
-      hovertemplate: "%{x}<br>buy_core: <b>%{y:.2f}</b><extra></extra>",
+      hovertemplate: "%{x}<br>매수점수: <b>%{y:.2f}</b><extra></extra>",
     },
     {
-      x, y: eu, name: "유포리아_sym", mode: "lines",
+      x, y: eu, name: "매도점수", mode: "lines",
       line: { color: "#ef4444", width: 1.5, dash: "dot" },
       yaxis: "y2",
-      hovertemplate: "%{x}<br>유포리아_sym: <b>%{y:.2f}</b><extra></extra>",
+      hovertemplate: "%{x}<br>매도점수: <b>%{y:.2f}</b><extra></extra>",
     },
     // 청산 탈출(X, 게이팅 통과분만) — 보라 마름모, 테두리 없이 작게(매수/매도를 가리지 않도록 먼저 그림).
     // 청산(거짓)과 같은 크기 — 내부 X 표시 유무로만 구분
@@ -692,8 +674,8 @@ function renderScoreChartRecent(rows) {
     margin: { l: 60, r: 60, t: 10, b: 40 },
     showlegend: false,  // 자체 범례는 끄고, 차트 아래 커스텀 아이콘 인덱스 하나로 통일
     xaxis: Object.assign({}, PLOTLY_LAYOUT_BASE.xaxis, { rangeselector: undefined }),
-    yaxis:  { title: "buy_core", gridcolor: "#1f2a3a", linecolor: "#1f2a3a", range: [-12, 12] },
-    yaxis2: { title: "유포리아_sym", gridcolor: "transparent", linecolor: "#1f2a3a", overlaying:"y", side:"right", range: [-12, 12] },
+    yaxis:  { title: "매수점수", gridcolor: "#1f2a3a", linecolor: "#1f2a3a", range: [-12, 12] },
+    yaxis2: { title: "매도점수", gridcolor: "transparent", linecolor: "#1f2a3a", overlaying:"y", side:"right", range: [-12, 12] },
   });
 
   Plotly.newPlot("scoreChartRecent", traces, layout, {
@@ -726,20 +708,20 @@ function renderScoreChartFull(sig) {
   const traces = [
     {
       x, y: bc,
-      name: "buy_core (V20 통합점수)",
+      name: "매수점수 (V20 통합점수)",
       type: "scatter", mode: "lines",
       line: { color: "#a855f7", width: 2 },
       fill: "tozeroy", fillcolor: "rgba(168,85,247,0.08)",
       yaxis: "y",
-      hovertemplate: "%{x}<br>buy_core: <b>%{y:.2f}</b><extra></extra>",
+      hovertemplate: "%{x}<br>매수점수: <b>%{y:.2f}</b><extra></extra>",
     },
     {
       x, y: eu,
-      name: "유포리아_sym",
+      name: "매도점수",
       type: "scatter", mode: "lines",
       line: { color: "#ef4444", width: 1.5, dash: "dot" },
       yaxis: "y2",
-      hovertemplate: "%{x}<br>유포리아_sym: <b>%{y:.2f}</b><extra></extra>",
+      hovertemplate: "%{x}<br>매도점수: <b>%{y:.2f}</b><extra></extra>",
     },
     // 청산 탈출/청산(거짓) — 보라 마름모, 테두리 없이 작게. 매수/매도보다 먼저 그려서
     // 매수/매도 마커가 항상 위(가려지지 않음)에 오도록 순서 배치
@@ -845,8 +827,8 @@ function renderScoreChartFull(sig) {
     // 기본 표시 범위 = 최근 5년(데이터는 2010-07~ 전체 그대로 실려 있음 — "5년"·"전체"
     // 버튼이나 드래그로 언제든 전체 역사까지 확대 가능, 초기 화면만 5년으로 좁힘).
     xaxis: Object.assign({}, PLOTLY_LAYOUT_BASE.xaxis, { range: _last5yRange() }),
-    yaxis:  { title: "buy_core", gridcolor: "#1f2a3a", linecolor: "#1f2a3a", range: [-12, 12] },
-    yaxis2: { title: "유포리아_sym", gridcolor: "transparent", linecolor: "#1f2a3a", overlaying:"y", side:"right", range: [-12, 12] },
+    yaxis:  { title: "매수점수", gridcolor: "#1f2a3a", linecolor: "#1f2a3a", range: [-12, 12] },
+    yaxis2: { title: "매도점수", gridcolor: "transparent", linecolor: "#1f2a3a", overlaying:"y", side:"right", range: [-12, 12] },
   });
   Plotly.newPlot("scoreChartFull", traces, layout, {
     responsive: true, displaylogo: false, displayModeBar: false, scrollZoom: true,
@@ -1045,8 +1027,8 @@ function renderDailyTable(rows) {
   if (!recent.length) { el.innerHTML = '<div class="empty">데이터 없음</div>'; return; }
   let html = '<table><thead><tr>' +
     '<th>날짜</th><th>Zone</th>' +
-    '<th class="right" title="V20 buy_core">코어</th>' +
-    '<th class="right" title="euphoria_sym (V20)">유포리아</th>' +
+    '<th class="right" title="V20 매수점수">코어</th>' +
+    '<th class="right" title="매도점수 (V20)">유포리아</th>' +
     '<th class="right">BTC</th><th class="right">ETH</th>' +
     '<th class="right">NUPL<br><span class="th-note" style="display:block;font-size:10px;font-weight:400;text-transform:none;letter-spacing:0" title="NUPL 원시값은 공개하지 않으며 백분위(nupl_pctl)로 참조">원시값 비공개, 백분위 참조</span></th><th class="right">MVRVz</th><th class="right">F&G</th>' +
     '<th class="right" title="' + (_ssOn ? '매도시작(▼ 사이클 첫 신호) · 참고 신호(▽ 이후 눈금·X, 집행 무관) — 게이팅 통과분만' : '매도 신호(눈금/X, 게이팅 통과분만)') + '">매도</th>' +
