@@ -665,7 +665,7 @@ function renderScoreChartRecent(rows) {
   const annotations = [
     { xref:"paper", yref:"y",  x:1.01, y:7.0,  text:"+7.0 매수 진입", showarrow:false, font:{color:"#22c55e", size:9}, xanchor:"left" },
     { xref:"paper", yref:"y",  x:1.01, y:6.0,  text:"+6.0 이탈", showarrow:false, font:{color:"#64748b", size:9}, xanchor:"left" },
-    { xref:"paper", yref:"y2", x:0.01, y:-6.0, text:"−6.0 매도진입 · X 재무장(전고점 돌파 시)", showarrow:false, font:{color:"#ef4444", size:9}, xanchor:"left" },
+    { xref:"paper", yref:"y2", x:1.01, y:-6.0, text:"−6.0 매도 진입", showarrow:false, font:{color:"#ef4444", size:9}, xanchor:"left" },
   ];
 
   const layout = Object.assign({}, PLOTLY_LAYOUT_BASE, {
@@ -816,7 +816,7 @@ function renderScoreChartFull(sig) {
   const annotations = [
     { xref:"paper", yref:"y",  x:1.01, y:CFG.BUY_CORE, text:"+7.0 매수 진입", showarrow:false, font:{color:"#22c55e", size:9}, xanchor:"left" },
     { xref:"paper", yref:"y",  x:1.01, y:CFG.BUY_EXIT, text:"+6.0 이탈",      showarrow:false, font:{color:"#64748b", size:9}, xanchor:"left" },
-    { xref:"paper", yref:"y2", x:0.01, y:CFG.X_CUT,    text:"−6.0 매도진입 · X 재무장(전고점 돌파 시)", showarrow:false, font:{color:"#ef4444", size:9}, xanchor:"left" },
+    { xref:"paper", yref:"y2", x:1.01, y:CFG.X_CUT,    text:"−6.0 매도 진입", showarrow:false, font:{color:"#ef4444", size:9}, xanchor:"left" },
   ];
 
   const layout = Object.assign({}, PLOTLY_LAYOUT_BASE, {
