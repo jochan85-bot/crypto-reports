@@ -224,10 +224,12 @@
   <div class="toc">
     <div class="toc-title">목차</div>
     <div class="toc-list">
-      <a href="#v20-buyzone">매수 — 존·매수시작(T75)·12회 분할</a>
-      <a href="#v20-sell">매도 — 매도 구간·매도시작·84일 TWAP·참고 신호</a>
+      <a href="#v20-buyzone">매수 — 존·매수시작(T75)·90일 TWAP</a>
+      <a href="#v20-sell">매도 — 매도 구간·매도시작·90일 TWAP·참고 신호</a>
       <a href="#v20-gate">G·래칫</a>
-      <a href="#v20-exec">집행 유예</a>
+      <a href="#v20-exec">집행 연결(ladder 되돌림 경로)</a>
+      <a href="#v20-rebal">리밸런싱 — 5%p 밴드</a>
+      <a href="#v20-brief">브리핑</a>
       <a href="#legacy-v19">이전 버전 (V19)</a>
     </div>
   </div>
@@ -306,17 +308,21 @@
       <strong>비용:</strong> 2022년 FTX 구간(11~12월)은 매수시작이 5월이라 12회가 이미 끝나 있어 그 구간을 사지 않습니다 —
       그 구간을 포함하는 대안(T7) 대비 평단 <strong>+27.4%</strong>. 이 비용은 수용했습니다. 표본은 사이클 4개뿐이라 표본 밖 성능은 주장하지 않습니다.
     </p>
-    <div class="highlight amber">
-      <strong>현재 집행 미연동 — 표시 전용입니다.</strong> 매수시작 마커·"트랜치 n/12"는 <strong>예정 표시</strong>이지
-      체결 기록이 아니며, 자동으로 매수 주문이 나가지 않습니다(매수 경로 <code>buy_mode=off</code>,
-      executor·sellplan·알림은 이 필드를 읽지 않음). 되돌림: <code>BUY_START_MODE</code> "on"→"off" 한 줄 — 세 필드 미산출·마커 비표시.
+    <div class="highlight">
+      <strong>2026-10-01부터 실제 집행과 연동됩니다.</strong> 매수 경로가 <code>buy_mode=live</code>로
+      전환되면서, 매수시작 이후 실제 매수는 아래 "매수시작 마커·12/12 표시"가 아니라 <strong>존 안 일수
+      90일 연속 TWAP</strong>(일 단위 매일 집행, 원화 금액 기준 균할 — V20-2 매도 절의 연속 TWAP와 같은
+      체계)으로 나갑니다. 차트의 매수시작 마커·"트랜치 n/12" 표시는 신호 발생 시점을 보여주는 용도로
+      계속 남아있지만, 실제 체결 횟수·날짜는 90일 스케줄 쪽이 정본입니다. 구간별 실주문은 오너의
+      '승인 &lt;구간ID&gt;' 없이는 나가지 않습니다(구조적 승인 게이트, 스위치값과 무관). 되돌림:
+      <code>buy_mode</code> "live"→"off" 한 줄 — 매수 경로 전체 즉시 정지.
     </div>
   </div>
 
   <!-- V20: 매도 -->
   <div class="section" id="v20-sell">
-    <h2><span class="section-num">V20-2</span>매도 — 매도 구간 · 매도시작 · 84일 TWAP · 참고 신호</h2>
-    <p style="font-size:13px;color:var(--muted)">※ 사이클 끝 잔여(미매도) 물량 전량 청산 규칙(최종 탈출)은 별도 검정 진행 중이며 아직 채택되지 않았습니다 — 아래 규칙은 그대로입니다.</p>
+    <h2><span class="section-num">V20-2</span>매도 — 매도 구간 · 매도시작 · 90일 TWAP · 참고 신호</h2>
+    <p style="font-size:13px;color:var(--muted)">※ 사이클 끝 잔여(미매도) 물량 전량 청산 규칙(최종 탈출)은 검정 결과 ladder 매도 체계 전제가 전제라, 집행이 연속 TWAP로 바뀌면서 종결됐습니다(재론 조건: ladder로 되돌아가는 경우) — 아래 규칙은 그대로입니다.</p>
 
     <h3>① 매도 구간 — 유포리아_sym &lt; −6.0 ∧ G</h3>
     <p>
@@ -337,25 +343,26 @@
     </div>
     <p style="font-size:13px;color:var(--muted)">
       필드: <code>sell_start_v2</code>(발화일 True) · <code>sell_start_cycle_v2</code>(사이클 ID — 매수 창이 X 갭에서 닫힌 뒤에도
-      다음 사이클 첫 존 진입 전날까지 유지) · <code>sell_schedule_state_v2</code>(대기/승인대기/진행 n/84/정지/완료, 표시용).
+      다음 사이클 첫 존 진입 전날까지 유지) · <code>sell_schedule_state_v2</code>(대기/승인대기/진행 n/90/정지/완료, 표시용).
     </p>
 
-    <h3>③ 84일 연속 TWAP — 매도 구간 안 날 기준</h3>
+    <h3>③ 90일 연속 TWAP — 매도 구간 안 날 기준(2026-10-01, 84일에서 전환)</h3>
     <ul>
-      <li>매도시작 <strong>이후</strong> 84일을 <strong>매도 구간 안 날</strong>로 셉니다. 매도시작일(신호일) 자체도 1일로 세고,
-        실제 집행일은 그 <strong>다음 날</strong>부터입니다(전날 판정으로 집행).</li>
+      <li>매도시작 <strong>이후</strong> 90일을 <strong>매도 구간 안 날</strong>로 셉니다. 매도시작일(신호일) 자체도 1일로 세고,
+        실제 집행일은 그 <strong>다음 날</strong>부터입니다(전날 판정으로 집행). 매도는 <strong>트리거 시점 보유 수량을 고정</strong>한 뒤
+        그 수량을 90으로 나눠 매일 매도합니다(수량 기준 균할 — 금액이 아닙니다).</li>
       <li>구간을 벗어나면 <strong>정지</strong>(일수 미차감), 구간에 다시 들어오면 <strong>재개</strong>합니다(같은 사이클 안에서).</li>
       <li><strong>보류·halt인 날은 일수에서 빼지 않습니다</strong>(집행 측 규칙 — 표시 필드는 구간 안 날만 셉니다).</li>
-      <li><strong>84일을 다 채우면 종료</strong> — 상태는 "완료"로 사이클이 끝날 때까지 표시됩니다(시간 기한 없음).</li>
+      <li><strong>90일을 다 채우면 종료</strong> — 상태는 "완료"로 사이클이 끝날 때까지 표시됩니다(시간 기한 없음).</li>
     </ul>
 
     <h3>④ 사이클별 매도시작</h3>
     <div class="score-breakdown">
       <table>
-        <tr><th>사이클</th><th>매도시작</th><th>84일 완료(마지막 회차 예정일)</th><th>이후 참고 신호</th></tr>
-        <tr><td>2017 (참고)</td><td>2017-07-10 (−8.0)</td><td>2017-10-03</td><td>5건</td></tr>
-        <tr><td>2021</td><td>2021-03-24 (−8.0)</td><td>2021-10-29</td><td>3건</td></tr>
-        <tr><td>2024-25</td><td>2024-12-29 (−7.5)</td><td>2025-06-11</td><td>8건</td></tr>
+        <tr><th>사이클</th><th>매도시작</th><th>90일 완료(마지막 회차 예정일)</th><th>이후 참고 신호</th></tr>
+        <tr><td>2017 (참고)</td><td>2017-07-10 (−8.0)</td><td>2017-10-09</td><td>5건</td></tr>
+        <tr><td>2021</td><td>2021-03-24 (−8.0)</td><td>2021-11-04</td><td>3건</td></tr>
+        <tr><td>2024-25</td><td>2024-12-29 (−7.5)</td><td>2025-07-12</td><td>8건</td></tr>
         <tr><td>2026 (진행 중)</td><td>— 아직 없음</td><td>—</td><td>—</td></tr>
       </table>
     </div>
@@ -370,15 +377,17 @@
 
     <h3>⑥ 근거</h3>
     <p style="font-size:13px;color:var(--muted)">
-      근거 스터디: <code>CONT_TWAP</code>(연속 TWAP 84일 — 매도 구간 안 일수 기준 완료일 2021-10-29 · 2024-25는 2025-06-11로 사이클 고점보다 117일 앞),
-      <code>SELL_EQUAL</code>(주간 균할 대조). 주지표는 2021 +15.81%p, 2024-25 −2.25%p(현행 사다리 대비, USD) — 채택은 오너 재량이며
+      근거 스터디: <code>CONT_TWAP</code>(연속 TWAP 90일 — 매도 구간 안 일수 기준 완료일 2021-11-04 · 2024-25는 2025-07-12),
+      <code>SELL_EQUAL</code>(주간 균할 대조, 후보 0건으로 기각 — Z60·주지표 정의만 재사용). 주지표는 2021 +16.35%p, 2024-25 −1.69%p(현행 사다리 대비, USD,
+      90일 재산출) — 채택은 오너 재량이며
       표본은 사이클 2개(+참고 1)라 표본 밖 성능은 주장하지 않습니다. 상세는 <code>PREREG_V20_BUY_REBAL</code>.
     </p>
-    <div class="highlight amber">
-      <strong>현재 집행 미연동 — 표시 전용입니다.</strong> ▼ 매도시작·"84일 중 n일"은 <strong>예정 표시</strong>이지 체결 기록이 아니며,
-      <strong>현행 집행은 그대로 사다리(<code>sellplan_rule=ladder</code>)</strong> — 눈금 10%·X 20%를 발화마다 당일 24시간 TWAP로 매도
-      (아래 V20-4)하고, 전환 전까지 바뀌지 않습니다. 84일 연속 TWAP로의 전환은 별도 결정·구현(스케줄 생성) 이후입니다.
-      되돌림: <code>SELL_START_MODE</code> "on"→"off" 한 줄 — 세 필드 미산출·마커 비표시(옛 ▼ 매도·청산 표기로 복귀).
+    <div class="highlight">
+      <strong>2026-10-01부터 실제 집행과 연동됩니다.</strong> 집행 체계가 사다리(<code>sellplan_rule=ladder</code>)에서
+      <strong>연속 TWAP(<code>sellplan_rule=cont</code>)</strong>로 전환되면서, ▼ 매도시작 이후 실제 매도는 위 ③의
+      90일 스케줄로 매일 집행됩니다(즉시 집행 모드, 틱당 최대 40초·구간 전체 최대 60분). 구간별 실주문은 오너의
+      '승인 &lt;구간ID&gt;' 없이는 나가지 않습니다. 되돌림: <code>sellplan_rule</code> "cont"→"ladder" 한 줄 —
+      진행 중 연속 TWAP 스케줄은 일수 미차감으로 정지, 눈금·X 발화마다 즉시 매도하는 옛 방식으로 복귀.
     </div>
 
     <h3>⑦ 참고 — 신호의 정의 (유포리아_sym · 방문 · X · 눈금)</h3>
@@ -479,13 +488,14 @@
 
   <!-- V20: 집행 연결(2026-09-29 갱신) -->
   <div class="section" id="v20-exec">
-    <h2><span class="section-num">V20-4</span>배분·집행 연결 (2026-09-29 갱신 — 더 이상 유예 아님)</h2>
-    <div class="highlight amber">
-      <strong>2026-09-29부로 눈금·X는 매도 배분(sellplan)·집행(executor)에 실제로
-      연결됐습니다</strong>(<code>sellplan_mode: "v20"</code>). 이전 절(V20-1~3)의 판정
-      필드가 이제 그대로 매도 트랑셰 생성의 입력입니다.
+    <h2><span class="section-num">V20-4</span>배분·집행 연결 — 눈금·X 사다리(ladder, 되돌림 경로)</h2>
+    <div class="highlight">
+      <strong>2026-10-01부터 현행 집행은 이 절이 아니라 위 V20-1·V20-2의 90일 연속 TWAP
+      (<code>sellplan_rule=cont</code>)입니다.</strong> 아래 눈금·X 사다리 규칙은 <code>sellplan_rule</code>을
+      <code>"ladder"</code>로 되돌렸을 때 그대로 복귀하는 경로로 보존돼 있습니다(2026-09-29 최초 도입,
+      2026-10-01 cont로 전환되기 전까지 실제 현행이었음).
     </div>
-    <p><strong>눈금·X → 조각 규칙(PREREG_V20_ALLOC_v1.md) — 현행 집행 <code>sellplan_rule=ladder</code>, 매도시작·84일 TWAP 전환 전까지 이 규칙 그대로</strong></p>
+    <p><strong>눈금·X → 조각 규칙(PREREG_V20_ALLOC_v1.md) — ladder 되돌림 시 이 규칙 그대로</strong></p>
     <ul>
       <li>눈금 발화 → 그 시점 업비트 보유 잔고의 <strong>10%</strong>를 당일(24시간) 10분
         간격 TWAP로 매도(BTC·ETH 동일 규칙).</li>
@@ -509,6 +519,54 @@
       확인 완료, `PREREG_V20_ALLOC_v1.md` §2). 판정 필드 자체를 끄려면(관찰용 v2 필드
       계산 중단) 별도로 <code>SIGNAL_MODE</code>를 <code>legacy</code>로 바꿉니다 — 이 둘은
       독립된 스위치입니다.
+    </p>
+  </div>
+
+  <!-- V20: 리밸런싱 -->
+  <div class="section" id="v20-rebal">
+    <h2><span class="section-num">V20-5</span>리밸런싱 — 매주 토요일 5%p 밴드</h2>
+    <p>
+      매수·매도와 별개로, 보유 중인 코인 4종(BTC·ETH·XRP·SOL)의 비중이 목표(3:1:1:1 = BTC 50% / 알트
+      3종 각 16.67%)에서 너무 벗어나면 매주 한 번 복원합니다. KRW 현금은 분모에서 제외합니다.
+    </p>
+    <div class="highlight">
+      <strong>판정</strong> = 매주 <strong>토요일 09:10</strong>, 그 시점 업비트 실시간 가격 기준 어느
+      종목이든 |실제비중 − 목표비중| &gt; <strong>5%p</strong>(초과, 이상 아님)이면 4종 전부 목표로 복원.
+      매수·매도 스케줄이 활성 중(트리거~완료)이거나 전역 halt 중이면 리밸 판정 자체를 쉽니다.
+    </div>
+    <ul>
+      <li><strong>집행</strong>: 리밸 계획 생성 → 알림(종목·수량·금액·사유) → 오너 "승인 &lt;구간ID&gt;"(24h 만료) →
+        <strong>즉시 집행</strong>(틱 재개형 — 틱당 최대 40초, 구간 전체 최대 60분 내 완결). 매도를 먼저 집행하고
+        매수는 그 매도 대금 한도 안에서만 합니다.</li>
+      <li>5,000원 미만 레그는 생략하고, 소액 레그는 집행 간격을 자동으로 늘립니다.</li>
+      <li>알트 종목 자체(현재 ETH·XRP·SOL)는 알트10 바스켓처럼 매주 순위로 바꾸지 않습니다 — 백테스트
+        결과 잦은 교체가 비용만 키워 손실을 냈기 때문입니다(연 환산 손실 약 8,300만원, ALT_BASKET
+        스터디). 종목 자체는 사이클 경계(다음 매수 존 진입일)에만 재선정합니다.</li>
+    </ul>
+    <p style="font-size:13px;color:var(--muted)">
+      2026-10-01 전환 직후 실시간 잔고로 재현한 판정: BTC 49.95%·ETH 16.74%·XRP 16.64%·SOL 16.66%
+      (목표 대비 최대 괴리 0.07%p ≤ 5%p) — 같은 날 앞서 BTC·ETH만 보유하던 계좌를 코인 3:1:1:1로
+      전환하는 일회성 작업을 먼저 마쳤기 때문에 괴리가 거의 없습니다. 되돌림: <code>rebal_mode</code>
+      "band"→"off" 한 줄 — 토요 판정 자체가 꺼집니다.
+    </p>
+  </div>
+
+  <!-- V20: 브리핑 -->
+  <div class="section" id="v20-brief">
+    <h2><span class="section-num">V20-6</span>브리핑 — 리포트에 딸려오는 시장 설명</h2>
+    <p>
+      신호 판정 섹션 아래에 붙는 짧은 시장 브리핑은, 신호·존·매수코어 같은 <strong>내부 판정값에는
+      관여하지 않습니다</strong> — 판정이 끝난 뒤 발송 직전에만 덧붙는 참고용 문단입니다.
+    </p>
+    <div class="highlight">
+      리포트 생성 스크립트가 내부에서 공개 RSS·API(인증 불필요 소스만)로 그날의 시장 뉴스를 몇 건
+      모으고, 그걸 요약해서 브리핑 문단 하나를 만듭니다. <strong>buy_core·유포리아_sym·존 상태·
+      눈금/X 같은 내부 판정 필드는 브리핑 문장에 언급하지 않도록 걸러집니다</strong> — 시장에서 보도된
+      가격·수치는 출처·날짜와 함께 그대로 둡니다.
+    </div>
+    <p style="font-size:13px;color:var(--muted)">
+      브리핑 수집·생성이 실패해도(소스 차단 등) 신호 섹션 발송 자체는 그대로 진행됩니다(브리핑 문단만
+      조용히 빠짐) — 판정·집행 경로와는 완전히 분리돼 있습니다. 2026-10-01 도입(`BRIEF_V2_INLINE`).
     </p>
   </div>
 
