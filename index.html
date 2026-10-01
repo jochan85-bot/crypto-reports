@@ -140,8 +140,8 @@
           <span class="icon-index-label">지표</span>
           <span style="color:#f59e0b">━ BTC</span>
           <span style="color:#3b82f6">━ ETH</span>
-          <span style="color:#a855f7">━ 매수점수</span>
-          <span style="color:#ef4444">┄ 매도점수</span>
+          <span style="color:#4ade80">━ 매수점수</span>
+          <span style="color:#f87171">━ 매도점수</span>
         </div>
         <div class="icon-index-row">
           <span class="icon-index-label">신호</span>
@@ -169,8 +169,8 @@
         <div class="icon-index-row">
           <span class="icon-index-label">지표</span>
           <span style="color:#f59e0b">━ BTC (USD)</span>
-          <span style="color:#a855f7">━ 매수점수</span>
-          <span style="color:#ef4444">┄ 매도점수</span>
+          <span style="color:#4ade80">━ 매수점수</span>
+          <span style="color:#f87171">━ 매도점수</span>
         </div>
         <div class="icon-index-row">
           <span class="icon-index-label">신호</span>
@@ -215,13 +215,13 @@ function buildZoneShapes(rows, isBuy, isSell) {
     const t = isBuy(r) ? 'buy' : (isSell(r) ? 'sell' : null);
     if (t !== curType) {
       if (curType) shapes.push({ type:'rect', xref:'x', yref:'paper', x0:start, x1:last, y0:0, y1:1,
-        fillcolor: curType === 'buy' ? 'rgba(34,197,94,0.08)' : 'rgba(239,68,68,0.08)', line:{width:0} });
+        fillcolor: curType === 'buy' ? 'rgba(34,197,94,0.16)' : 'rgba(239,68,68,0.16)', line:{width:0} });
       curType = t; start = r.date;
     }
     last = r.date;
   });
   if (curType) shapes.push({ type:'rect', xref:'x', yref:'paper', x0:start, x1:last, y0:0, y1:1,
-    fillcolor: curType === 'buy' ? 'rgba(34,197,94,0.08)' : 'rgba(239,68,68,0.08)', line:{width:0} });
+    fillcolor: curType === 'buy' ? 'rgba(34,197,94,0.16)' : 'rgba(239,68,68,0.16)', line:{width:0} });
   return shapes;
 }
 
@@ -592,15 +592,15 @@ function renderScoreChartRecent(rows) {
     {
       x, y: bc, name: "매수점수 (V20)",
       type: "scatter", mode: "lines+markers",
-      line: { color: "#a855f7", width: 2 },
-      marker: { size: 4, color: "#a855f7" },
-      fill: "tozeroy", fillcolor: "rgba(168,85,247,0.10)",
+      line: { color: "#4ade80", width: 2 },
+      marker: { size: 4, color: "#4ade80" },
+      fill: "tozeroy", fillcolor: "rgba(74,222,128,0.10)",
       yaxis: "y",
       hovertemplate: "%{x}<br>매수점수: <b>%{y:.2f}</b><extra></extra>",
     },
     {
       x, y: eu, name: "매도점수", mode: "lines",
-      line: { color: "#ef4444", width: 1.5, dash: "dot" },
+      line: { color: "#f87171", width: 1.5 },
       yaxis: "y2",
       hovertemplate: "%{x}<br>매도점수: <b>%{y:.2f}</b><extra></extra>",
     },
@@ -674,8 +674,8 @@ function renderScoreChartRecent(rows) {
     margin: { l: 60, r: 60, t: 10, b: 40 },
     showlegend: false,  // 자체 범례는 끄고, 차트 아래 커스텀 아이콘 인덱스 하나로 통일
     xaxis: Object.assign({}, PLOTLY_LAYOUT_BASE.xaxis, { rangeselector: undefined }),
-    yaxis:  { title: "매수점수", gridcolor: "#1f2a3a", linecolor: "#1f2a3a", range: [-12, 12] },
-    yaxis2: { title: "매도점수", gridcolor: "transparent", linecolor: "#1f2a3a", overlaying:"y", side:"right", range: [-12, 12] },
+    yaxis:  { title: { text: "매수점수", font: { color: "#22c55e" } }, gridcolor: "#1f2a3a", linecolor: "#1f2a3a", range: [-12, 12] },
+    yaxis2: { title: { text: "매도점수", font: { color: "#ef4444" } }, gridcolor: "transparent", linecolor: "#1f2a3a", overlaying:"y", side:"right", range: [-12, 12] },
   });
 
   Plotly.newPlot("scoreChartRecent", traces, layout, {
@@ -710,8 +710,8 @@ function renderScoreChartFull(sig) {
       x, y: bc,
       name: "매수점수 (V20 통합점수)",
       type: "scatter", mode: "lines",
-      line: { color: "#a855f7", width: 2 },
-      fill: "tozeroy", fillcolor: "rgba(168,85,247,0.08)",
+      line: { color: "#4ade80", width: 2 },
+      fill: "tozeroy", fillcolor: "rgba(74,222,128,0.08)",
       yaxis: "y",
       hovertemplate: "%{x}<br>매수점수: <b>%{y:.2f}</b><extra></extra>",
     },
@@ -719,7 +719,7 @@ function renderScoreChartFull(sig) {
       x, y: eu,
       name: "매도점수",
       type: "scatter", mode: "lines",
-      line: { color: "#ef4444", width: 1.5, dash: "dot" },
+      line: { color: "#f87171", width: 1.5 },
       yaxis: "y2",
       hovertemplate: "%{x}<br>매도점수: <b>%{y:.2f}</b><extra></extra>",
     },
@@ -827,8 +827,8 @@ function renderScoreChartFull(sig) {
     // 기본 표시 범위 = 최근 5년(데이터는 2010-07~ 전체 그대로 실려 있음 — "5년"·"전체"
     // 버튼이나 드래그로 언제든 전체 역사까지 확대 가능, 초기 화면만 5년으로 좁힘).
     xaxis: Object.assign({}, PLOTLY_LAYOUT_BASE.xaxis, { range: _last5yRange() }),
-    yaxis:  { title: "매수점수", gridcolor: "#1f2a3a", linecolor: "#1f2a3a", range: [-12, 12] },
-    yaxis2: { title: "매도점수", gridcolor: "transparent", linecolor: "#1f2a3a", overlaying:"y", side:"right", range: [-12, 12] },
+    yaxis:  { title: { text: "매수점수", font: { color: "#22c55e" } }, gridcolor: "#1f2a3a", linecolor: "#1f2a3a", range: [-12, 12] },
+    yaxis2: { title: { text: "매도점수", font: { color: "#ef4444" } }, gridcolor: "transparent", linecolor: "#1f2a3a", overlaying:"y", side:"right", range: [-12, 12] },
   });
   Plotly.newPlot("scoreChartFull", traces, layout, {
     responsive: true, displaylogo: false, displayModeBar: false, scrollZoom: true,
