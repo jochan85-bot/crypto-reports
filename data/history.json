@@ -43,13 +43,7 @@
       "mvrv_z": "2026-01-01",
       "puell": "2026-01-01"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -124,13 +118,7 @@
       "mvrv_z": "2026-01-02",
       "puell": "2026-01-02"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -205,13 +193,7 @@
       "mvrv_z": "2026-01-03",
       "puell": "2026-01-03"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -286,13 +268,7 @@
       "mvrv_z": "2026-01-04",
       "puell": "2026-01-04"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -367,13 +343,7 @@
       "mvrv_z": "2026-01-05",
       "puell": "2026-01-05"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -448,13 +418,7 @@
       "mvrv_z": "2026-01-06",
       "puell": "2026-01-06"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -529,13 +493,7 @@
       "mvrv_z": "2026-01-07",
       "puell": "2026-01-07"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -610,13 +568,7 @@
       "mvrv_z": "2026-01-08",
       "puell": "2026-01-08"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -691,13 +643,7 @@
       "mvrv_z": "2026-01-09",
       "puell": "2026-01-09"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -772,13 +718,7 @@
       "mvrv_z": "2026-01-10",
       "puell": "2026-01-10"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -853,13 +793,7 @@
       "mvrv_z": "2026-01-11",
       "puell": "2026-01-11"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -934,13 +868,7 @@
       "mvrv_z": "2026-01-12",
       "puell": "2026-01-12"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -1015,13 +943,7 @@
       "mvrv_z": "2026-01-13",
       "puell": "2026-01-13"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -1096,13 +1018,7 @@
       "mvrv_z": "2026-01-14",
       "puell": "2026-01-14"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -1177,13 +1093,7 @@
       "mvrv_z": "2026-01-15",
       "puell": "2026-01-15"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -1258,13 +1168,7 @@
       "mvrv_z": "2026-01-16",
       "puell": "2026-01-16"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -1339,13 +1243,7 @@
       "mvrv_z": "2026-01-17",
       "puell": "2026-01-17"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -1420,13 +1318,7 @@
       "mvrv_z": "2026-01-18",
       "puell": "2026-01-18"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -1501,13 +1393,7 @@
       "mvrv_z": "2026-01-19",
       "puell": "2026-01-19"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -1582,13 +1468,7 @@
       "mvrv_z": "2026-01-20",
       "puell": "2026-01-20"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -1663,13 +1543,7 @@
       "mvrv_z": "2026-01-21",
       "puell": "2026-01-21"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -1744,13 +1618,7 @@
       "mvrv_z": "2026-01-22",
       "puell": "2026-01-22"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -1825,13 +1693,7 @@
       "mvrv_z": "2026-01-23",
       "puell": "2026-01-23"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -1906,13 +1768,7 @@
       "mvrv_z": "2026-01-24",
       "puell": "2026-01-24"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -1987,13 +1843,7 @@
       "mvrv_z": "2026-01-25",
       "puell": "2026-01-25"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -2068,13 +1918,7 @@
       "mvrv_z": "2026-01-26",
       "puell": "2026-01-26"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -2149,13 +1993,7 @@
       "mvrv_z": "2026-01-27",
       "puell": "2026-01-27"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -2230,13 +2068,7 @@
       "mvrv_z": "2026-01-28",
       "puell": "2026-01-28"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -2311,13 +2143,7 @@
       "mvrv_z": "2026-01-29",
       "puell": "2026-01-29"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -2392,13 +2218,7 @@
       "mvrv_z": "2026-01-30",
       "puell": "2026-01-30"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -2473,13 +2293,7 @@
       "mvrv_z": "2026-01-31",
       "puell": "2026-01-31"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -2554,13 +2368,7 @@
       "mvrv_z": "2026-02-01",
       "puell": "2026-02-01"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -2635,13 +2443,7 @@
       "mvrv_z": "2026-02-02",
       "puell": "2026-02-02"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -2716,13 +2518,7 @@
       "mvrv_z": "2026-02-03",
       "puell": "2026-02-03"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 11,
     "sell_visit_v2": false,
@@ -2797,13 +2593,7 @@
       "mvrv_z": "2026-02-04",
       "puell": "2026-02-04"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -2878,13 +2668,7 @@
       "mvrv_z": "2026-02-05",
       "puell": "2026-02-05"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -2959,13 +2743,7 @@
       "mvrv_z": "2026-02-06",
       "puell": "2026-02-06"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -3040,13 +2818,7 @@
       "mvrv_z": "2026-02-07",
       "puell": "2026-02-07"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -3121,13 +2893,7 @@
       "mvrv_z": "2026-02-08",
       "puell": "2026-02-08"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -3202,13 +2968,7 @@
       "mvrv_z": "2026-02-09",
       "puell": "2026-02-09"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -3283,13 +3043,7 @@
       "mvrv_z": "2026-02-10",
       "puell": "2026-02-10"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -3364,13 +3118,7 @@
       "mvrv_z": "2026-02-11",
       "puell": "2026-02-11"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -3445,13 +3193,7 @@
       "mvrv_z": "2026-02-12",
       "puell": "2026-02-12"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -3526,13 +3268,7 @@
       "mvrv_z": "2026-02-13",
       "puell": "2026-02-13"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -3607,13 +3343,7 @@
       "mvrv_z": "2026-02-14",
       "puell": "2026-02-14"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -3688,13 +3418,7 @@
       "mvrv_z": "2026-02-15",
       "puell": "2026-02-15"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -3769,13 +3493,7 @@
       "mvrv_z": "2026-02-16",
       "puell": "2026-02-16"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -3850,13 +3568,7 @@
       "mvrv_z": "2026-02-17",
       "puell": "2026-02-17"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -3931,13 +3643,7 @@
       "mvrv_z": "2026-02-18",
       "puell": "2026-02-18"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -4012,13 +3718,7 @@
       "mvrv_z": "2026-02-19",
       "puell": "2026-02-19"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -4093,13 +3793,7 @@
       "mvrv_z": "2026-02-20",
       "puell": "2026-02-20"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -4174,13 +3868,7 @@
       "mvrv_z": "2026-02-21",
       "puell": "2026-02-21"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -4255,13 +3943,7 @@
       "mvrv_z": "2026-02-22",
       "puell": "2026-02-22"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -4336,13 +4018,7 @@
       "mvrv_z": "2026-02-23",
       "puell": "2026-02-23"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -4417,13 +4093,7 @@
       "mvrv_z": "2026-02-24",
       "puell": "2026-02-24"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -4498,13 +4168,7 @@
       "mvrv_z": "2026-02-25",
       "puell": "2026-02-25"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -4579,13 +4243,7 @@
       "mvrv_z": "2026-02-26",
       "puell": "2026-02-26"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -4660,13 +4318,7 @@
       "mvrv_z": "2026-02-27",
       "puell": "2026-02-27"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -4741,13 +4393,7 @@
       "mvrv_z": "2026-02-28",
       "puell": "2026-02-28"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -4822,13 +4468,7 @@
       "mvrv_z": "2026-03-01",
       "puell": "2026-03-01"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -4903,13 +4543,7 @@
       "mvrv_z": "2026-03-02",
       "puell": "2026-03-02"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -4984,13 +4618,7 @@
       "mvrv_z": "2026-03-03",
       "puell": "2026-03-03"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -5065,13 +4693,7 @@
       "mvrv_z": "2026-03-04",
       "puell": "2026-03-04"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -5151,13 +4773,7 @@
       "mvrv_z": "2026-03-05",
       "puell": "2026-03-05"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -5237,13 +4853,7 @@
       "mvrv_z": "2026-03-06",
       "puell": "2026-03-06"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -5323,13 +4933,7 @@
       "mvrv_z": "2026-03-07",
       "puell": "2026-03-07"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -5409,13 +5013,7 @@
       "mvrv_z": "2026-03-08",
       "puell": "2026-03-08"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -5495,13 +5093,7 @@
       "mvrv_z": "2026-03-09",
       "puell": "2026-03-09"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -5581,13 +5173,7 @@
       "mvrv_z": "2026-03-10",
       "puell": "2026-03-10"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -5667,13 +5253,7 @@
       "mvrv_z": "2026-03-11",
       "puell": "2026-03-11"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -5753,13 +5333,7 @@
       "mvrv_z": "2026-03-12",
       "puell": "2026-03-12"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -5839,13 +5413,7 @@
       "mvrv_z": "2026-03-13",
       "puell": "2026-03-13"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -5925,13 +5493,7 @@
       "mvrv_z": "2026-03-14",
       "puell": "2026-03-14"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -6011,13 +5573,7 @@
       "mvrv_z": "2026-03-15",
       "puell": "2026-03-15"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -6097,13 +5653,7 @@
       "mvrv_z": "2026-03-16",
       "puell": "2026-03-16"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -6183,13 +5733,7 @@
       "mvrv_z": "2026-03-17",
       "puell": "2026-03-17"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -6269,13 +5813,7 @@
       "mvrv_z": "2026-03-18",
       "puell": "2026-03-18"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -6355,13 +5893,7 @@
       "mvrv_z": "2026-03-19",
       "puell": "2026-03-19"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -6441,13 +5973,7 @@
       "mvrv_z": "2026-03-20",
       "puell": "2026-03-20"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -6527,13 +6053,7 @@
       "mvrv_z": "2026-03-21",
       "puell": "2026-03-21"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -6613,13 +6133,7 @@
       "mvrv_z": "2026-03-22",
       "puell": "2026-03-22"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -6699,13 +6213,7 @@
       "mvrv_z": "2026-03-23",
       "puell": "2026-03-23"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -6785,13 +6293,7 @@
       "mvrv_z": "2026-03-24",
       "puell": "2026-03-24"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -6871,13 +6373,7 @@
       "mvrv_z": "2026-03-25",
       "puell": "2026-03-25"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -6957,13 +6453,7 @@
       "mvrv_z": "2026-03-26",
       "puell": "2026-03-26"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -7043,13 +6533,7 @@
       "mvrv_z": "2026-03-27",
       "puell": "2026-03-27"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -7129,13 +6613,7 @@
       "mvrv_z": "2026-03-28",
       "puell": "2026-03-28"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -7215,13 +6693,7 @@
       "mvrv_z": "2026-03-29",
       "puell": "2026-03-29"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -7301,13 +6773,7 @@
       "mvrv_z": "2026-03-30",
       "puell": "2026-03-30"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -7387,13 +6853,7 @@
       "mvrv_z": "2026-03-31",
       "puell": "2026-03-31"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -7473,13 +6933,7 @@
       "mvrv_z": "2026-04-01",
       "puell": "2026-04-01"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -7559,13 +7013,7 @@
       "mvrv_z": "2026-04-02",
       "puell": "2026-04-02"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -7645,13 +7093,7 @@
       "mvrv_z": "2026-04-03",
       "puell": "2026-04-03"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -7731,13 +7173,7 @@
       "mvrv_z": "2026-04-04",
       "puell": "2026-04-04"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -7817,13 +7253,7 @@
       "mvrv_z": "2026-04-05",
       "puell": "2026-04-05"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -7903,13 +7333,7 @@
       "mvrv_z": "2026-04-06",
       "puell": "2026-04-06"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -7989,13 +7413,7 @@
       "mvrv_z": "2026-04-07",
       "puell": "2026-04-07"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -8075,13 +7493,7 @@
       "mvrv_z": "2026-04-08",
       "puell": "2026-04-08"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -8161,13 +7573,7 @@
       "mvrv_z": "2026-04-09",
       "puell": "2026-04-09"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -8247,13 +7653,7 @@
       "mvrv_z": "2026-04-10",
       "puell": "2026-04-10"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -8333,13 +7733,7 @@
       "mvrv_z": "2026-04-11",
       "puell": "2026-04-11"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -8419,13 +7813,7 @@
       "mvrv_z": "2026-04-12",
       "puell": "2026-04-12"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -8505,13 +7893,7 @@
       "mvrv_z": "2026-04-13",
       "puell": "2026-04-13"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -8591,13 +7973,7 @@
       "mvrv_z": "2026-04-14",
       "puell": "2026-04-14"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -8677,13 +8053,7 @@
       "mvrv_z": "2026-04-15",
       "puell": "2026-04-15"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -8763,13 +8133,7 @@
       "mvrv_z": "2026-04-16",
       "puell": "2026-04-16"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -8849,13 +8213,7 @@
       "mvrv_z": "2026-04-17",
       "puell": "2026-04-17"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -8935,13 +8293,7 @@
       "mvrv_z": "2026-04-18",
       "puell": "2026-04-18"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -9021,13 +8373,7 @@
       "mvrv_z": "2026-04-19",
       "puell": "2026-04-19"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -9107,13 +8453,7 @@
       "mvrv_z": "2026-04-20",
       "puell": "2026-04-20"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -9193,13 +8533,7 @@
       "mvrv_z": "2026-04-21",
       "puell": "2026-04-21"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -9279,13 +8613,7 @@
       "mvrv_z": "2026-04-22",
       "puell": "2026-04-22"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -9365,13 +8693,7 @@
       "mvrv_z": "2026-04-23",
       "puell": "2026-04-23"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -9451,13 +8773,7 @@
       "mvrv_z": "2026-04-24",
       "puell": "2026-04-24"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -9537,13 +8853,7 @@
       "mvrv_z": "2026-04-25",
       "puell": "2026-04-25"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -9623,13 +8933,7 @@
       "mvrv_z": "2026-04-26",
       "puell": "2026-04-26"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -9709,13 +9013,7 @@
       "mvrv_z": "2026-04-27",
       "puell": "2026-04-27"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -9795,13 +9093,7 @@
       "mvrv_z": "2026-04-28",
       "puell": "2026-04-28"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -9881,13 +9173,7 @@
       "mvrv_z": "2026-04-29",
       "puell": "2026-04-29"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -9967,13 +9253,7 @@
       "mvrv_z": "2026-04-30",
       "puell": "2026-04-30"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -10053,13 +9333,7 @@
       "mvrv_z": "2026-05-01",
       "puell": "2026-05-01"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -10139,13 +9413,7 @@
       "mvrv_z": "2026-05-02",
       "puell": "2026-05-02"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -10225,13 +9493,7 @@
       "mvrv_z": "2026-05-03",
       "puell": "2026-05-03"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -10311,13 +9573,7 @@
       "mvrv_z": "2026-05-04",
       "puell": "2026-05-04"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -10397,13 +9653,7 @@
       "mvrv_z": "2026-05-05",
       "puell": "2026-05-05"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -10483,13 +9733,7 @@
       "mvrv_z": "2026-05-06",
       "puell": "2026-05-06"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -10569,13 +9813,7 @@
       "mvrv_z": "2026-05-07",
       "puell": "2026-05-07"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -10655,13 +9893,7 @@
       "mvrv_z": "2026-05-08",
       "puell": "2026-05-08"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -10741,13 +9973,7 @@
       "mvrv_z": "2026-05-09",
       "puell": "2026-05-09"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -10827,13 +10053,7 @@
       "mvrv_z": "2026-05-10",
       "puell": "2026-05-10"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -10913,13 +10133,7 @@
       "mvrv_z": "2026-05-11",
       "puell": "2026-05-11"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -10999,13 +10213,7 @@
       "mvrv_z": "2026-05-12",
       "puell": "2026-05-12"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -11085,13 +10293,7 @@
       "mvrv_z": "2026-05-13",
       "puell": "2026-05-13"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -11171,13 +10373,7 @@
       "mvrv_z": "2026-05-14",
       "puell": "2026-05-14"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -11257,13 +10453,7 @@
       "mvrv_z": "2026-05-15",
       "puell": "2026-05-15"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -11343,13 +10533,7 @@
       "mvrv_z": "2026-05-16",
       "puell": "2026-05-16"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -11429,13 +10613,7 @@
       "mvrv_z": "2026-05-17",
       "puell": "2026-05-17"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -11515,13 +10693,7 @@
       "mvrv_z": "2026-05-18",
       "puell": "2026-05-18"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -11601,13 +10773,7 @@
       "mvrv_z": "2026-05-19",
       "puell": "2026-05-19"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -11687,13 +10853,7 @@
       "mvrv_z": "2026-05-20",
       "puell": "2026-05-20"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -11773,13 +10933,7 @@
       "mvrv_z": "2026-05-21",
       "puell": "2026-05-21"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -11859,13 +11013,7 @@
       "mvrv_z": "2026-05-22",
       "puell": "2026-05-22"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -11945,13 +11093,7 @@
       "mvrv_z": "2026-05-23",
       "puell": "2026-05-23"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -12031,13 +11173,7 @@
       "mvrv_z": "2026-05-24",
       "puell": "2026-05-24"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -12117,13 +11253,7 @@
       "mvrv_z": "2026-05-25",
       "puell": "2026-05-25"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -12203,13 +11333,7 @@
       "mvrv_z": "2026-05-26",
       "puell": "2026-05-26"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -12289,13 +11413,7 @@
       "mvrv_z": "2026-05-27",
       "puell": "2026-05-27"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -12375,13 +11493,7 @@
       "mvrv_z": "2026-05-28",
       "puell": "2026-05-28"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -12461,13 +11573,7 @@
       "mvrv_z": "2026-05-29",
       "puell": "2026-05-29"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -12547,13 +11653,7 @@
       "mvrv_z": "2026-05-30",
       "puell": "2026-05-30"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -12633,13 +11733,7 @@
       "mvrv_z": "2026-05-31",
       "puell": "2026-05-31"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -12719,13 +11813,7 @@
       "mvrv_z": "2026-06-01",
       "puell": "2026-06-01"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 12,
     "sell_visit_v2": false,
@@ -12805,13 +11893,7 @@
       "mvrv_z": "2026-06-02",
       "puell": "2026-06-02"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -12891,13 +11973,7 @@
       "mvrv_z": "2026-06-03",
       "puell": "2026-06-03"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -12977,13 +12053,7 @@
       "mvrv_z": "2026-06-04",
       "puell": "2026-06-04"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -13063,13 +12133,7 @@
       "mvrv_z": "2026-06-05",
       "puell": "2026-06-05"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -13149,13 +12213,7 @@
       "mvrv_z": "2026-06-06",
       "puell": "2026-06-06"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -13235,13 +12293,7 @@
       "mvrv_z": "2026-06-07",
       "puell": "2026-06-07"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -13321,13 +12373,7 @@
       "mvrv_z": "2026-06-08",
       "puell": "2026-06-08"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -13407,13 +12453,7 @@
       "mvrv_z": "2026-06-09",
       "puell": "2026-06-09"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -13493,13 +12533,7 @@
       "mvrv_z": "2026-06-10",
       "puell": "2026-06-10"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -13579,13 +12613,7 @@
       "mvrv_z": "2026-06-11",
       "puell": "2026-06-11"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -13665,13 +12693,7 @@
       "mvrv_z": "2026-06-12",
       "puell": "2026-06-12"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -13751,13 +12773,7 @@
       "mvrv_z": "2026-06-13",
       "puell": "2026-06-13"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -13837,13 +12853,7 @@
       "mvrv_z": "2026-06-14",
       "puell": "2026-06-14"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -13923,13 +12933,7 @@
       "mvrv_z": "2026-06-15",
       "puell": "2026-06-15"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -14009,13 +13013,7 @@
       "mvrv_z": "2026-06-16",
       "puell": "2026-06-16"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -14095,13 +13093,7 @@
       "mvrv_z": "2026-06-17",
       "puell": "2026-06-17"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -14181,13 +13173,7 @@
       "mvrv_z": "2026-06-18",
       "puell": "2026-06-18"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -14267,13 +13253,7 @@
       "mvrv_z": "2026-06-19",
       "puell": "2026-06-19"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -14353,13 +13333,7 @@
       "mvrv_z": "2026-06-20",
       "puell": "2026-06-20"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -14439,13 +13413,7 @@
       "mvrv_z": "2026-06-21",
       "puell": "2026-06-21"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -14525,13 +13493,7 @@
       "mvrv_z": "2026-06-22",
       "puell": "2026-06-22"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -14611,13 +13573,7 @@
       "mvrv_z": "2026-06-23",
       "puell": "2026-06-23"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -14697,13 +13653,7 @@
       "mvrv_z": "2026-06-24",
       "puell": "2026-06-24"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -14783,13 +13733,7 @@
       "mvrv_z": "2026-06-25",
       "puell": "2026-06-25"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -14869,13 +13813,7 @@
       "mvrv_z": "2026-06-26",
       "puell": "2026-06-26"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -14955,13 +13893,7 @@
       "mvrv_z": "2026-06-27",
       "puell": "2026-06-27"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -15041,13 +13973,7 @@
       "mvrv_z": "2026-06-28",
       "puell": "2026-06-28"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -15127,13 +14053,7 @@
       "mvrv_z": "2026-06-29",
       "puell": "2026-06-29"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -15213,13 +14133,7 @@
       "mvrv_z": "2026-06-30",
       "puell": "2026-06-30"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -15299,13 +14213,7 @@
       "mvrv_z": "2026-07-01",
       "puell": "2026-07-01"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -15385,13 +14293,7 @@
       "mvrv_z": "2026-07-02",
       "puell": "2026-07-02"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -15471,13 +14373,7 @@
       "mvrv_z": "2026-07-03",
       "puell": "2026-07-03"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -15557,13 +14453,7 @@
       "mvrv_z": "2026-07-04",
       "puell": "2026-07-04"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -15643,13 +14533,7 @@
       "mvrv_z": "2026-07-05",
       "puell": "2026-07-05"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -15729,13 +14613,7 @@
       "mvrv_z": "2026-07-06",
       "puell": "2026-07-06"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -15815,13 +14693,7 @@
       "mvrv_z": "2026-07-07",
       "puell": "2026-07-07"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -15901,13 +14773,7 @@
       "mvrv_z": "2026-07-08",
       "puell": "2026-07-08"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -15987,13 +14853,7 @@
       "mvrv_z": "2026-07-09",
       "puell": "2026-07-09"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -16073,13 +14933,7 @@
       "mvrv_z": "2026-07-10",
       "puell": "2026-07-10"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -16159,13 +15013,7 @@
       "mvrv_z": "2026-07-11",
       "puell": "2026-07-11"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -16245,13 +15093,7 @@
       "mvrv_z": "2026-07-12",
       "puell": "2026-07-12"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -16331,13 +15173,7 @@
       "mvrv_z": "2026-07-13",
       "puell": "2026-07-13"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -16417,13 +15253,7 @@
       "mvrv_z": "2026-07-14",
       "puell": "2026-07-14"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -16503,13 +15333,7 @@
       "mvrv_z": "2026-07-15",
       "puell": "2026-07-15"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -16589,13 +15413,7 @@
       "mvrv_z": "2026-07-16",
       "puell": "2026-07-16"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -16675,13 +15493,7 @@
       "mvrv_z": "2026-07-17",
       "puell": "2026-07-17"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -16761,13 +15573,7 @@
       "mvrv_z": "2026-07-18",
       "puell": "2026-07-18"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -16847,13 +15653,7 @@
       "mvrv_z": "2026-07-19",
       "puell": "2026-07-19"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -16933,13 +15733,7 @@
       "mvrv_z": "2026-07-20",
       "puell": "2026-07-20"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -17019,13 +15813,7 @@
       "mvrv_z": "2026-07-21",
       "puell": "2026-07-21"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -17105,13 +15893,7 @@
       "mvrv_z": "2026-07-22",
       "puell": "2026-07-22"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -17191,13 +15973,7 @@
       "mvrv_z": "2026-07-23",
       "puell": "2026-07-23"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -17277,13 +16053,7 @@
       "mvrv_z": "2026-07-24",
       "puell": "2026-07-24"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -17363,13 +16133,7 @@
       "mvrv_z": "2026-07-25",
       "puell": "2026-07-25"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -17449,13 +16213,7 @@
       "mvrv_z": "2026-07-26",
       "puell": "2026-07-26"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -17535,13 +16293,7 @@
       "mvrv_z": "2026-07-27",
       "puell": "2026-07-27"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -17621,13 +16373,7 @@
       "mvrv_z": "2026-07-28",
       "puell": "2026-07-28"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -17707,13 +16453,7 @@
       "mvrv_z": "2026-07-29",
       "puell": "2026-07-29"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -17793,13 +16533,7 @@
       "mvrv_z": "2026-07-30",
       "puell": "2026-07-30"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -17879,13 +16613,7 @@
       "mvrv_z": "2026-07-31",
       "puell": "2026-07-31"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -17965,13 +16693,7 @@
       "mvrv_z": "2026-08-01",
       "puell": "2026-08-01"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -18051,13 +16773,7 @@
       "mvrv_z": "2026-08-02",
       "puell": "2026-08-02"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -18137,13 +16853,7 @@
       "mvrv_z": "2026-08-03",
       "puell": "2026-08-03"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -18223,13 +16933,7 @@
       "mvrv_z": "2026-08-04",
       "puell": "2026-08-04"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -18309,13 +17013,7 @@
       "mvrv_z": "2026-08-05",
       "puell": "2026-08-05"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -18395,13 +17093,7 @@
       "mvrv_z": "2026-08-06",
       "puell": "2026-08-06"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -18481,13 +17173,7 @@
       "mvrv_z": "2026-08-07",
       "puell": "2026-08-07"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -18567,13 +17253,7 @@
       "mvrv_z": "2026-08-08",
       "puell": "2026-08-08"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -18653,13 +17333,7 @@
       "mvrv_z": "2026-08-09",
       "puell": "2026-08-09"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -18739,13 +17413,7 @@
       "mvrv_z": "2026-08-10",
       "puell": "2026-08-10"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -18825,13 +17493,7 @@
       "mvrv_z": "2026-08-11",
       "puell": "2026-08-11"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -18911,13 +17573,7 @@
       "mvrv_z": "2026-08-12",
       "puell": "2026-08-12"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -18997,13 +17653,7 @@
       "mvrv_z": "2026-08-13",
       "puell": "2026-08-13"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -19083,13 +17733,7 @@
       "mvrv_z": "2026-08-14",
       "puell": "2026-08-14"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -19169,13 +17813,7 @@
       "mvrv_z": "2026-08-15",
       "puell": "2026-08-15"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -19255,13 +17893,7 @@
       "mvrv_z": "2026-08-16",
       "puell": "2026-08-16"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -19341,13 +17973,7 @@
       "mvrv_z": "2026-08-17",
       "puell": "2026-08-17"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -19427,13 +18053,7 @@
       "mvrv_z": "2026-08-18",
       "puell": "2026-08-18"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -19513,13 +18133,7 @@
       "mvrv_z": "2026-08-19",
       "puell": "2026-08-19"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": true,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -19599,13 +18213,7 @@
       "mvrv_z": "2026-08-20",
       "puell": "2026-08-20"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -19685,13 +18293,7 @@
       "mvrv_z": "2026-08-21",
       "puell": "2026-08-21"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -19771,13 +18373,7 @@
       "mvrv_z": "2026-08-22",
       "puell": "2026-08-22"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -19857,13 +18453,7 @@
       "mvrv_z": "2026-08-23",
       "puell": "2026-08-23"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -19943,13 +18533,7 @@
       "mvrv_z": "2026-08-24",
       "puell": "2026-08-24"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -20029,13 +18613,7 @@
       "mvrv_z": "2026-08-25",
       "puell": "2026-08-25"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -20115,13 +18693,7 @@
       "mvrv_z": "2026-08-26",
       "puell": "2026-08-26"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -20201,13 +18773,7 @@
       "mvrv_z": "2026-08-27",
       "puell": "2026-08-27"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -20287,13 +18853,7 @@
       "mvrv_z": "2026-08-28",
       "puell": "2026-08-28"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -20373,13 +18933,7 @@
       "mvrv_z": "2026-08-29",
       "puell": "2026-08-29"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -20459,13 +19013,7 @@
       "mvrv_z": "2026-08-30",
       "puell": "2026-08-30"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -20545,13 +19093,7 @@
       "mvrv_z": "2026-08-31",
       "puell": "2026-08-31"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -20631,13 +19173,7 @@
       "mvrv_z": "2026-09-01",
       "puell": "2026-09-01"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -20717,13 +19253,7 @@
       "mvrv_z": "2026-09-02",
       "puell": "2026-09-02"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -20803,13 +19333,7 @@
       "mvrv_z": "2026-09-03",
       "puell": "2026-09-03"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -20889,13 +19413,7 @@
       "mvrv_z": "2026-09-04",
       "puell": "2026-09-04"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -20975,13 +19493,7 @@
       "mvrv_z": "2026-09-05",
       "puell": "2026-09-05"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -21061,13 +19573,7 @@
       "mvrv_z": "2026-09-06",
       "puell": "2026-09-06"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -21147,13 +19653,7 @@
       "mvrv_z": "2026-09-07",
       "puell": "2026-09-07"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -21233,13 +19733,7 @@
       "mvrv_z": "2026-09-08",
       "puell": "2026-09-08"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -21319,13 +19813,7 @@
       "mvrv_z": "2026-09-09",
       "puell": "2026-09-09"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -21405,13 +19893,7 @@
       "mvrv_z": "2026-09-10",
       "puell": "2026-09-10"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -21491,13 +19973,7 @@
       "mvrv_z": "2026-09-11",
       "puell": "2026-09-11"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -21577,13 +20053,7 @@
       "mvrv_z": "2026-09-12",
       "puell": "2026-09-12"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -21663,13 +20133,7 @@
       "mvrv_z": "2026-09-13",
       "puell": "2026-09-13"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -21749,13 +20213,7 @@
       "mvrv_z": "2026-09-14",
       "puell": "2026-09-14"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -21835,13 +20293,7 @@
       "mvrv_z": "2026-09-15",
       "puell": "2026-09-15"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -21921,13 +20373,7 @@
       "mvrv_z": "2026-09-16",
       "puell": "2026-09-16"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -22007,13 +20453,7 @@
       "mvrv_z": "2026-09-17",
       "puell": "2026-09-17"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -22093,13 +20533,7 @@
       "mvrv_z": "2026-09-18",
       "puell": "2026-09-18"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -22179,13 +20613,7 @@
       "mvrv_z": "2026-09-19",
       "puell": "2026-09-19"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -22265,13 +20693,7 @@
       "mvrv_z": "2026-09-20",
       "puell": "2026-09-20"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -22351,13 +20773,7 @@
       "mvrv_z": "2026-09-21",
       "puell": "2026-09-21"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -22437,13 +20853,7 @@
       "mvrv_z": "2026-09-22",
       "puell": "2026-09-22"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -22523,13 +20933,7 @@
       "mvrv_z": "2026-09-23",
       "puell": "2026-09-23"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -22609,13 +21013,7 @@
       "mvrv_z": "2026-09-24",
       "puell": "2026-09-24"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -22695,13 +21093,7 @@
       "mvrv_z": "2026-09-25",
       "puell": "2026-09-25"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -22781,13 +21173,7 @@
       "mvrv_z": "2026-09-26",
       "puell": "2026-09-26"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
@@ -22867,13 +21253,7 @@
       "mvrv_z": "2026-09-27",
       "puell": "2026-09-27"
     },
-    "source_lag": {
-      "price": 0,
-      "kimchi": 0,
-      "nupl": 0,
-      "mvrv_z": 0,
-      "puell": 0
-    },
+    "source_lag": null,
     "buy_zone_v2": false,
     "buy_cycle_id_v2": 13,
     "sell_visit_v2": false,
