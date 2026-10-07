@@ -22054,5 +22054,90 @@
     "obs_rc_growth_30d": 0.0001,
     "obs_px_growth_30d": 0.0745,
     "obs_mvrv_decomp": 0.0744
+  },
+  {
+    "date": "2026-10-07",
+    "btc_krw": 115964000,
+    "eth_krw": 3655000,
+    "zone": "HOLD",
+    "zone_since": "2026-08-01",
+    "zone_days": 68,
+    "zone_changed": false,
+    "buy_core_v19": 3.0146,
+    "euphoria_v19": 1.2196,
+    "sell_signal_v19": false,
+    "sell_ep_v19": false,
+    "buy_v19": false,
+    "pullback_fresh": false,
+    "pullback_date": "2025-10-20",
+    "ethbtc": 0.0315,
+    "metrics": {
+      "mayer": 1.12,
+      "fng": 71
+    },
+    "macro": {
+      "dollar_tailwind": false,
+      "nl_expanding": false
+    },
+    "percentiles": {
+      "mvrv_z_pctl": 0.4481,
+      "nupl_pctl": 0.4164,
+      "puell_pctl": 0.4216,
+      "mayer_pctl": 0.4727
+    },
+    "gate_inputs": {
+      "dxy_chg_60d": 0.0236,
+      "nl_ratio": -0.0152
+    },
+    "kimchi_premium_pct": -1.774,
+    "data_stale": false,
+    "stale_level": "ok",
+    "source_last": {
+      "price": "2026-10-05",
+      "kimchi": "2026-10-07",
+      "nupl": "2026-10-05",
+      "mvrv_z": "2026-10-05",
+      "puell": "2026-10-05"
+    },
+    "source_lag": {
+      "price": 2,
+      "kimchi": 0,
+      "nupl": 2,
+      "mvrv_z": 2,
+      "puell": 2
+    },
+    "buy_zone_v2": false,
+    "buy_cycle_id_v2": 13,
+    "sell_visit_v2": false,
+    "visit_min_v2": null,
+    "rung_fires_v2": [],
+    "x_exit_v2": false,
+    "g_state_v2": false,
+    "g_prev_high_v2": 124824.45,
+    "ratchet_state_v2": false,
+    "euphoria_sym_v2": 1.2196,
+    "signals_v2": [],
+    "x_false_today_v2": null,
+    "x_false_resolved_today_v2": null,
+    "data_fallback_today_v2": false,
+    "buy_start_v2": false,
+    "buy_start_cycle_v2": 12,
+    "buy_tranche_state_v2": {
+      "state": "exhausted",
+      "n": 90,
+      "of": 90,
+      "resumed": false
+    },
+    "sell_start_v2": false,
+    "sell_start_cycle_v2": 12,
+    "sell_schedule_state_v2": {
+      "state": "wait",
+      "n": 0,
+      "of": 90,
+      "resumed": false
+    },
+    "obs_rc_growth_30d": 0.0001,
+    "obs_px_growth_30d": 0.0647,
+    "obs_mvrv_decomp": 0.0646
   }
 ]
