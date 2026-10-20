@@ -23162,8 +23162,8 @@
   },
   {
     "date": "2026-10-20",
-    "btc_krw": 110199000,
-    "eth_krw": 3238000,
+    "btc_krw": 110112000,
+    "eth_krw": 3235000,
     "zone": "HOLD",
     "zone_since": "2026-08-01",
     "zone_days": 81,
@@ -23188,13 +23188,13 @@
       "mvrv_z_pctl": 0.4401,
       "nupl_pctl": 0.4082,
       "puell_pctl": 0.4065,
-      "mayer_pctl": 0.405
+      "mayer_pctl": 0.4045
     },
     "gate_inputs": {
       "dxy_chg_60d": 0.0351,
       "nl_ratio": 0.0042
     },
-    "kimchi_premium_pct": -2.571,
+    "kimchi_premium_pct": -2.584,
     "data_stale": false,
     "stale_level": "ok",
     "source_last": {
@@ -23242,7 +23242,7 @@
       "resumed": false
     },
     "obs_rc_growth_30d": 0.0001,
-    "obs_px_growth_30d": 0.009,
-    "obs_mvrv_decomp": 0.0089
+    "obs_px_growth_30d": 0.0083,
+    "obs_mvrv_decomp": 0.0082
   }
 ]
