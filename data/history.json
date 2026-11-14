@@ -25333,5 +25333,97 @@
     "obs_rc_growth_30d": 0.0001,
     "obs_px_growth_30d": -0.0954,
     "obs_mvrv_decomp": -0.0955
+  },
+  {
+    "date": "2026-11-14",
+    "btc_krw": 93226000,
+    "eth_krw": 2631000,
+    "zone": "HOLD",
+    "zone_since": "2026-08-01",
+    "zone_days": 106,
+    "zone_changed": false,
+    "buy_core_v19": 5.0767,
+    "euphoria_v19": 3.5559,
+    "sell_signal_v19": false,
+    "sell_ep_v19": false,
+    "buy_v19": false,
+    "pullback_fresh": false,
+    "pullback_date": "2025-10-20",
+    "ethbtc": 0.0282,
+    "metrics": {
+      "mayer": 0.98,
+      "fng": 13
+    },
+    "macro": {
+      "dollar_tailwind": false,
+      "nl_expanding": true
+    },
+    "percentiles": {
+      "mvrv_z_pctl": 0.3253,
+      "nupl_pctl": 0.2796,
+      "puell_pctl": 0.3897,
+      "mayer_pctl": 0.3444
+    },
+    "gate_inputs": {
+      "dxy_chg_60d": 0.031,
+      "nl_ratio": -0.0093
+    },
+    "kimchi_premium_pct": -1.123,
+    "data_stale": false,
+    "stale_level": "ok",
+    "source_last": {
+      "price": "2026-11-12",
+      "kimchi": "2026-11-14",
+      "nupl": "2026-11-12",
+      "mvrv_z": "2026-11-12",
+      "puell": "2026-11-12"
+    },
+    "source_lag": {
+      "price": 2,
+      "kimchi": 0,
+      "nupl": 2,
+      "mvrv_z": 2,
+      "puell": 2
+    },
+    "buy_zone_v2": false,
+    "buy_cycle_id_v2": 13,
+    "sell_visit_v2": false,
+    "visit_min_v2": null,
+    "rung_fires_v2": [],
+    "x_exit_v2": false,
+    "g_state_v2": false,
+    "g_prev_high_v2": 124824.45,
+    "ratchet_state_v2": false,
+    "euphoria_sym_v2": 3.5559,
+    "signals_v2": [],
+    "x_false_today_v2": null,
+    "x_false_resolved_today_v2": null,
+    "data_fallback_today_v2": false,
+    "buy_start_v2": false,
+    "buy_start_cycle_v2": 12,
+    "buy_tranche_state_v2": {
+      "state": "exhausted",
+      "n": 90,
+      "of": 90,
+      "resumed": false
+    },
+    "sell_start_v2": false,
+    "sell_start_cycle_v2": 12,
+    "sell_schedule_state_v2": {
+      "state": "wait",
+      "n": 0,
+      "of": 90,
+      "resumed": false
+    },
+    "judge_basis_date_v2": "2026-11-12",
+    "judge_hold_v2": false,
+    "judge_hold_reason_v2": null,
+    "judge_stop_v2": {
+      "date": "2026-11-13",
+      "reason": "정상 끝(CM 최신 완결일 다음 날)"
+    },
+    "obs_rc_growth_30d": 0.0001,
+    "obs_px_growth_30d": -0.1414,
+    "obs_mvrv_decomp": -0.1415
   }
 ]
