@@ -170,7 +170,7 @@
         <div class="icon-index-row">
           <span class="icon-index-label">지표</span>
           <span style="color:#f59e0b">━ BTC (USD)</span>
-          <span style="color:#e2e8f0" title="BTC 달러 종가 150일 단순이동평균 · MA150 경보시스템과 같은 선 · 표시 전용">╌ BTC 150일선 (달러 기준)</span>
+          <span style="color:#e2e8f0" title="BTC 달러 종가 150일 단순이동평균 · MA150 경보와 같은 선 · 표시 전용">╌ BTC 150일선 (달러 기준)</span>
           <span style="color:#4ade80">━ 매수점수</span>
           <span style="color:#f87171">━ 매도점수</span>
         </div>
@@ -1393,7 +1393,7 @@ async function renderMaAlert() {
     const on = a.state === "on";
     const line = document.createElement("span");
     line.id = "maAlertLine";
-    line.textContent = (on ? `🔴 MA${a.line} 경보 켜짐` : `🟢 MA${a.line} 경보 꺼짐`) + (a.provisional ? " (잠정)" : "");
+    line.textContent = (on ? `🔴 MA${a.line} 경보 켜짐 - DAT, 크립토 레버리지 현금화 고려` : `🟢 MA${a.line} 경보 꺼짐 - DAT, 크립토 레버리지 진입 고려`) + (a.provisional ? " (잠정)" : "");
     const br2 = document.createElement("span");
     br2.style.cssText = "flex-basis:100%;height:0";
     br.after(line, br2);
