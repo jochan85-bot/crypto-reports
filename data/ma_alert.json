@@ -1,0 +1,22 @@
+{
+ "title": "MA150 경보시스템",
+ "line": 150,
+ "state": "on",
+ "since": "2026-11-14",
+ "since_close": 64128.1,
+ "close": 59747.8,
+ "ma": 72897.8,
+ "dev_pct": -18.04,
+ "threshold": 74355.8,
+ "threshold_dir": "위",
+ "run": 0,
+ "run_need": 3,
+ "basis_date": "2026-11-24",
+ "today_kst": "2026-11-26",
+ "lag_days": 2,
+ "provisional": false,
+ "judge_tail_rows": 0,
+ "target": "대상: DAT(MSTR·MSTU·BMNR·BMNU)와 BITU·ETHT. 현물은 대상이 아닙니다.",
+ "note": "경보는 참고 표시이며 자동 매매에 연결되어 있지 않습니다.",
+ "generated_at": "2026-11-26 15:21 KST"
+}
