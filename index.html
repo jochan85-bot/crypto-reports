@@ -124,13 +124,6 @@
   <!-- Guide 모달 -->
 
   <main>
-    <!-- 0. MA150 경보시스템 — 표시 전용(data/ma_alert.json, 아침 크립토 시그널 메시지와 같은 값). 자동 매매와 무관. JJ_MA150_ALERT_DISPLAY_20261126 -->
-    <div class="card" id="maAlertCard" style="display:none">
-      <h2><span id="maAlertTitle">MA150 경보시스템</span> <span class="muted" id="maAlertBasis" style="font-weight:400;font-size:12px;"></span></h2>
-      <div id="maAlertBody"></div>
-      <div class="muted" style="font-size:12px;margin-top:8px;" id="maAlertTarget">대상: DAT(MSTR·MSTU·BMNR·BMNU)와 BITU·ETHT. 현물은 대상이 아닙니다.</div>
-      <div class="muted" style="font-size:12px;margin-top:2px;">경보는 참고 표시이며 자동 매매에 연결되어 있지 않습니다.</div>
-    </div>
     <!-- 1. 크립토 라이브 시그널 (history.json, KRW) — 오너 지시 2026-09-29: 제목 변경
          + 가격/점수 차트를 카드 하나로 병합(따로 나뉘어 보이던 것 통합) -->
     <div class="card">
@@ -1387,32 +1380,26 @@ async function main() {
   renderSignalLog(rows);
   renderMonthSelect(rows);
 }
-// ─── MA150 경보시스템 박스 (data/ma_alert.json, 표시 전용) ─────────────────────
-// 켜짐 = BTC 달러 종가가 150일선×0.98 아래로 3일 연속 마감, 꺼짐 = 150일선×1.02 위로 3일 연속 마감. 파일이 없거나 깨지면 박스를 숨긴다.
+// ─── MA150 경보 한 줄 (data/ma_alert.json, 표시 전용 — JJ_MA150_ALERT_SIMPLE) ──────────────
+// 맨 위 상태 줄(배지·코어·유포리아) 바로 아래에 「🔴 MA150 경보 켜짐」/「🟢 MA150 경보 꺼짐」, 데이터가 2일 넘게 낡으면 끝에 (잠정).
+// renderStatus 는 건드리지 않고, 상태 줄 렌더 뒤 첫 줄바꿈 다음에 끼워 넣는다. 파일이 없거나 깨지면 아무것도 안 넣는다.
 async function renderMaAlert() {
   try {
     const a = await fetch("data/ma_alert.json?t=" + Date.now(), { cache: "no-store" }).then(r => r.json());
-    if (!a || !a.state || !a.ma) return;
-    const usd = v => "$" + Math.round(v).toLocaleString("en-US");
-    const md = s => s ? `${+s.slice(5, 7)}/${+s.slice(8, 10)}` : "-";
+    if (!a || !a.state || !a.line) return;
+    const el = document.getElementById("statusBar");
+    const br = el && el.querySelector('span[style*="flex-basis:100%"]');
+    if (!br || document.getElementById("maAlertLine")) return;
     const on = a.state === "on";
-    const flip = on ? "꺼짐" : "켜짐";
-    if (a.title) document.getElementById("maAlertTitle").textContent = a.title;
-    if (a.target) document.getElementById("maAlertTarget").textContent = a.target;
-    document.getElementById("maAlertBasis").textContent =
-      `— 기준 ${md(a.basis_date)} 종가` + (a.provisional ? ` · 잠정(데이터 ${a.lag_days}일 전)` : "");
-    const since = a.since ? ` · ${md(a.since)} 전환 (그날 종가 ${usd(a.since_close)})` : "";
-    const run = a.run ? ` (현재 ${a.run}/3일)` : "";
-    document.getElementById("maAlertBody").innerHTML = `<div style="padding:8px 0;border-top:1px solid #1f2a3a;">
-        <div><b>상태 — <span style="color:${on ? "#ef4444" : "#22c55e"}">${on ? "켜짐" : "꺼짐"}</span></b><span class="muted">${since}</span></div>
-        <div class="muted" style="font-size:13px;margin-top:2px;">종가 ${usd(a.close)} · ${a.line}일선 ${usd(a.ma)}
-          (${a.dev_pct >= 0 ? "+" : ""}${a.dev_pct.toFixed(1)}%) · ${flip} 문턱 ${usd(a.threshold)} ${a.threshold_dir}로 3일 연속 마감${run}</div>
-      </div>`;
-    document.getElementById("maAlertCard").style.display = "";
-  } catch (e) { /* 표시 전용 — 실패 시 박스 숨김 유지 */ }
+    const line = document.createElement("span");
+    line.id = "maAlertLine";
+    line.textContent = (on ? `🔴 MA${a.line} 경보 켜짐` : `🟢 MA${a.line} 경보 꺼짐`) + (a.provisional ? " (잠정)" : "");
+    const br2 = document.createElement("span");
+    br2.style.cssText = "flex-basis:100%;height:0";
+    br.after(line, br2);
+  } catch (e) { /* 표시 전용 — 실패 시 생략 */ }
 }
-renderMaAlert();
-main();
+main().finally(renderMaAlert);
 </script>
 <footer style="margin-top:32px;padding:18px 16px;border-top:1px solid #1f2a3a;text-align:center;display:flex;justify-content:center;gap:16px;flex-wrap:wrap;">
   <a href="https://jochan85-bot.github.io/gold-reports/" style="color:#eab308;text-decoration:none;font-size:13px;padding:6px 14px;border:1px solid rgba(234,179,8,.4);border-radius:8px;background:rgba(234,179,8,.08);">&#x1FA99; 국제금 시그널</a>
